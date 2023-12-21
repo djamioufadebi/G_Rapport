@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Livewire;
+
+use App\Models\User;
+use App\Models\Client;
+use App\Models\Projet;
+use Livewire\Component;
+
+class CreateProjet extends Component
+{
+    public $libelle;
+    public $description;
+    public $date_debut;
+    public $date_fin_prevue;
+
+    public $projet;
+    public $id_user;
+    public $id_client;
+
+    protected $paginationTheme = "bootstrap";
+
+
+    public function store()
+    {
+
+        $client = Client::findOrFail($this->id_client);
+
+        $this->validate([
+            'libelle' => 'string|required|unique:projets,libelle',
+            'description' => 'string|required',
+            'date_debut' => 'date|required',
+            'date_fin_prevue' => 'date|required',
+            'id_user' => '',
+            'id_client' => 'required',
+
+        ]);
+
+        try {
+            $projet = new Projet;
+
+            $projet->libelle = $this->libelle;
+            $projet->description = $this->description;
+            $projet->date_debut = $this->date_debut;
+            $projet->date_fin_prevue = $this->date_fin_prevue;
+            $projet->id_client = $this->id_client;
+            // pour recuperer le User connecté
+            $projet->id_user = auth()->user()->id;
+
+            $projet->save();
+
+            return redirect()->Route('projets')->with(
+                'success',
+                'Nouveau projet ajoutée ! '
+            );
+        } catch (\Exception $e) {
+            return redirect()->back()->with(
+                'error',
+                'Erreur d\'enregistrement du projet '
+            );
+
+        }
+
+    }
+    public function render()
+    {
+
+        $currentClient = Client::all();
+
+        return view('livewire.create-projet', compact('currentClient'));
+    }
+}

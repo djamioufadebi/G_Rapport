@@ -1,0 +1,63 @@
+
+
+/* styles.css */
+/* Style du tableau */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+/* Style de l'en-tête du tableau */
+.table thead th {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+/* Style des cellules du tableau */
+.table tbody td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+/* Style pour les lignes impaires */
+.table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Style pour les cellules de la dernière colonne */
+.table tbody td:last-child {
+  border-right: none;
+}
+
+/* Style pour les cellules de la première colonne */
+.table tbody td:first-child {
+  border-left: none;
+}
+
+
+/* styles.css */
+/* Style de l'en-tête du tableau */
+.table thead th {
+  background-color: #f2f2f2; /* Couleur de fond des en-têtes */
+  border: 1px solid #ddd;  /* Bordure des en-têtes */
+  padding: 15px 10px; /* Espacement intérieur des en-têtes */
+  text-align: left;
+  font-weight: bold; /* Police plus grasse pour les en-têtes */
+  color: #333; /* Couleur du texte */
+}
+
+/* Hover sur les en-têtes de colonnes */
+.table thead th:hover {
+  background-color: #e0e0e0; /* Couleur de fond au survol */
+  cursor: pointer;
+}
+
+/* Focus sur les en-têtes de colonnes */
+.table thead th:focus {
+  outline: none; /* Supprime le contour */
+}
+
+

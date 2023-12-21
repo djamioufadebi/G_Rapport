@@ -57,11 +57,6 @@
           <br>
         </div>
 
-        <!-- <div class="card-footer">
-          <div>
-            <a href="{{ route('users' )}}" class="btn btn-secondary">Voir</a>
-          </div>
-        </div> -->
       </div>
 
     </div>

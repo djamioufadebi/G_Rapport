@@ -164,7 +164,7 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('profile') }}">Mon Profil </a>
+                <a class="dropdown-item" href="{{ route('mon_profile') }}">Mon Profil </a>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                       document.getElementById('logout-form').submit();">
                   {{ __('Logout') }}
@@ -191,52 +191,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
     integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <!-- Le script de toast -->
-  @if (session('success'))
-  <script>
-  toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "3000",
-    "hideDuration": "2000",
-    "timeOut": "8000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }
-  toastr.success("{{ session('success') }}");
-  </script>
-  @endif
-  @if (session('error'))
-  <script>
-  toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "3000",
-    "hideDuration": "2000",
-    "time Out": "8000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }
-  toastr.error("{{ session('error') }}");
-  </script>
-  @endif
 
 </body>
 

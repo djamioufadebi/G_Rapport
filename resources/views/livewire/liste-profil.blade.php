@@ -1,17 +1,8 @@
 <div class="row">
   <div class="md-8 justify-content-between">
 
-    @if(session('success'))
-    <script>
-    Swal.fire({
-      title: 'Nouveau profil ajouté !',
-      text: '{{ session('
-      success ') }}',
-      icon: 'success',
-      confirmButtonText: 'OK'
-    })
-    </script>
-    @endif
+    @include('composants.sweetalert-message')
+
     <!-- le bouton ajouter -->
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
@@ -22,7 +13,7 @@
         </button>
       </div>
       <div class="col-md-3">
-        <input type="text" wire class="form-control" placeholder="Rechercher" wire:model="search">
+        <input type="text" class="form-control" placeholder="Rechercher" wire:model="search">
       </div>
     </div>
 

@@ -29,18 +29,22 @@ class CreateProfil extends Component
             $this->successMessage = 'Enregistrement du profil réussi!';
             $this->showModal = true;
 
-            return redirect()->Route('profils');
+            return redirect()->Route('profils')->with(
+                'success',
+                ['title' => 'succès!', 'message' => 'Nouveau profil ajoutée !.']
+
+            );
+            ;
 
             // ->with('success','Nouveau profil ajoutée ! ')
             //;
 
         } catch (\Exception $e) {
 
-            $this->successMessage = 'Erreur d\'enregistrement du profil !';
-            $this->showModal = true;
-            return redirect()->back()
-                //->with( 'error', 'Erreur d\'enregistrement du profil ')
-            ;
+            return redirect()->back()->with(
+                'error',
+                ['title' => 'Erreur!', 'message' => 'Erreur d\'enregistrement du profil !!.']
+            );
 
         }
 

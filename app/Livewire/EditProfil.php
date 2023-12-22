@@ -33,7 +33,7 @@ class EditProfil extends Component
             $profil->save();
 
             return redirect()->Route('profils')->with(
-                'success',
+                'modify',
                 'Mise à jour du profil !'
             );
         } catch (\Exception $e) {

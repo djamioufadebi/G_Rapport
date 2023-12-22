@@ -12,6 +12,7 @@ use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\RapportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProfilController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,8 +43,8 @@ route::middleware('auth')->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/mon-profil', [HomeController::class, 'profil'])->name('profile');
-    Route::get('/update', [HomeController::class, 'update'])->name('profile.update');
+    Route::get('/mon-profil', [UserProfilController::class, 'profil'])->name('mon_profile');
+    Route::get('/update', [UserProfilController::class, 'update'])->name('mon_profile.update');
 
     // route pour envoyer la page de confirmation pour un nouvel utlisateur
     Route::get('/home', [NewuserController::class, 'confirm'])->name('confirmations');

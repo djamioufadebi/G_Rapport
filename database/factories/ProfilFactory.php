@@ -33,7 +33,8 @@ class ProfilFactory extends Factory
                 'manager',
                 'Gestionnaire',
                 'Chef chantier',
-                'Utilisateur simple'
+                'Utilisateur simple',
+                'Magasinier'
             ]),
         ]);
     }
@@ -79,6 +80,13 @@ class ProfilFactory extends Factory
         ]);
     }
 
+    public function magasinier()
+    {
+        return $this->state([
+            'nom' => 'Magasinier',
+            'id' => 6,
+        ]);
+    }
 
 
 }

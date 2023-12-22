@@ -18,8 +18,9 @@ class ProfilSeeder extends Seeder
         Profil::factory()->manager()->create();
         Profil::factory()->Gestionnaire()->create();
         Profil::factory()->chefChantier()->create();
+        Profil::factory()->magasinier()->create();
         Profil::factory()->utilisateurSimple()->create();
-        // ... et ainsi de suite pour les autres profils
+
     }
 
 }

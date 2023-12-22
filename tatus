@@ -1,0 +1,23 @@
+[33mcommit e070eafd3bf76bd78ab1ebf30b696a68badc0ab8[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mnouvelle_branche[m[33m, [m[1;31morigin/nouvelle_branche[m[33m)[m
+Author: djamioufadebi <djamioufadebi1@gmail.com>
+Date:   Fri Dec 22 12:14:48 2023 +0100
+
+    Changements apportés aux fichiers
+
+[33mcommit d5ab1001866f5e2b2244146dcbba8eaaa60344f4[m
+Author: djamioufadebi <djamioufadebi1@gmail.com>
+Date:   Fri Dec 22 12:07:53 2023 +0100
+
+    Nouvel enregistrement
+
+[33mcommit 362ac6d50b353133acd3f8cd0405ad3851ed6d04[m
+Author: Djamiou2 <djamioufadebi@gmail.com>
+Date:   Thu Dec 21 16:57:47 2023 +0100
+
+     Modification des profils
+
+[33mcommit 8d4c978340c323c90ca8d6982c5e67ed8d7ae40a[m[33m ([m[1;32mmain[m[33m)[m
+Author: Djamiou2 <djamioufadebi@gmail.com>
+Date:   Thu Dec 21 15:39:43 2023 +0100
+
+    Premier commit : Initialisation du projet Laravel

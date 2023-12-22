@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container-md">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">{{ __('Mon Profil') }}</div>
+      <div class="card bg-light">
+        <div class="card-header bg-primary text-white">{{ __('Mon Profil') }}</div>
 
         <div class="card-body">
           @if (session('status'))
@@ -17,58 +17,53 @@
           @include('composants.sweetalert-message')
 
           @if (session('error'))
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-danger" role="alert">
             {{ session('error') }}
           </div>
           @endif
-          <div>
-            <img src="{{ asset('asset/storage/profil.jpg')}}" alt="" width="100px" height="100px">
+          <div class="text-center mb-4">
+            <img src="{{ asset('images/profil.jpg')}}" alt="" width="100px" height="100px"
+              class="rounded-circle border border-primary">
           </div>
           <form action="{{ route('mon_profile.update') }}" method="POST">
             @csrf
             <div class="mb-3">
-              <label for="photo">Changer la photo de profil</label>
+              <label for="photo" class="form-label">Changer la photo de profil</label>
               <input type="file" class="form-control" name="photo">
             </div>
-            <div class="mb-3">
-              <label for="nom">Nom</label>
-              <input type="text" class="form-control" name="nom" value="{{ Auth::user()->nom }}" required>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="nom" class="form-label">Nom</label>
+                <input type="text" class="form-control" name="nom" value="{{ Auth::user()->nom }}" required>
+              </div>
+              <div class="col-md-6">
+                <label for="prenom" class="form-label">Prenom</label>
+                <input type="text" class="form-control" name="prenom" value="{{ Auth::user()->prenom }}" required>
+              </div>
             </div>
             <div class="mb-3">
-              <label for="prenom">Prenom</label>
-              <input type="text" class="form-control" name="prenom" value="{{ Auth::user()->prenom }}" required>
-            </div>
-            <div class="mb-3">
-              <label for="email">Email</label>
+              <label for="email" class="form-label">Email</label>
               <input type="email" class="form-control" name="email" value="{{ Auth::user()->email }}" required>
             </div>
             <div class="mb-3">
-              <label for="password">Ancien mot de passe</label>
-              <input type="password" class="form-control" name="old_password" value="{{ Auth::user()->password }}"
-                required>
+              <label for="old_password" class="form-label">Ancien mot de passe</label>
+              <input type="password" class="form-control" name="old_password" required>
             </div>
             <div class="mb-3">
-              <label for="password">Nouveau mot de passe</label>
-              <input type="password" class="form-control" name="new_password" value="" required>
+              <label for="new_password" class="form-label">Nouveau mot de passe</label>
+              <input type="password" class="form-control" name="new_password" required>
             </div>
             <div class="mb-3">
-              <label for="password_confirmation">Confirmer le mot de passe</label>
-              <input type="password" class="form-control" name="confirmation_new_password"
-                value="{{ Auth::user()->password_confirmation }}" required>
+              <label for="confirmation_new_password" class="form-label">Confirmer le mot de passe</label>
+              <input type="password" class="form-control" name="confirmation_new_password" required>
             </div>
-            <br>
-            <div>
-              <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success">Mettre à jour</a>
+            <div class="text-center">
+              <button type="submit" class="btn btn-success">Mettre à jour</button>
             </div>
           </form>
-          <br>
         </div>
-
       </div>
-
     </div>
   </div>
 </div>
-</div>
-
 @endsection

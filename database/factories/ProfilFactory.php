@@ -29,8 +29,8 @@ class ProfilFactory extends Factory
     {
         return $this->state([
             'nom' => $this->faker->randomElement([
-                'administrateur',
-                'manager',
+                'Administrateur',
+                'Manager',
                 'Gestionnaire',
                 'Chef chantier',
                 'Utilisateur simple',
@@ -43,7 +43,7 @@ class ProfilFactory extends Factory
     public function administrateur()
     {
         return $this->state([
-            'nom' => 'administrateur',
+            'nom' => 'Administrateur',
             'id' => 1,
         ]);
     }
@@ -51,12 +51,12 @@ class ProfilFactory extends Factory
     public function manager()
     {
         return $this->state([
-            'nom' => 'manager',
+            'nom' => 'Manager',
             'id' => 2,
         ]);
     }
 
-    public function Gestionnaire()
+    public function gestionnaire()
     {
         return $this->state([
             'nom' => 'Gestionnaire',

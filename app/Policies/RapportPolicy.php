@@ -14,7 +14,7 @@ class RapportPolicy
 
     public function viewliste(User $user)
     {
-        return true;
+        return in_array($user->id_profil, [1, 2, 3, 4, 6]);
 
     }
 
@@ -27,13 +27,13 @@ class RapportPolicy
     public function edit(User $user, Rapport $rapport)
     {
         // Seuls l'utilisateur ayant l'id profil 2 ou l'utilisateur propriétaire du rapport peuvent éditer un rapport
-        return $user->id_profil === 2;
+        return $user->id_profil === 2 || $user->id === $rapport->user_id;
     }
 
     public function view(User $user, Rapport $rapport)
     {
         // Autoriser tous les utilisateurs à voir un rapport
-        return $user->id_profil === 2;
+        return $user->id_profil === 2 || $user->id === $rapport->user_id;
     }
 
     /**

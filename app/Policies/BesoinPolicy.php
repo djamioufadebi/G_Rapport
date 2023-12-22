@@ -19,7 +19,7 @@ class BesoinPolicy
 
     public function viewliste(User $user)
     {
-        return true;
+        return in_array($user->id_profil, [1, 2, 3, 4, 6]);
 
     }
 

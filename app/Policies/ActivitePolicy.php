@@ -32,7 +32,7 @@ class ActivitePolicy
 
     public function viewliste(User $user)
     {
-        return true;
+        return in_array($user->id_profil, [1, 2, 3, 4, 6]);
 
     }
 
@@ -45,7 +45,7 @@ class ActivitePolicy
     public function edit(User $user, Activite $activite)
     {
         // Seuls l'utilisateur ayant l'id profil 3 ou 2 ou l'utilisateur propriétaire de l'activité peuvent éditer une activité
-        return $user->id_profil === 2 || $user->id_profil === 3 || $user->id === $activite->user_id;
+        return $user->id_profil === 2 || $user->id_profil === 3;
     }
 
     public function view(User $user, Activite $activite)

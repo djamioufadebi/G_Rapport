@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IntervenantController;
 use App\Http\Controllers\NewuserController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\RapportController;
@@ -43,14 +44,13 @@ route::middleware('auth')->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
+
     Route::get('/mon-profil', [UserProfilController::class, 'profil'])->name('mon_profile');
     Route::get('/update', [UserProfilController::class, 'update'])->name('mon_profile.update');
 
     // route pour envoyer la page de confirmation pour un nouvel utlisateur
     Route::get('/home', [NewuserController::class, 'confirm'])->name('confirmations');
-
-    //Route::get('/assign-profils', [AssignerProfilController::class, 'index'])->name('assign_roles');
-    // Route::post('/save-assignments', [AssignerProfilController::class, 'assignement_save'])->name('save_assignments');
 
     Route::prefix('users')->group(
         function () {

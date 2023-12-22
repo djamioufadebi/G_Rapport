@@ -10,7 +10,12 @@ class ClientController extends Controller
 {
     public function index()
     {
-        return view('Clients.liste');
+        if (Gate::allows('viewliste', Client::class)) {
+            return view('Clients.liste');
+        } else {
+            return view('composants.redirection-new-user'); // Redirection vers une vue indiquant un accès refusé
+        }
+
     }
 
     public function create()

@@ -43,33 +43,23 @@ class LoginController extends Controller
         $user = Auth::user();
 
         if ($user) {
-            switch ($user->id_profil) {
-                case 1:
-                    return route('users'); // Rediriger vers le tableau de bord du profil 1
+            if ($user->profil()->pluck('nom')->contains('Administrateur')) {
+                return route('profils'); // Rediriger vers le tableau de bord pour les administrateurs
 
-                case 2:
-                    // Rediriger vers le tableau de bord du profil 2
-                    return route('besoins');
-
-                case 3:
-                    // Rediriger vers le tableau de bord du profil 2
-                    return route('projets');
-                case 4:
-                    // Rediriger vers le tableau de bord du profil 2
-                    return route('activites');
-                case 5:
-                    // Rediriger vers le tableau de bord du profil 2
-                    return view('composants.redirection-new-user');
-                case 6:
-                    // Rediriger vers le tableau de bord du profil 2
-                    return route('besoins');
-                default:
-                    // si l'utilisateur n'est pas au bon rôle, on lui donne un message d'erreur
-                    abort(403, 'Vous n\'avez pas le profil pour accéder à cette page');
-                //return route('home'); // Rediriger vers une page par défaut si le profil n'est pas spécifié
+            } elseif ($user->profil()->pluck('nom')->contains('Gestionnaire')) {
+                return route('projets'); // Rediriger vers le tableau de bord du profil 2
+            } elseif ($user->profil()->pluck('nom')->contains('Chef chantier')) {
+                return route('besoins'); // Rediriger vers le tableau de bord du profil 3
+            } elseif ($user->profil()->pluck('nom')->contains('Manager')) {
+                return route('besoins'); // Rediriger vers le tableau de bord du profil 4
+            } elseif ($user->profil()->pluck('nom')->contains('Magasinier')) {
+                return route('rapports'); // Rediriger vers le tableau de bord du profil 4
+            } else {
+                return view('composants.redirection-new-user');
             }
         } else {
-            return route('login'); // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié
+            // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié
+            return route('login');
         }
     }
 

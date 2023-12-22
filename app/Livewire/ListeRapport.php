@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Projet;
 use App\Models\Rapport;
+use Illuminate\Auth\Access\AuthorizationException;
 use Livewire\Component;
 use App\Models\Notification;
 use Livewire\WithPagination;
@@ -23,11 +24,11 @@ class ListeRapport extends Component
         $rapport = Rapport::with('projet')->get();
     }
 
-
     public function confirmDelete($id)
     {
         $rapport = Rapport::find($id);
-
+        // verifie si l'utilisateur a l'autorisation de supprimer
+        //$this->authorize('delete', $rapport);
         // creer une notification pour la suppresion du rapport
         $notification = new Notification;
         $notification->user_id = Auth::user()->id;
@@ -36,6 +37,7 @@ class ListeRapport extends Component
         $notification->read = false;
 
         $notification->save();
+
 
         //  selectionner le Projet à supprimer avec la fonction find() et le supprimer avec la fonction delete()
         $rapport->delete();

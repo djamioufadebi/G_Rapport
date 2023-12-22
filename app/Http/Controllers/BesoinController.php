@@ -11,7 +11,11 @@ class BesoinController extends Controller
 
     public function index()
     {
-        return view('besoins.liste');
+        if (Gate::allows('viewliste', Besoin::class)) {
+            return view('besoins.liste');
+        } else {
+            return view('composants.redirection-new-user'); // Redirection vers une vue indiquant un accès refusé
+        }
     }
 
     public function create()

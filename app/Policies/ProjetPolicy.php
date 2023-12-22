@@ -20,7 +20,7 @@ class ProjetPolicy
     public function viewliste(User $user)
     {
         // Seuls les utilisateurs ayant le profil  2 ou 3 ou 4 ou 5 peuvent voir la liste des projets
-        return in_array($user->id_profil, [2, 3]);
+        return in_array($user->id_profil, [1, 2, 3, 4, 6]);
     }
 
     public function create(User $user)

@@ -15,8 +15,12 @@ class ActiviteController extends Controller
 
     public function index()
     {
-        // tout les users peut voir la liste des rapports des activites
-        return view('Activites.liste');
+        if (Gate::allows('viewliste', Activite::class)) {
+            return view('Activites.liste');
+        } else {
+            return view('composants.redirection-new-user'); // Redirection vers une vue indiquant un accès refusé
+        }
+
     }
 
     public function create()
@@ -42,8 +46,6 @@ class ActiviteController extends Controller
 
     public function show(Activite $activite)
     {
-        // politique d'autorisation définie dans la page de Policy
-        // $this->authorize('view', $activite);
         if (Gate::allows('view', $activite)) {
             return view('Activites.show', compact('activite'));
         } else {

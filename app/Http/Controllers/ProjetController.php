@@ -14,7 +14,7 @@ class ProjetController extends Controller
         if (Gate::allows('viewliste', Projet::class)) {
             return view('projets.liste');
         } else {
-            return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
+            return view('composants.redirection-new-user'); // Redirection vers une vue indiquant un accès refusé
         }
     }
 

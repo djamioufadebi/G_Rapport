@@ -11,7 +11,11 @@ class IntervenantController extends Controller
 
     public function index()
     {
-        return view('intervenants.liste');
+        if (Gate::allows('viewliste', Intervenant::class)) {
+            return view('intervenants.liste');
+        } else {
+            return view('composants.redirection-new-user'); // Redirection vers une vue indiquant un accès refusé
+        }
     }
 
     public function create()

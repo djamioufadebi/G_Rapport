@@ -12,6 +12,16 @@
           </div>
         </div>
         @endif
+        @if(session('dejatiliser'))
+        <script>
+        Swal.fire({
+          title: 'Erreur d\'enregistrement!',
+          text: 'Ce role existe déjà !',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
+        @endif
 
         @if(session('success'))
         <div class="alert alert-success">

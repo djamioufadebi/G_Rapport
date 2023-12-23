@@ -5,12 +5,16 @@
         @csrf
         @method('POST')
 
-        @if (Session::get('error'))
-        <div class="p-5">
-          <div class="alert alert-danger" role="alert">
-            {{ Session::get('error')}}
-          </div>
-        </div>
+
+        @if(session('dejatiliser'))
+        <script>
+        Swal.fire({
+          title: 'Erreur d\'enregistrement !',
+          text: 'Ce nom est déjà utilisé !',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
         @endif
 
         @if(session('success'))

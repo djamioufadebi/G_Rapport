@@ -35,14 +35,14 @@ Auth::routes();
 
 route::middleware('auth')->group(function () {
 
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
     Route::get('/acces-refuser', function () {
         return view('composants.acces_refuser');
     });
     Route::get('/redirection-new-user', function () {
         return view('composants.redirection-new-user');
     });
-
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 

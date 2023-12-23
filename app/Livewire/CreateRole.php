@@ -16,23 +16,29 @@ class CreateRole extends Component
             'nom' => 'string|required',
         ]);
 
-        try {
-            $role->nom = $this->nom;
+        $query = Profil::where('nom', $this->nom)->get();
+        if (count($query) > 0) {
 
-            $role->save();
+            $this->error = 'Ce nom est déjà utilisé!';
+            return redirect()->route('roles.create')->with('dejatiliser', $this->error);
+        } else {
 
-            return redirect()->Route('roles')->with(
-                'success',
-                'Nouveau role ajoutée ! '
-            );
-        } catch (\Exception $e) {
-            return redirect()->back()->with(
-                'error',
-                'Erreur d\'enregistrement du role '
-            );
+            try {
+                $role->nom = $this->nom;
 
+                $role->save();
+
+                return redirect()->Route('roles')->with(
+                    'success',
+                    'Nouveau role ajoutée ! '
+                );
+            } catch (\Exception $e) {
+                return redirect()->back()->with(
+                    'error',
+                    'Erreur d\'enregistrement du role '
+                );
+            }
         }
-
     }
     public function render()
     {

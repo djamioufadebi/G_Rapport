@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,12 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
-    }
-    public function profil()
-    {
-        $user = User::where('id', auth()->user()->id)->first();
-
-        return view('Auth.profil', compact('user'));
+        $user = Auth::user();
+        if ($user->profil()->pluck('nom')->contains('Manager')) {
+            return view('home');
+            // return redirect()->route('home');
+        } else {
+            return view('composants.redirection-new-user');
+        }
     }
 }

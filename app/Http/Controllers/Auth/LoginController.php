@@ -45,7 +45,6 @@ class LoginController extends Controller
         if ($user) {
             if ($user->profil()->pluck('nom')->contains('Administrateur')) {
                 return route('profils'); // Rediriger vers le tableau de bord pour les administrateurs
-
             } elseif ($user->profil()->pluck('nom')->contains('Gestionnaire')) {
                 return route('projets'); // Rediriger vers le tableau de bord du profil 2
             } elseif ($user->profil()->pluck('nom')->contains('Chef chantier')) {

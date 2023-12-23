@@ -28,23 +28,33 @@ class CreateIntervenant extends Component
             'adresse' => 'string|required',
         ]);
 
-        try {
-            $intervenant->nom = $this->nom;
-            $intervenant->prenom = $this->prenom;
-            $intervenant->email = $this->email;
-            $intervenant->contact = $this->contact;
-            $intervenant->adresse = $this->adresse;
-            $intervenant->save();
+        // On recupère les intervenants existants avec le nom et le prenom
+        $query = Intervenant::where('nom', $this->nom)->orwhere('prenom', $this->prenom)->orwhere('email', $this->email)->get();
+        // On verifie si l'intervenant existe déjà dans la base de données avec le nom et le prenom
+        if (count($query) > 0) {
 
-            return redirect()->Route('intervenants')->with(
-                'success',
-                'Nouveau intervenant ajoutée ! '
-            );
-        } catch (Exception $e) {
-            return redirect()->back()->with(
-                'error',
-                'Erreur d\'enregistrement de l\'intervenant '
-            );
+            $this->error = 'Cet intervenant existe déjà!';
+            return redirect()->route('intervenants.create')->with('dejatiliser', $this->error);
+        } else {
+
+            try {
+                $intervenant->nom = $this->nom;
+                $intervenant->prenom = $this->prenom;
+                $intervenant->email = $this->email;
+                $intervenant->contact = $this->contact;
+                $intervenant->adresse = $this->adresse;
+                $intervenant->save();
+
+                return redirect()->Route('intervenants')->with(
+                    'success',
+                    'Nouveau intervenant ajoutée ! '
+                );
+            } catch (Exception $e) {
+                return redirect()->back()->with(
+                    'error',
+                    'Erreur d\'enregistrement de l\'intervenant '
+                );
+            }
         }
 
     }

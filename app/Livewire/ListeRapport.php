@@ -104,12 +104,15 @@ class ListeRapport extends Component
         $listeRapport = Rapport::latest()->paginate(10);
 
         if ($this->search) {
-            // si le champ de recherche n'est pas vide on recherche dans la table Rapport
+
             $search = Rapport::where('libelle', 'Like', '%'
                 . $this->search . '%')->orwhere('contenu', 'Like', '%'
+                    . $this->search . '%')->orwhere('created_at', 'Like', '%'
                     . $this->search . '%')->get();
+            dd($search);
+        } else {
+            $listeRapport = Rapport::latest()->paginate(10);
         }
-        $listeRapport = Rapport::latest()->paginate(10);
 
         return view('livewire.liste-rapport', compact('listeRapport'));
     }

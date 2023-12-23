@@ -13,6 +13,17 @@
         </div>
         @endif
 
+        @if(session('dejatiliser'))
+        <script>
+        Swal.fire({
+          title: 'Erreur d\'enregistrement!',
+          text: 'Ce rapport existe déjà dans la base !',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
+        @endif
+
         @if(session('success'))
         <div class="alert alert-success">
           {{ session('success') }}

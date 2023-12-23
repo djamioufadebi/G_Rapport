@@ -9,6 +9,7 @@ class CreateProfil extends Component
 {
     public $nom;
     public $profil;
+    public $error = ''; // Message d'erreur
 
     public $successMessage = ''; // Message de succès
     public $showModal = false; // Pour contrôler l'affichage du modal de succès
@@ -19,33 +20,41 @@ class CreateProfil extends Component
             'nom' => 'string|required',
         ]);
 
-        try {
-            $profil->nom = $this->nom;
+        $query = Profil::where('nom', $this->nom)->get();
+        if (count($query) > 0) {
 
-            $profil->save();
+            $this->error = 'Ce nom est déjà utilisé!';
+            return redirect()->route('profils.create')->with('dejatiliser', $this->error);
+        } else {
+
+            try {
+                $profil->nom = $this->nom;
+
+                $profil->save();
 
 
-            // Afficher le message de succès et le modal
-            $this->successMessage = 'Enregistrement du profil réussi!';
-            $this->showModal = true;
+                // Afficher le message de succès et le modal
+                $this->successMessage = 'Enregistrement du profil réussi!';
+                $this->showModal = true;
 
-            return redirect()->Route('profils')->with(
-                'success',
-                ['title' => 'succès!', 'message' => 'Nouveau profil ajoutée !.']
+                return redirect()->Route('profils')->with(
+                    'success',
+                    ['title' => 'succès!', 'message' => 'Nouveau profil ajoutée !.']
 
-            );
-            ;
+                );
+                ;
 
-            // ->with('success','Nouveau profil ajoutée ! ')
-            //;
+                // ->with('success','Nouveau profil ajoutée ! ')
+                //;
 
-        } catch (\Exception $e) {
+            } catch (\Exception $e) {
 
-            return redirect()->back()->with(
-                'error',
-                ['title' => 'Erreur!', 'message' => 'Erreur d\'enregistrement du profil !!.']
-            );
+                return redirect()->back()->with(
+                    'error',
+                    ['title' => 'Erreur!', 'message' => 'Erreur d\'enregistrement du profil !!.']
+                );
 
+            }
         }
 
     }

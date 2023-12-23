@@ -10,41 +10,41 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <br>
-          <div class="text-center">
-            <label class="font-weight-bold d-block " for="statut">Sélectionnez un statut :</label>
-          </div>
-          <br>
+        <form>
           <div class="form-group">
-            <div>
-              <input type="radio" id="statutEnCours{{$activite->id}}" wire:model="statut" value="en cours" name="statut"
-                @if($activite->statut === 'en cours') checked @endif>
-              <label for="statutEnCours{{$activite->id}}">En cours</label>
-            </div>
-            <div>
-              <input type="radio" id="statutTerminer{{$activite->id}}" wire:model="statut" value="terminé" name="statut"
-                @if($activite->statut === 'terminé') checked @endif >
-              <label for="statutTerminer{{$activite->id}}">Terminé</label>
-            </div>
-            <div>
-              <input type="radio" id="statutArrêter{{$activite->id}}" wire:model="statut" value="arrêté" name="statut"
-                @if($activite->statut === 'arrêté') checked @endif>
-              <label for="statutArrêter{{$activite->id}}">Arrêté</label>
+            <br>
+            <div class="text-left">
+              <label class="font-weight-bold d-block " for="statut">Sélectionnez un statut :</label>
             </div>
             <br>
-          </div>
-          <br>
-        </div>
-        <a href="{{route('activites')}}">
-          <button type="button" class="btn btn-danger">Annuler</button>
-        </a>
+            < class="form-group">
+              <div>
+                <input type="radio" id="statutEnCours{{$activite->id}}" wire:model="statut" value="en cours"
+                  name="statut" @if($activite->statut === 'en cours') checked @endif>
+                <label for="statutEnCours{{$activite->id}}">En cours</label>
+              </div>
+              <div>
+                <input type="radio" id="statutTerminer{{$activite->id}}" wire:model="statut" value="terminé"
+                  name="statut" @if($activite->statut === 'terminé') checked @endif >
+                <label for="statutTerminer{{$activite->id}}">Terminé</label>
+              </div>
+              <div>
+                <input type="radio" id="statutArrêter{{$activite->id}}" wire:model="statut" value="arrêté" name="statut"
+                  @if($activite->statut === 'arrêté') checked @endif>
+                <label for="statutArrêter{{$activite->id}}">Arrêté</label>
+              </div>
 
-        <button type="submit" wire:click="ValidationStatutActivite('{{$activite->id}}')"
-          class="btn btn-primary">Enregistrer</button>
+                <a href="{{route('activites')}}">
+                  <button type="button" class="btn btn-danger">Annuler</button>
+                </a>
+                <button type="submit" wire:click="ValidationStatutActivite('{{$activite->id}}')"
+                  class="btn btn-primary">Enregistrer</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
+</div>
 </div>
 
 @livewireScripts
@@ -59,4 +59,6 @@ document.addEventListener('livewire:load', function() {
   });
 });
 </script>
-@endforeach
+@endf
+or
+each

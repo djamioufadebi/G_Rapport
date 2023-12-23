@@ -36,31 +36,39 @@ class CreateProjet extends Component
 
         ]);
 
-        try {
-            $projet = new Projet;
+        // pour verifier si le Projet existe déjà
+        $query = Projet::where('libelle', $this->libelle)->get();
+        // pour verifier si Projet existe déjà
+        if (count($query) > 0) {
 
-            $projet->libelle = $this->libelle;
-            $projet->description = $this->description;
-            $projet->date_debut = $this->date_debut;
-            $projet->date_fin_prevue = $this->date_fin_prevue;
-            $projet->id_client = $this->id_client;
-            // pour recuperer le User connecté
-            $projet->id_user = auth()->user()->id;
+            $this->error = 'Ce Projet existe déjà!';
+            return redirect()->route('projets.create')->with('dejatiliser', $this->error);
+        } else {
 
-            $projet->save();
+            try {
+                $projet = new Projet;
 
-            return redirect()->Route('projets')->with(
-                'success',
-                'Nouveau projet ajoutée ! '
-            );
-        } catch (\Exception $e) {
-            return redirect()->back()->with(
-                'error',
-                'Erreur d\'enregistrement du projet '
-            );
+                $projet->libelle = $this->libelle;
+                $projet->description = $this->description;
+                $projet->date_debut = $this->date_debut;
+                $projet->date_fin_prevue = $this->date_fin_prevue;
+                $projet->id_client = $this->id_client;
+                // pour recuperer le User connecté
+                $projet->id_user = auth()->user()->id;
 
+                $projet->save();
+
+                return redirect()->Route('projets')->with(
+                    'success',
+                    'Nouveau projet ajoutée ! '
+                );
+            } catch (\Exception $e) {
+                return redirect()->back()->with(
+                    'error',
+                    'Erreur d\'enregistrement du projet '
+                );
+            }
         }
-
     }
     public function render()
     {

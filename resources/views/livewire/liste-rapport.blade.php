@@ -59,8 +59,6 @@
     </div>
 
     <div class="card">
-      <!-- <div class="card-header">Liste des articles</div> -->
-
       <div class="card-body">
         <table class="table table-striped">
           <thead>

@@ -4,9 +4,40 @@
     @if(session('success'))
     <script>
     Swal.fire({
-      title: 'Nouvelle acticvité ajoutée !',
-      text: '{{ session('
-      success ') }}',
+      title: 'Ajout d\'activité ',
+      text: ' Nouvelle activité ajoutée !',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    })
+    </script>
+    @endif
+    @if(session('delete'))
+    <script>
+    Swal.fire({
+      title: 'Suppression du activité',
+      text: 'Le activité a été supprimée !',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    })
+    </script>
+    @endif
+
+    @if(session('valider'))
+    <script>
+    Swal.fire({
+      title: 'Finition  !',
+      text: 'L\'activité est finalisée',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    })
+    </script>
+    @endif
+
+    @if(session('rejeter'))
+    <script>
+    Swal.fire({
+      title: 'Arrêt!',
+      text: 'L\'activité a été arrêtée',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -16,12 +47,15 @@
     <!-- le bouton ajouter -->
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
+        <button type="button" class="btn btn-secondary">
+          <a href="" class="text-white fs-6" style="text-decoration:none;">Génerer PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('activites.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
-            nouvelle activité</a></button>
+            Nouvelle</a></button>
       </div>
       <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Rechercher">
+        <input wire:change="s" wire:model="search" type="text" class="form-control"
+          placeholder="Rechercher une activité par son nom...">
       </div>
     </div>
 
@@ -54,15 +88,18 @@
               <td>
                 <!-- href : le lien vers la page de modification du statut/ à mettre en place -->
                 @if ($activite->statut == 'en cours')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{ $activite->id }}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3 )
+                  data-bs-target="#confirmProfilModal{{ $activite->id }}" @endif
                   class=" btn btn-sm badge bg-success">{{$activite->statut}}</a>
 
                 @elseif ($activite->statut == 'arrêté')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{ $activite->id }}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3 )
+                  data-bs-target="#confirmProfilModal{{ $activite->id }}" @endif
                   class="btn btn-sm badge bg-warning">{{$activite->statut}}</a>
 
                 @elseif ($activite->statut == 'terminé')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{ $activite->id }}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3 )
+                  data-bs-target="#confirmProfilModal{{ $activite->id }}" @endif
                   class="btn btn-sm badge bg-danger">{{$activite->statut}}</a>
                 @endif
               </td>
@@ -74,7 +111,8 @@
                 <a href="{{ route('activites.edit', $activite->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le activite -->
-                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $activite->id }}"
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3)
+                  data-bs-target="#confirmationModal{{ $activite->id }}" @endif
                   class="btn btn-sm btn-danger">Supprimer
                 </button>
               </td>
@@ -83,12 +121,13 @@
 
               <!-- Modal pour la confirmation de la suppression -->
               <!-- La Modal -->
-              <div wire:ignore.self class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+              <div wire:ignore.self class="modal fade" id="confirmationModal{{ $activite->id }}" tabindex="-1"
+                role="dialog">
                 <div class="modal-dialog" role="document">
                   <!-- Contenu du modal -->
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Confirmation de suppression</h5>
+                      <h3 class="modal-title">Confirmation de suppression</h3>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -108,17 +147,6 @@
               </div>
 
               @livewireScripts
-              <!-- le script javascript  -->
-              <script>
-              document.addEventListener('livewire:load', function() {
-                Livewire.on('showConfirmationModal', () => {
-                  $('#confirmationModal').modal('show');
-                });
-                Livewire.on('hideConfirmationModal', () => {
-                  $('#confirmationModal').modal('hide');
-                });
-              });
-              </script>
 
               <!-- Fin pop up du modal -->
 
@@ -137,5 +165,6 @@
 
       </div>
     </div>
+    </di
+ v>
   </div>
-</div>

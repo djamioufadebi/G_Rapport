@@ -13,6 +13,11 @@ class ListeIntervenant extends Component
     public $intervenant;
 
     public $selectedItemId;
+
+    public $search;
+
+    public function s () {}
+
     // fonction pour supprimer un Intervenant avec une confirmation avant de suppression
     public function confirmDelete($id)
     {
@@ -25,7 +30,7 @@ class ListeIntervenant extends Component
 
     public function render()
     {
-        $intervenants = Intervenant::latest()->paginate(10);
+        $intervenants = Intervenant::where('nom', 'like', '%' . $this->search . '%')->paginate(10);
         return view('livewire.liste-intervenant', compact('intervenants'));
     }
 }

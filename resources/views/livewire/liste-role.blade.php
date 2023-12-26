@@ -4,14 +4,16 @@
     <!-- le bouton ajouter -->
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
+         <button type="button" class="btn btn-secondary">
+          <a href="" class="text-white fs-6" style="text-decoration:none;">Génerer PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('roles.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
             Nouveau
           </a>
         </button>
       </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Rechercher">
+      <div class="col-md-5">
+        <input wire:change="s" wire:model="search" type="text" class="form-control" placeholder="Rechercher un role par son nom...">
       </div>
     </div>
 

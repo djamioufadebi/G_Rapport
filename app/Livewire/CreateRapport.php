@@ -46,6 +46,7 @@ class CreateRapport extends Component
                 // creer une notification pour la creation du rapport
                 $notification = new Notification;
                 $notification->user_id = Auth::user()->id;
+                //$notification->id_rapport = $this->id;
                 $notification->titre = "Creation d'un rapport";
                 $notification->message = "Le rapport : " . $this->libelle . " viens d'etre creer pour le projet :" . $projet->libelle;
                 $notification->read = false;
@@ -57,6 +58,7 @@ class CreateRapport extends Component
                     'success',
                     'Nouveau rapport ajoutée !'
                 );
+
             } catch (\Exception $e) {
                 return redirect()->back()->with(
                     'error',

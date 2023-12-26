@@ -5,7 +5,8 @@
   <div class="row mb-4">
     <div class="col-md-6">
       <!-- Insérez le logo de la société ici -->
-      <img src="images/innov2b.jpg" alt="Logo de la société" class="img-fluid" width="100" height="auto" srcset="">
+      <img src="{{ asset('images/innov2b.jpg')}}" alt="Logo de la société" class="img-fluid" width="100" height="auto"
+        srcset="">
 
     </div>
     <div class="col-md-6 text-center">

@@ -8,7 +8,6 @@ use Livewire\WithPagination;
 
 class ListeProfil extends Component
 {
-    public string $search = '';
 
     public $id;
     public $profil;
@@ -17,6 +16,10 @@ class ListeProfil extends Component
 
     // champs pour la selection d'un profil
     public $selectedItemId;
+    public $search;
+
+    public function s () {}
+    
 
     // fonction pour supprimer un profil avec une confirmation avant de suppression
     public function confirmDelete($id)
@@ -29,18 +32,7 @@ class ListeProfil extends Component
 
     public function render()
     {
-        /**
-         * Condition permettant de faire les recherches en fonction du nom ,
-         */
-        $word = '%' . $this->search . '%';
-
-        if (strlen($this->search) > 2) {
-
-            $this->profils = Profil::query()->where('nom', 'Like', $word)->get();
-            dd($this->profiles);
-        }
-
-        $profils = Profil::latest()->paginate(10);
+        $profils = Profil::where('nom', 'like', '%' . $this->search . '%')->paginate(10);
 
         return view('livewire.liste-profil', compact('profils'));
     }

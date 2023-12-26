@@ -17,12 +17,14 @@ class ListeRapport extends Component
     public $rapport;
     public $statut;
 
-    public $search = '';
+    public $search;
 
     public function mount()
     {
         $rapport = Rapport::with('projet')->get();
     }
+
+    public function s () {}
 
     public function confirmDelete($id)
     {
@@ -101,18 +103,7 @@ class ListeRapport extends Component
     public function render()
     {
 
-        $listeRapport = Rapport::latest()->paginate(10);
-
-        if ($this->search) {
-
-            $search = Rapport::where('libelle', 'Like', '%'
-                . $this->search . '%')->orwhere('contenu', 'Like', '%'
-                    . $this->search . '%')->orwhere('created_at', 'Like', '%'
-                    . $this->search . '%')->get();
-            dd($search);
-        } else {
-            $listeRapport = Rapport::latest()->paginate(10);
-        }
+        $listeRapport = Rapport::where('libelle', 'like', '%' . $this->search . '%')->paginate(10);
 
         return view('livewire.liste-rapport', compact('listeRapport'));
     }

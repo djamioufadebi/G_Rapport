@@ -6,7 +6,7 @@
     <div class="col-md-10">
       <div class="card">
         <div class="card-header text-black text-bold ">
-          {{ __('Administration/Création des utilisateurs') }}
+          {{ __('Création des utilisateurs') }}
         </div>
 
         <div class="card-body">

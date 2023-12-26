@@ -16,6 +16,10 @@ class ListeRole extends Component
     // champs pour la selection d'un role
     public $selectedItemId;
 
+    public $search;
+    
+    public function s () {}
+
     // fonction pour supprimer un role avec une confirmation avant de suppression
     public function confirmDelete($id)
     {
@@ -26,7 +30,7 @@ class ListeRole extends Component
     }
     public function render()
     {
-        $roles = Role::latest()->paginate(10);
+        $roles = Role::where('nom', 'like', '%' . $this->search . '%')->paginate(10);
         return view('livewire.liste-role', compact('roles'));
     }
 

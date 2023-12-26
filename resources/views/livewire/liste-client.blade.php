@@ -5,9 +5,8 @@
     @if(session('success'))
     <script>
     Swal.fire({
-      title: 'Nouveau client ajouté avec succès!',
-      text: '{{ session('
-      success ') }}',
+      title: 'Nouveau client !',
+      text: ' client ajouté avec succès !',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -20,7 +19,7 @@
       title: 'Le client supprimé !',
       text: '{{ session('
       success ') }}',
-      icon: 'success',
+      icon: 'error',
       confirmButtonText: 'OK'
     })
     </script>
@@ -29,12 +28,15 @@
 
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
+        <button type="button" class="btn btn-secondary">
+          <a href="" class="text-white fs-6" style="text-decoration:none;">Génerer PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('clients.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
             Nouveau</a></button>
       </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Rechercher" wire:model="recherche">
+      <div class="col-md-5">
+        <input wire:change="s" wire:model="search" type="text" class="form-control"
+          placeholder="Rechercher un client par son nom...">
       </div>
     </div>
 
@@ -68,8 +70,9 @@
                 <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le client -->
-                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal"
-                  class="btn btn-sm btn-danger">Supprimer
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3)
+                  data-bs-target="#confirmationModal"
+                  @endif class="btn btn-sm btn-danger">Supprimer
                 </button>
               </td>
           </tbody>

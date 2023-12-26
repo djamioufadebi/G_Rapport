@@ -3,9 +3,8 @@
     @if(session('success'))
     <script>
     Swal.fire({
-      title: 'Le rapport a été soumis avec succès!',
-      text: '{{ session('
-      success ') }}',
+      title: 'Nouveau rapport!',
+      text: 'Votre rapport a été soumis avec succès',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -14,9 +13,8 @@
     @if(session('delete'))
     <script>
     Swal.fire({
-      title: 'Le rapport a été soumis avec succès!',
-      text: '{{ session('
-      success ') }}',
+      title: 'Suppression ',
+      text: 'Le rapport a été supprimé!',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -26,9 +24,8 @@
     @if(session('valider'))
     <script>
     Swal.fire({
-      title: 'Le rapport a été validé avec succès!',
-      text: '{{ session('
-      success ') }}',
+      title: 'Validation',
+      text: 'Rapport validé',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -38,10 +35,9 @@
     @if(session('rejeter'))
     <script>
     Swal.fire({
-      title: 'Le rapport a été rejeté avec succès!',
-      text: '{{ session('
-      success ') }}',
-      icon: 'success',
+      title: 'Rejet !!!',
+      text: 'Rapport réjeté',
+      icon: 'info',
       confirmButtonText: 'OK'
     })
     </script>
@@ -49,12 +45,15 @@
     <!-- le bouton ajouter -->
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
+        <button type="button" class="btn btn-secondary">
+          <a href="" class="text-white fs-6" style="text-decoration:none;">Génerer PDF</a></button>
         <button type="button" class="btn btn-primary">
-          <a href="{{route('rapports.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
+          <a href="{{route('projets.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
             Nouveau</a></button>
       </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Rechercher" wire:model="search">
+      <div class="col-md-5">
+        <input wire:change="s" wire:model="search" type="text" class="form-control"
+          placeholder="Rechercher un projet par son Libellé...">
       </div>
     </div>
 
@@ -81,15 +80,18 @@
               <td>
                 <!-- href : le lien vers la page de modification du statut/ à mettre en place -->
                 @if ($rapport->statut == 'Validé')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{ $rapport->id }}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                  data-bs-target="#confirmProfilModal{{ $rapport->id }}" @endif
                   class="btn btn-sm badge bg-success">{{$rapport->statut}}</a>
 
                 @elseif ($rapport->statut == 'en attente')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{ $rapport->id }}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                  data-bs-target="#confirmProfilModal{{ $rapport->id }}" @endif
                   class="btn btn-sm badge bg-warning">{{$rapport->statut}}</a>
 
                 @elseif ($rapport->statut == 'rejeté')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{ $rapport->id }}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                  data-bs-target="#confirmProfilModal{{ $rapport->id }}" @endif
                   class="btn btn-sm badge bg-danger">{{$rapport->statut}}</a>
                 @endif
               </td>
@@ -101,7 +103,8 @@
                 <a href="{{ route('rapports.edit', $rapport->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le rapport -->
-                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $rapport->id }}"
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                  data-bs-target="#confirmationModal{{ $rapport->id }}"@endif
                   class="btn btn-sm btn-danger">Supprimer
                 </button>
 

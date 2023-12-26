@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Profil;
+use App\Notifications\NewSuser;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -79,8 +82,17 @@ class RegisterController extends Controller
 
         ]);
         //  attacher le profil ayant le nom "Utilisateur simple" à l'utilisateur
-        $profil = Profil::select('id')->Where('nom', 'utilisateur simple')->first();
+        $profil = Profil::select('id')->Where('nom', 'Utilisateur simple')->first();
         $user = $user->profil()->associate($profil);
+
+        // l'envoie de mail au nouveau utilisateur
+        // Notification::route('mail', $data['email'])->notify(new NewSuser());
+        // ou ceci simplement
+        // Notification::send($user, new NewSuser());
+        // Mail::to($user->email)->send(new NewSuser($user));
+
         return $user;
+
+
     }
 }

@@ -14,6 +14,10 @@ class ListeClient extends Component
     public $client;
     public $selectedItemId;
 
+    public $search;
+
+    public function s () {}
+
     // fonction pour supprimer un Client avec une confirmation avant de suppression
     public function confirmDelete($id)
     {
@@ -26,7 +30,7 @@ class ListeClient extends Component
 
     public function render()
     {
-        $clients = Client::latest()->paginate(10);
+        $clients = Client::where('nom', 'like', '%' . $this->search . '%')->paginate(10);
         return view('livewire.liste-client', compact('clients'));
     }
 }

@@ -11,8 +11,11 @@ use Livewire\WithPagination;
 class ListeActivite extends Component
 {
     public $statut;
+    public $search;
 
     use WithPagination;
+
+    public function s () {}
 
     public function confirmDelete($id)
     {
@@ -92,7 +95,9 @@ class ListeActivite extends Component
 
     public function render()
     {
-        $listeActivites = Activite::latest()->paginate(5);
+
+        $listeActivites = Activite::where('nom', 'like', '%' . $this->search . '%')
+            ->paginate(5);
 
         return view('livewire.liste-activite', compact('listeActivites'));
     }

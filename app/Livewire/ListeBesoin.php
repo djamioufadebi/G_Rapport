@@ -12,6 +12,9 @@ class ListeBesoin extends Component
 {
 
     public $statut;
+    public $search;
+
+    public function s () {}
 
     public function confirmDelete($id)
     {
@@ -91,7 +94,7 @@ class ListeBesoin extends Component
 
     public function render()
     {
-        $listeBesoins = Besoin::latest()->paginate(10);
+        $listeBesoins = Besoin::where('libelle', 'like', '%' . $this->search . '%')->paginate(10);
 
         return view('livewire.liste-besoin', compact('listeBesoins'));
     }

@@ -5,21 +5,18 @@
     @if(session('success'))
     <script>
     Swal.fire({
-      title: 'Votre besoin a été soumis avec succès!',
-      text: '{{ session('
-      success ') }}',
+      title: 'Nouveau besoin!',
+      text: 'Votre besoin a été soumis avec succès',
       icon: 'success',
       confirmButtonText: 'OK'
     })
     </script>
     @endif
-
     @if(session('delete'))
     <script>
     Swal.fire({
-      title: 'Le besoin a été soumis avec succès!',
-      text: '{{ session('
-      success ') }}',
+      title: 'Suppression ',
+      text: 'Le besoin a été supprimé!',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -29,9 +26,8 @@
     @if(session('valider'))
     <script>
     Swal.fire({
-      title: 'Le besoin a été validé avec succès!',
-      text: '{{ session('
-      success ') }}',
+      title: 'Validation',
+      text: 'Besoin validé',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -41,10 +37,9 @@
     @if(session('rejeter'))
     <script>
     Swal.fire({
-      title: 'Le besoin a été rejeté avec succès!',
-      text: '{{ session('
-      success ') }}',
-      icon: 'success',
+      title: 'Rejet !!!',
+      text: 'Besoin réjeté',
+      icon: 'info',
       confirmButtonText: 'OK'
     })
     </script>
@@ -52,12 +47,15 @@
 
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
+        <button type="button" class="btn btn-secondary">
+          <a href="" class="text-white fs-6" style="text-decoration:none;">Génerer PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('besoins.create')}}" class="text-white fs-6" style="text-decoration:none;">Faire
             Nouveau Besoin</a></button>
       </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Rechercher">
+      <div class="col-md-5">
+        <input wire:change="s" wire:model="search" type="text" class="form-control"
+          placeholder="Rechercher un besoin par son libellé...">
       </div>
     </div>
 
@@ -84,14 +82,17 @@
               <td>{{$besoin->created_at}}</td>
               <td>
                 @if ($besoin->statut == 'Validé')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{ $besoin->id }}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                  data-bs-target="#confirmProfilModal{{ $besoin->id }}" @endif
                   class="btn btn-sm badge bg-success">{{$besoin->statut}}</a>
 
                 @elseif ($besoin->statut == 'en attente')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{ $besoin->id }}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                  data-bs-target="#confirmProfilModal{{ $besoin->id }}" @endif
                   class="btn btn-sm badge bg-warning">{{$besoin->statut}}</a>
                 @elseif ($besoin->statut == 'rejeté')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{ $besoin->id }}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                  data-bs-target="#confirmProfilModal{{ $besoin->id }}" @endif
                   class="btn btn-sm badge bg-danger">{{$besoin->statut}}</a>
                 @endif
               </td>
@@ -102,10 +103,12 @@
                 <a href="{{ route('besoins.edit', $besoin->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le besoin -->
-                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $besoin->id }}"
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2)
+                  data-bs-target="#confirmationModal{{ $besoin->id }}" @endif
                   class="btn btn-sm btn-danger">Supprimer
                 </button>
               </td>
+
 
               @include('modals.modals-status.modal-besoin-statut')
 

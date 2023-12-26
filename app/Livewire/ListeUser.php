@@ -13,7 +13,9 @@ class ListeUser extends Component
 
     public $selectedProfilId;
 
-    public $search = '';
+    public $search;
+
+    public function s () {}
 
     public function confirmDelete($id)
     {
@@ -49,7 +51,7 @@ class ListeUser extends Component
     {
         $listeProfil = Profil::all();
 
-        $listeUsers = User::latest()->paginate(10);
+        $listeUsers = User::where('nom', 'like', '%' . $this->search . '%')->paginate(10);
 
         return view('livewire.liste-user', compact('listeUsers', 'listeProfil'));
     }

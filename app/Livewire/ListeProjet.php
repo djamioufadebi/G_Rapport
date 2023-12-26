@@ -17,10 +17,14 @@ class ListeProjet extends Component
 
     public $projet;
     public $id;
-    public $search = '';
-
+    public $search;
 
     public $statut;
+
+    // la fonction pour afficher les projets en fonction de la recherche et de l'utilisateur connecté
+    public function s()
+    {
+    }
 
 
     // fonction pour supprimer un Projet avec une confirmation avant de suppression
@@ -113,7 +117,7 @@ class ListeProjet extends Component
 
     public function render()
     {
-        $projets = Projet::latest()->paginate(10);
+        $projets = Projet::where('libelle', 'like', '%' . $this->search . '%')->paginate(10);
 
         return view('livewire.liste-projet', compact('projets'));
     }

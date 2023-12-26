@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IntervenantController;
 use App\Http\Controllers\NewuserController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PdfGenerateController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\RapportController;
@@ -35,7 +36,7 @@ Auth::routes();
 
 route::middleware('auth')->group(function () {
 
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'idex'])->name('home');
 
     Route::get('/acces-refuser', function () {
         return view('composants.acces_refuser');
@@ -43,6 +44,9 @@ route::middleware('auth')->group(function () {
     Route::get('/redirection-new-user', function () {
         return view('composants.redirection-new-user');
     });
+
+    // route pour la géneration de PDF de la liste des besoins
+    Route::get('/generate-pdf', [PdfGenerateController::class, 'generatepdf'])->name('generate_pdf');
 
     Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 
@@ -58,6 +62,7 @@ route::middleware('auth')->group(function () {
             Route::get('/create', [UserController::class, 'create'])->name('users.create');
             Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('users.edit');
             Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
+            Route::get('/user-pdf', [UserController::class, 'generatepdf'])->name('users.pdf');
         }
     );
 

@@ -1,5 +1,5 @@
 @foreach($projets as $projet)
-<div wire:ignore.self class="modal fade fullscreen-modal" id="confirmProfilModal{{ $projet->id }}" tabindex="-1"
+<div wire:ignore.self class="modal fade fullscreen-modal" id="confirmProfilModal{{$projet->id }}" tabindex="-1"
   role="dialog">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">

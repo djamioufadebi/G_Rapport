@@ -17,7 +17,7 @@
               <label class="font-weight-bold d-block " for="statut">Sélectionnez un statut :</label>
             </div>
             <br>
-            < class="form-group">
+            <div class="form-group">
               <div>
                 <input type="radio" id="statutEnCours{{$activite->id}}" wire:model="statut" value="en cours"
                   name="statut" @if($activite->statut === 'en cours') checked @endif>
@@ -34,11 +34,11 @@
                 <label for="statutArrêter{{$activite->id}}">Arrêté</label>
               </div>
 
-                <a href="{{route('activites')}}">
-                  <button type="button" class="btn btn-danger">Annuler</button>
-                </a>
-                <button type="submit" wire:click="ValidationStatutActivite('{{$activite->id}}')"
-                  class="btn btn-primary">Enregistrer</button>
+              <a href="{{route('activites')}}">
+                <button type="button" class="btn btn-danger">Annuler</button>
+              </a>
+              <button type="submit" wire:click="ValidationStatutActivite('{{$activite->id}}')"
+                class="btn btn-primary">Enregistrer</button>
         </form>
       </div>
     </div>
@@ -48,17 +48,5 @@
 </div>
 
 @livewireScripts
-<!-- le script javascript  -->
-<script>
-document.addEventListener('livewire:load', function() {
-  Livewire.on('showConfirmationModal', () => {
-    $('#confirmProfilModal').modal('show');
-  });
-  Livewire.on('hideConfirmationModal', () => {
-    $('#confirmProfilModal').modal('hide');
-  });
-});
-</script>
-@endf
-or
-each
+
+@endforeach

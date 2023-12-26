@@ -4,9 +4,8 @@
     @if(session('success'))
     <script>
     Swal.fire({
-      title: 'Nouveau projet !',
-      text: '{{ session('
-      success ') }}',
+      title: 'Ajout de projet ',
+      text: ' Nouveau projet ajouté !',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -15,9 +14,8 @@
     @if(session('delete'))
     <script>
     Swal.fire({
-      title: 'Le Projet a été supprimé !',
-      text: '{{ session('
-      success ') }}',
+      title: 'Suppression du projet',
+      text: 'Le Projet a été supprimé !',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -27,9 +25,8 @@
     @if(session('valider'))
     <script>
     Swal.fire({
-      title: 'Le Projet est finalisé!',
-      text: '{{ session('
-      success ') }}',
+      title: 'Finition  !',
+      text: 'Le Projet est finalisé',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -39,9 +36,8 @@
     @if(session('rejeter'))
     <script>
     Swal.fire({
-      title: 'Le Projet a été arrêté!',
-      text: '{{ session('
-      success ') }}',
+      title: 'Arrêt!',
+      text: 'Le Projet a été arrêté',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -50,18 +46,19 @@
     <!-- le bouton ajouter -->
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
+         <button type="button" class="btn btn-secondary">
+          <a href="" class="text-white fs-6" style="text-decoration:none;">Génerer PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('projets.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
             Nouveau</a></button>
       </div>
       <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Rechercher" wire:model="search">
+        <input wire:change="s" wire:model="search" type="text" class="form-control"
+          placeholder="Rechercher un projet par son Libellé...">
       </div>
     </div>
 
     <div class="card">
-      <!-- <div class="card-header">Liste des articles</div> -->
-
       <div class="card-body">
         <table class="table table-striped">
           <thead>
@@ -86,15 +83,17 @@
               <td>
                 <!-- href : le lien vers la page de modification du statut/ à mettre en place -->
                 @if ($projet->statut == 'en cours')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{$projet->id}}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3 )
+                  data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-success">{{$projet->statut}}</a>
                 @elseif ($projet->statut == 'arrêté')
-                <a href="#" data-bs-toggle="modal" data-bs-target="#confirmProfilModal{{$projet->id}}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3 )
+                  data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-warning">{{$projet->statut}}</a>
 
                 @elseif ($projet->statut == 'terminé')
-                <a href="{{ route('projets.edit', $projet->id) }}" data-bs-toggle="modal"
-                  data-bs-target="#confirmProfilModal{{$projet->id}}"
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3 )
+                  data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-danger">{{$projet->statut}}</a>
                 @endif
 
@@ -107,8 +106,9 @@
                 <a href="{{ route('projets.edit', $projet->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le projet -->
-                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{$projet->id}}"
-                  class="btn btn-sm btn-danger">Supprimer
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3)
+                  data-bs-target="#confirmationModal{{$projet->id}}" @endif
+                  class="btn btn-sm btn-danger"> Supprimer
                 </button>
               </td>
           </tbody>
@@ -117,12 +117,12 @@
 
           <!-- Modal pour la confirmation de la suppression -->
           <!-- La Modal -->
-          <div wire:ignore.self class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+          <div wire:ignore.self class="modal fade" id="confirmationModal{{$projet->id}}" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
               <!-- Contenu du modal -->
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Confirmation de suppression</h5>
+                  <h3 class="modal-title">Confirmation de suppression</h3>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>

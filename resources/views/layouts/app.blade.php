@@ -121,23 +121,17 @@
           </ul>
 
           <!-- center side navbar: notification-->
-          <div class="dropdown">
-
-            <div class="col">
-              <i class="fa fa-bell"></i>
-              <img src="images/notification.png" class="img-fluid" width="30" height="auto" alt="icone notifs" sizes=""
-                srcset="">
-              <a class="dropdown-toggle" href="#" role="button" id="notificationDropdown" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Notifications
-              </a>
-
-            </div>
-            <div class="dropdown-menu" aria-labelledby="notificationDropdown">
-              <!-- Afficher les notifications ici -->
-
-            </div>
+          <!-- center side navbar: notification-->
+          <div class="nav-item dropdown">
+            <a class="dropdown-toggle" href="{{ route('notifications')}}" role="button" id="notificationDropdown"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Notifications
+            </a>
           </div>
+          <!-- fin : notification -->
+
+          <!-- Le code de l'onglet notification avec le logo -->
+
 
           <!-- fin : notification -->
 

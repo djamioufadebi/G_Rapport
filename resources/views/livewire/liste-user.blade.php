@@ -6,14 +6,14 @@
     <script>
     Swal.fire({
       title: 'Ajout d\'un utilisateur!',
-      text: '{{ session('
-      success ') }}',
+      text: 'Nouveau utilisateur enregistré',
       icon: 'success',
       confirmButtonText: 'OK'
     })
     </script>
     @endif
-    @if(session('success'))
+
+    @if(session('edition'))
     <script>
     Swal.fire({
       title: 'Mise à jour de l\'utilisateur!',
@@ -24,6 +24,7 @@
     })
     </script>
     @endif
+
     @if(session('attributionerror'))
     <script>
     Swal.fire({
@@ -51,12 +52,16 @@
 
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
+        <button type="button" class="btn btn-secondary">
+          <a href="{{route('users.pdf')}}" class="text-white fs-6" style="text-decoration:none;">Génerer
+            PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('users.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
             Nouveau</a></button>
       </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Rechercher">
+      <div class="col-md-5">
+        <input wire:change="s" wire:model="search" type="text" class="form-control"
+          placeholder="Rechercher un utilisateur par son nom...">
       </div>
     </div>
 
@@ -185,6 +190,6 @@
         </div>
 
       </div>
-      </ div>
     </div>
   </div>
+</div>

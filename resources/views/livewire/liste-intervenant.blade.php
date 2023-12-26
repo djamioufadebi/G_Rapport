@@ -4,10 +4,21 @@
     @if(session('success'))
     <script>
     Swal.fire({
-      title: 'Nouveau intervenant ajouté avec succès!',
+      title: 'Nouveau intervenant',
+      text: 'Intervenant ajouté avec succès!',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    })
+    </script>
+    @endif
+
+    @if(session('delete'))
+    <script>
+    Swal.fire({
+      title: 'Le client supprimé !',
       text: '{{ session('
       success ') }}',
-      icon: 'success',
+      icon: 'error',
       confirmButtonText: 'OK'
     })
     </script>
@@ -16,12 +27,15 @@
     <!-- le bouton ajouter -->
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
+        <button type="button" class="btn btn-secondary">
+          <a href="" class="text-white fs-6" style="text-decoration:none;">Génerer PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('intervenants.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
             Nouveau</a></button>
       </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Rechercher">
+      <div class="col-md-5">
+        <input wire:change="s" wire:model="search" type="text" class="form-control"
+          placeholder="Rechercher un intervenant par son nom...">
       </div>
     </div>
 
@@ -56,7 +70,8 @@
                 <a href="{{ route('intervenants.edit', $intervenant->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le intervenant -->
-                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal"
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3)
+                  data-bs-target="#confirmationModal" @endif
                   class="btn btn-sm btn-danger">Supprimer
                 </button>
               </td>

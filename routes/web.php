@@ -36,7 +36,7 @@ Auth::routes();
 
 route::middleware('auth')->group(function () {
 
-    Route::get('/home', [HomeController::class, 'idex'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('/acces-refuser', function () {
         return view('composants.acces_refuser');
@@ -46,7 +46,7 @@ route::middleware('auth')->group(function () {
     });
 
     // route pour la géneration de PDF de la liste des besoins
-    Route::get('/generate-pdf', [PdfGenerateController::class, 'generatepdf'])->name('generate_pdf');
+    Route::get('/generate_pdf', [PdfGenerateController::class, 'generatepdf'])->name('generate_pdf');
 
     Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 
@@ -54,7 +54,7 @@ route::middleware('auth')->group(function () {
     Route::get('/update', [UserProfilController::class, 'update'])->name('mon_profile.update');
 
     // route pour envoyer la page de confirmation pour un nouvel utlisateur
-    Route::get('/home', [NewuserController::class, 'confirm'])->name('confirmations');
+    Route::get('/new-user', [NewuserController::class, 'confirm'])->name('confirmations');
 
     Route::prefix('users')->group(
         function () {

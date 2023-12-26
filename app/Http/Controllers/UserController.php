@@ -37,7 +37,7 @@ class UserController extends Controller
     {
 
         $data = ['title' => 'Liste des utilisateurs'];
-        $pdf = Pdf::loadView('vue_pdf', $data);
+        $pdf = Pdf::loadView('PDF/vue_pdf', $data);
         return $pdf->download('liste_des_utilisateurs.pdf');
 
     }

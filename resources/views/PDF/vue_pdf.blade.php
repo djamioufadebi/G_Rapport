@@ -1,27 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
   <style>
-/* Styles CSS personnalisés */
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-}
+  /* Styles CSS personnalisés */
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
 
-.container {
-  width: 80%;
-  margin: 0 auto;
-  padding: 20px;
-}
+  .container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-/* Styles pour le tableau */
-.table-bordered td,
-.table-bordered th {
-  border: 1px solid #dee2e6;
-}
+  /* Styles pour le tableau */
+  .table-bordered td,
+  .table-bordered th {
+    border: 1px solid #dee2e6;
+  }
   </style>
+
+</head>
+
+<body>
+
+
 
   <div class="container">
     <!-- Photo et nom de la société -->
@@ -65,3 +80,8 @@ h1 {
     </table>
     <!-- Fin du tableau stylisé avec Bootstrap -->
   </div>
+
+
+</body>
+
+</html>

@@ -10,9 +10,9 @@ class PdfGenerateController extends Controller
 {
     public function generatepdf()
     {
-        $data = ['title' => 'Liste de projet'];
-        $pdf = Pdf::loadView('vue_pdf', $data);
-        return $pdf->download('vue.pdf');
+        //$data = ['title' => 'Liste de projet'];
+        //$pdf = Pdf::loadView('PDF/vue_pdf', $data);
+        //return $pdf->download('vue.pdf');
     }
 
 }

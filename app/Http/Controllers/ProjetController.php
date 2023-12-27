@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projet;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjetController extends Controller
 {
@@ -43,6 +45,19 @@ class ProjetController extends Controller
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
+    }
+
+    public function pdfProjet()
+    {
+
+        // condition permet de vérifier l'id du profil de l'utilisateur connecté
+        if (Auth->user())
+            $projets = Projet::all();
+        // $data = ['title' => 'Liste des utilisateurs'];
+        $pdf = Pdf::loadView('PDF.projets_pdf', ['projets' => $projets]);
+        // return $pdf->download('liste_des_utilisateurs.pdf');
+        return $pdf->stream();
+
     }
 
 

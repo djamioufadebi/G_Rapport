@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use App\Models\Rapport;
 use App\Models\User;
 use Gate;
@@ -52,6 +55,20 @@ class RapportController extends Controller
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
+    }
+
+    public function pdfRapport()
+    {
+        $user = Auth::user();
+        if ($user->profil()->pluck('nom')->contains('Manager')) {
+
+            $rapports = Rapport::all();
+            // $data = ['title' => 'Liste des utilisateurs'];
+            $pdf = Pdf::loadView('PDF.rapports_pdf', ['rapports' => $rapports]);
+            // return $pdf->download('liste_des_utilisateurs.pdf');
+            return $pdf->stream();
+        }
+
     }
 
 }

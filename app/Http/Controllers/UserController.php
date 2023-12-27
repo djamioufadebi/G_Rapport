@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
+use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
@@ -36,9 +37,7 @@ class UserController extends Controller
 
     public function generatepdf()
     {
-
         $users = User::all();
-        // $data = ['title' => 'Liste des utilisateurs'];
         $pdf = Pdf::loadView('PDF.user_pdf', ['users' => $users]);
         // return $pdf->download('liste_des_utilisateurs.pdf');
         return $pdf->stream();

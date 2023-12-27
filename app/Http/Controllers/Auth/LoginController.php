@@ -50,7 +50,7 @@ class LoginController extends Controller
             } elseif ($user->profil()->pluck('nom')->contains('Chef chantier')) {
                 return route('besoins'); // Rediriger vers le tableau de bord du profil 3
             } elseif ($user->profil()->pluck('nom')->contains('Manager')) {
-                return route('besoins'); // Rediriger vers le tableau de bord du profil 4
+                return route('home'); // Rediriger vers le tableau de bord du profil 4
             } elseif ($user->profil()->pluck('nom')->contains('Magasinier')) {
                 return route('rapports'); // Rediriger vers le tableau de bord du profil 4
             } else {

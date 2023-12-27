@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ActiviteController;
-use App\Http\Controllers\AssignerProfilController;
 use App\Http\Controllers\BesoinController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
@@ -47,6 +46,7 @@ route::middleware('auth')->group(function () {
 
     // route pour la géneration de PDF de la liste des besoins
     Route::get('/generate_pdf', [PdfGenerateController::class, 'generatepdf'])->name('generate_pdf');
+    Route::get('/user-pdf', [UserController::class, 'generatepdf'])->name('users.pdf');
 
     Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 
@@ -62,7 +62,6 @@ route::middleware('auth')->group(function () {
             Route::get('/create', [UserController::class, 'create'])->name('users.create');
             Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('users.edit');
             Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
-            Route::get('/user-pdf', [UserController::class, 'generatepdf'])->name('users.pdf');
         }
     );
 

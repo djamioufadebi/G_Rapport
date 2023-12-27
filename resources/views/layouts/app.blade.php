@@ -49,10 +49,10 @@
   <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="{{ url('/home') }}">
+        <a class="navbar-brand" href="{{route('home')}}">
           <img src="images/innov2b.jpg" class="img-fluid" width="100" height="auto" alt="" srcset="">
         </a>
-        <a class="navbar-brand" href="{{ url('/home') }}">
+        <a class="navbar-brand" href="{{route('home')}}">
           {{ config('app.name', 'Laravel') }}
         </a>
 
@@ -74,7 +74,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <!-- Sous-menu Administration -->
                 <li><a class="dropdown-item" href="{{ route('profils') }}">Profils</a></li>
-                <li><a class="dropdown-item" href="{{ route('roles') }}">Rôles</a></li>
+                <!-- <li><a class="dropdown-item" href="{{ route('roles') }}">Rôles</a></li> -->
                 <li><a class="dropdown-item" href="{{ route('users') }}">Utilisateurs</a></li>
               </ul>
             </li>

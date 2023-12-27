@@ -50,13 +50,16 @@ class ProjetController extends Controller
     public function pdfProjet()
     {
 
-        // condition permet de vérifier l'id du profil de l'utilisateur connecté
-        if (Auth->user())
+        $user = Auth::user();
+        if ($user->id_profil == 2 || $user->id_profil == 3) {
             $projets = Projet::all();
-        // $data = ['title' => 'Liste des utilisateurs'];
-        $pdf = Pdf::loadView('PDF.projets_pdf', ['projets' => $projets]);
-        // return $pdf->download('liste_des_utilisateurs.pdf');
-        return $pdf->stream();
+            // $data = ['title' => 'Liste des utilisateurs'];
+            $pdf = Pdf::loadView('PDF.projets_pdf', ['projets' => $projets]);
+            // return $pdf->download('liste_des_utilisateurs.pdf');
+            return $pdf->stream();
+        } else {
+            return view('composants.redirection-new-user');
+        }
 
     }
 

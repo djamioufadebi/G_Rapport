@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Besoin;
+use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
 
@@ -39,6 +41,22 @@ class BesoinController extends Controller
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
+    }
+    public function pdfBesoin()
+    {
+        $user = Auth::user();
+        if ($user->id_profil == 2) {
+            $besoins = Besoin::all();
+            // $data = ['title' => 'Liste des utilisateurs'];
+            $pdf = Pdf::loadView('PDF.besoins_pdf', ['besoins' => $besoins]);
+            // return $pdf->download('liste_des_utilisateurs.pdf');
+            return $pdf->stream();
+        } else {
+
+            return view('composants.redirection-new-user');
+        }
+
+
     }
 
 }

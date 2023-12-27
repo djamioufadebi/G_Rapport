@@ -8,9 +8,12 @@ use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
+use Livewire\WithPagination;
 
 class UserController extends Controller
 {
+
+    use WithPagination;
     public function index()
     {
         if (Gate::allows('viewliste', User::class)) {
@@ -37,11 +40,15 @@ class UserController extends Controller
 
     public function generatepdf()
     {
-        $users = User::all();
-        $pdf = Pdf::loadView('PDF.user_pdf', ['users' => $users]);
-        // return $pdf->download('liste_des_utilisateurs.pdf');
-        return $pdf->stream();
-
+        $user = Auth::user();
+        if ($user->id_profil == 1) {
+            $users = User::all();
+            $pdf = Pdf::loadView('PDF.user_pdf', ['users' => $users]);
+            // return $pdf->download('liste_des_utilisateurs.pdf');
+            return $pdf->stream();
+        } else {
+            return view('composants.redirection-new-user');
+        }
     }
 
 }

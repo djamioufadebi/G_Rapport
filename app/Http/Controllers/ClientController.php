@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
 
@@ -44,4 +46,23 @@ class ClientController extends Controller
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
     }
+
+    public function pdfClient()
+    {
+        $user = Auth::user();
+        if ($user->id_profil == 3) {
+            $clients = Client::all();
+            // $data = ['title' => 'Liste des utilisateurs'];
+            $pdf = Pdf::loadView('PDF.clients_pdf', ['clients' => $clients]);
+            // return $pdf->download('liste_des_utilisateurs.pdf');
+            return $pdf->stream();
+        } else {
+
+            return view('composants.redirection-new-user');
+        }
+
+
+    }
+
+
 }

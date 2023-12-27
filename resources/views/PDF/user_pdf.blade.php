@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="UTF-8">
@@ -10,9 +10,11 @@
 
 <body>
   <div class="container">
-    <h1 class="mt-4 mb-3 text-center">Liste des utilisateurs</h1>
     <table class="table table-striped table-bordered ">
-      <caption>Liste des utilisateurs</caption>
+      <caption>
+        <h2> Liste des utilisateurs</h2>
+      </caption>
+      <br>
       <thead class="thead-dark">
         <tr>
           <th scope="col">ID</th>
@@ -40,9 +42,10 @@
     </table>
   </div>
   <!-- Intégration du script Bootstrap (facultatif si non déjà présent) -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
   <!-- Pour Bootstrap 5, utilisez le script suivant -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 
 </html>

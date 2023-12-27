@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use App\Models\Intervenant;
+use Auth;
 use Gate;
 use Illuminate\Http\Request;
 
@@ -43,6 +46,23 @@ class IntervenantController extends Controller
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
+    }
+
+    public function pdfIntervenant()
+    {
+        $user = Auth::user();
+        if ($user->id_profil == 3) {
+            $intervenants = Intervenant::all();
+            // $data = ['title' => 'Liste des utilisateurs'];
+            $pdf = Pdf::loadView('PDF.intervenants_pdf', ['intervenants' => $intervenants]);
+            // return $pdf->download('liste_des_utilisateurs.pdf');
+            return $pdf->stream();
+        } else {
+
+            return view('composants.redirection-new-user');
+        }
+
+
     }
 
 }

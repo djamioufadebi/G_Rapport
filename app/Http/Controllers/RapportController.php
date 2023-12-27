@@ -60,14 +60,16 @@ class RapportController extends Controller
     public function pdfRapport()
     {
         $user = Auth::user();
-        if ($user->profil()->pluck('nom')->contains('Manager')) {
-
+        if ($user->id_profil == 2) {
             $rapports = Rapport::all();
             // $data = ['title' => 'Liste des utilisateurs'];
             $pdf = Pdf::loadView('PDF.rapports_pdf', ['rapports' => $rapports]);
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
+        } else {
+            return view('composants.redirection-new-user');
         }
+
 
     }
 

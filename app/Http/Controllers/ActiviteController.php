@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activite;
+use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
 
@@ -51,6 +53,23 @@ class ActiviteController extends Controller
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
+    }
+
+    public function pdfActivite()
+    {
+        $user = Auth::user();
+        if ($user->id_profil == 3) {
+            $activites = Activite::all();
+            // $data = ['title' => 'Liste des utilisateurs'];
+            $pdf = Pdf::loadView('PDF.activites_pdf', ['activites' => $activites]);
+            // return $pdf->download('liste_des_utilisateurs.pdf');
+            return $pdf->stream();
+        } else {
+
+            return view('composants.redirection-new-user');
+        }
+
+
     }
 
 }

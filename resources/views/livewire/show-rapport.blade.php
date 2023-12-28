@@ -42,13 +42,13 @@
           <tr>
             <th scope="row">Nom du demandeur</th>
             <td>
-              <!-- nom du demandeur -->
+              {{ $userRapport->nom }} {{ $userRapport->prenom }}
             </td>
           </tr>
           <tr>
             <th scope="row">Nom du projet</th>
             <td>
-              <!-- nom du demandeur -->
+              {{ $rapport->projet->libelle }}
             </td>
           </tr>
           <tr>

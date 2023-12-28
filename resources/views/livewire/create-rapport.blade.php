@@ -24,12 +24,6 @@
         </script>
         @endif
 
-        @if(session('success'))
-        <div class="alert alert-success">
-          {{ session('success') }}
-        </div>
-        @endif
-
         <div class="mb-3">
           <label for="libelle" class="form-label">libelle du rapport :</label>
           <input type="text" class="form-control  @error('libelle')is-invalid
@@ -54,7 +48,7 @@
 
         <!-- Champs choix de projet -->
         <div class="mb-3">
-          <label>Le nom du projet</label>
+          <label>Projet</label>
           <select class="form-select @error('id_projet') is-invalid @enderror" id="id_projet" wire:model="id_projet"
             name="id_projet">
             <option value=""></option>
@@ -66,7 +60,7 @@
 
           <!-- afiche le message d'erreur si le champs est vide  -->
           @error('id_projet')
-          <div class="text text-red-500 mt-1 animate-pulse">Le niveau est requis.</div>
+          <div class="text text-red-500 mt-1 animate-pulse">Le nom du projet est requis.</div>
           @enderror
         </div>
     </div>

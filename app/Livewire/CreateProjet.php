@@ -41,13 +41,12 @@ class CreateProjet extends Component
         // pour verifier si Projet existe déjà
         if (count($query) > 0) {
 
-            $this->error = 'Ce Projet existe déjà!';
-            return redirect()->route('projets.create')->with('dejatiliser', $this->error);
+            $message = 'Ce Projet existe déjà!';
+            return redirect()->route('projets.create')->with('dejautiliser', $message);
         } else {
 
             try {
                 $projet = new Projet;
-
                 $projet->libelle = $this->libelle;
                 $projet->description = $this->description;
                 $projet->date_debut = $this->date_debut;
@@ -72,9 +71,7 @@ class CreateProjet extends Component
     }
     public function render()
     {
-
         $currentClient = Client::all();
-
         return view('livewire.create-projet', compact('currentClient'));
     }
 }

@@ -98,7 +98,7 @@ class ListeBesoin extends Component
         $user = Auth::user();
 
         // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer
-        if ($user->id_profil != 2 && $user->id_profil != 1) {
+        if ($user->id_profil != 1 && $user->id_profil != 2) {
             // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer
             $listeBesoins->where('user_id', $user->id);
         }

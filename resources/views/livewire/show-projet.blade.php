@@ -64,10 +64,10 @@
             </td>
           </tr>
           <tr>
-            <th scope="row">Nom du client</th>
+            <th scope="row"> Client :</th>
             <td>
-
-              <!-- libelle du demandeur -->
+              <p>Nom : {{ $clients->nom }}</p>
+              <p>Contact : {{ $clients->contact }}</p>
             </td>
           </tr>
           <tr>

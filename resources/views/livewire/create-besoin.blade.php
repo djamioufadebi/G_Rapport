@@ -5,8 +5,7 @@
         @csrf
         @method('POST')
 
-
-        @if(session('dejatiliser'))
+        @if(session('dejautiliser'))
         <script>
         Swal.fire({
           title: 'Erreur d\'enregistrement!',
@@ -41,7 +40,7 @@
         <!-- Champs choix de projet -->
         <!-- Le client -->
         <div class="mb-3">
-          <label>Le nom du client</label>
+          <label>Projet</label>
           <select class="form-select @error('id_projet') is-invalid @enderror" id="id_projet" wire:model="id_projet"
             name="id_projet">
             <option value=""></option>
@@ -53,7 +52,7 @@
           </select>
           <!-- afiche le message d'erreur si le champs est vide  -->
           @error('id_projet')
-          <div class="invalid-feedback">Le client est requis.</div>
+          <div class="invalid-feedback">Le projet est requis.</div>
           @enderror
         </div>
     </div>

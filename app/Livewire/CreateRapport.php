@@ -30,8 +30,8 @@ class CreateRapport extends Component
         // pour verifier si Rapport existe déjà
         if (count($query) > 0) {
 
-            $this->error = 'Ce Rapport existe déjà!';
-            return redirect()->route('rapports.create')->with('dejatiliser', $this->error);
+            $message = 'Ce Rapport existe déjà!';
+            return redirect()->route('rapports.create')->with('dejautiliser', $message);
         } else {
 
             try {
@@ -42,7 +42,7 @@ class CreateRapport extends Component
                 $rapport->id_projet = $this->id_projet;
 
                 $rapport->save();
-                
+
                 // recuperer le projet choisi
                 $projet = Projet::find($this->id_projet);
 

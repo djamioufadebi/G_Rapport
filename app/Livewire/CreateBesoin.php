@@ -30,8 +30,8 @@ class CreateBesoin extends Component
         // pour verifier si besoin existe déjà
         if (count($query) > 0) {
 
-            $this->error = 'Ce Besoin existe déjà!';
-            return redirect()->route('besoins.create')->with('dejatiliser', $this->error);
+            $message = 'Ce Besoin existe déjà!';
+            return redirect()->route('besoins.create')->with('dejautiliser', $message);
         } else {
 
             try {

@@ -6,37 +6,86 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Liste des activités</title>
+
+  <!-- Styles -->
+  <style type="text/css">
+  body {
+    font-family: arial;
+    letter-spacing: 0.5px;
+  }
+
+  .mobile-report-categ-panel {
+    padding: 10px;
+    background: #77B5FE;
+  }
+
+  table {
+    width: 98%;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+  }
+
+  table tbody tr td {
+    padding: 5px;
+    border: 1px solid #77B5FE;
+  }
+
+  table thead th {
+    background: #ccc;
+    font-size: 15px;
+    padding: 5px;
+    border: 1px solid #77B5FE;
+  }
+
+
+  .div-tot {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .table-activite tr td {
+    padding: 3px;
+    font-size: 15px;
+
+  }
+  </style>
 </head>
 
 <body>
   <div class="container">
-    <table class="table table-striped table-bordered ">
+    <table class="table table-striped table-bordered" class=" table table-activite" id="dataTable" cellspacing="0">
       <caption>
         <h2> Liste des activités</h2>
       </caption>
       <br>
-      <thead class="thead-dark">
+      <thead>
         <tr>
           <th scope="col">ID</th>
-          <th scope="col">Nom</th>
-          <th scope="col">Prénom</th>
-          <th scope="col">Contact</th>
-          <th scope="col">Email</th>
-          <th scope="col">Profil</th>
+          <th scope="col">Nom d'activité</th>
+          <th scope="col">Description</th>
+          <th scope="col">Date Début</th>
+          <th scope="col">Date Fin</th>
+          <th scope="col">Date Statut</th>
         </tr>
       </thead>
-      <tbody>
-        @if(count($users))
-        @foreach ($users as $user)
-        <tr>
-          <th scope="row">{{ $user->id }}</th>
-          <td>{{ $user->nom }}</td>
-          <td>{{ $user->prenom }}</td>
-          <td>{{ $user->contact }}</td>
-          <td>{{ $user->email }}</td>
-          <td>{{ $user->profil->nom }}</td>
+      <tbody id="tablbody">
+        @if(count($activites))
+        @foreach ($activites as $activite)
+        <tr class="tr-off">
+          <th scope="row">{{ $activite->id }}</th>
+          <td>{{ $activite->nom }}</td>
+          <td>{{ $activite->description }}</td>
+          <td>{{ $activite->date_debut }}</td>
+          <td>{{ $activite->date_fin }}</td>
+          <td>{{ $activite->statut }}</td>
         </tr>
         @endforeach
+        @else
+        <tr>
+          <td colspan="6" class="div-tot">
+            <h3>Aucune activité</h3>
+          </td>
+        </tr>
         @endif
       </tbody>
     </table>

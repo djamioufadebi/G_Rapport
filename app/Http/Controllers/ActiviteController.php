@@ -58,7 +58,7 @@ class ActiviteController extends Controller
     public function pdfActivite()
     {
         $user = Auth::user();
-        if ($user->id_profil == 3) {
+        if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
             $activites = Activite::all();
             // $data = ['title' => 'Liste des utilisateurs'];
             $pdf = Pdf::loadView('PDF.activites_pdf', ['activites' => $activites]);

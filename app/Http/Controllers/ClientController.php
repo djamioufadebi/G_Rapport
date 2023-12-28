@@ -50,14 +50,13 @@ class ClientController extends Controller
     public function pdfClient()
     {
         $user = Auth::user();
-        if ($user->id_profil == 3) {
+        if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
             $clients = Client::all();
             // $data = ['title' => 'Liste des utilisateurs'];
             $pdf = Pdf::loadView('PDF.clients_pdf', ['clients' => $clients]);
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {
-
             return view('composants.acces_refuser');
         }
 

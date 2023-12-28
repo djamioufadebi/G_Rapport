@@ -58,7 +58,6 @@ class IntervenantController extends Controller
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {
-
             return view('composants.acces_refuser');
         }
 

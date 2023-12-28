@@ -36,10 +36,12 @@ class ProfilController extends Controller
 
     public function pdfProfil()
     {
+
         $profils = Profil::all();
         $pdf = Pdf::loadView('PDF.profils_pdf', ['profils' => $profils]);
         // return $pdf->download('liste_des_utilisateurs.pdf');
         return $pdf->stream();
+
     }
 
 }

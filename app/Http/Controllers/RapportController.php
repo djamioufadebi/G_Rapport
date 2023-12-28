@@ -12,19 +12,6 @@ use Illuminate\Http\Request;
 
 class RapportController extends Controller
 {
-
-    public function delete(User $user, Rapport $rapport)
-    {
-        // Vérification basée sur le profil de l'utilisateur
-        if ($user->id_profil == 2) {
-            return true; // L'administrateur peut supprimer n'importe quel rapport
-        } else {
-            return view('composants.acces_refuser'); // L'éditeur peut supprimer ses propres posts
-        }
-
-        //return false; // Par défaut, les utilisateurs ne peuvent pas supprimer les posts
-    }
-
     public function index()
     {
         if (Gate::allows('viewliste', Rapport::class)) {
@@ -36,11 +23,7 @@ class RapportController extends Controller
 
     public function create()
     {
-        //if (Gate::allows('create', Rapport::class)) {
         return view('rapports.create');
-        // } else {
-        //  return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
-        //}
     }
 
     public function edit(Rapport $rapport)
@@ -63,15 +46,19 @@ class RapportController extends Controller
 
     public function pdfRapport()
     {
-        //$user = Auth::user();
-        //if ($user->id_profil == 2) {
-        $rapports = Rapport::all();
-        $pdf = Pdf::loadView('PDF.rapports_pdf', ['rapports' => $rapports]);
-        return $pdf->stream();
+        $user = Auth::user();
+        if ($user->id_profil == 1 || $user->id_profil == 2) {
+            $rapports = Rapport::all();
+            $pdf = Pdf::loadView('PDF.rapports_pdf', ['rapports' => $rapports]);
+            return $pdf->stream();
 
-        // } else {
-        //     return view('composants.acces_refuser');
-        // }
+        } else {
+            // recuperer les rapports de l'utilisateur connecté
+            $rapports = Rapport::where('user_id', $user->id)->get();
+            $pdf = Pdf::loadView('PDF.rapports_pdf', ['rapports' => $rapports]);
+            return $pdf->stream();
+            // return view('composants.acces_refuser');
+        }
 
     }
 

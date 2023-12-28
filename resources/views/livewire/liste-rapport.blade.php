@@ -49,7 +49,7 @@
           <a href="{{route('rapports.pdf')}}" class="text-white fs-6" style="text-decoration:none;">Génerer
             PDF</a></button>
         <button type="button" class="btn btn-primary">
-          <a href="{{route('projets.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
+          <a href="{{route('rapports.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
             Nouveau</a></button>
       </div>
       <div class="col-md-5">
@@ -104,7 +104,7 @@
                 <a href="{{ route('rapports.edit', $rapport->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le rapport -->
-                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 2]) )
                   data-bs-target="#confirmationModal{{ $rapport->id }}"@endif
                   class="btn btn-sm btn-danger">Supprimer
                 </button>

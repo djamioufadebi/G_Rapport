@@ -5,7 +5,7 @@
         @csrf
         @method('POST')
 
-        @if(session('dejatiliser'))
+        @if(session('dejautiliser'))
         <script>
         Swal.fire({
           title: 'Erreur d\'enregistrement!',
@@ -16,11 +16,6 @@
         </script>
         @endif
 
-        @if(session('success'))
-        <div class="alert alert-success">
-          {{ session('success') }}
-        </div>
-        @endif
 
         <div class="mb-3">
           <label for="nom" class="form-label">Nom de l'Intervenant :</label>

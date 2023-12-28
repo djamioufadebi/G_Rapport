@@ -6,7 +6,7 @@
         @method('POST')
 
 
-        @if(session('dejatiliser'))
+        @if(session('dejautiliser'))
         <script>
         Swal.fire({
           title: 'Erreur d\'enregistrement !',

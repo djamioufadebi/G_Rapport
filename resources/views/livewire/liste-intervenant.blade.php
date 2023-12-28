@@ -71,7 +71,7 @@
                 <a href="{{ route('intervenants.edit', $intervenant->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le intervenant -->
-                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3)
+                <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 3]))
                   data-bs-target="#confirmationModal" @endif
                   class="btn btn-sm btn-danger">Supprimer
                 </button>
@@ -91,6 +91,5 @@
 
       </div>
     </div>
-  </di
-v>
-</div>
+    </di v>
+  </div>

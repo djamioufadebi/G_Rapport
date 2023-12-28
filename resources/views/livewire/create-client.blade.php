@@ -5,7 +5,7 @@
         @csrf
         @method('POST')
 
-        @if(session('dejatiliser'))
+        @if(session('dejautiliser'))
         <script>
         Swal.fire({
           title: 'Erreur d\'enregistrement!',
@@ -14,12 +14,6 @@
           confirmButtonText: 'OK'
         })
         </script>
-        @endif
-
-        @if(session('success'))
-        <div class="alert alert-success">
-          {{ session('success') }}
-        </div>
         @endif
 
         <div class="mb-3">

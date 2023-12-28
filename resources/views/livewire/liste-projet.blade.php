@@ -107,7 +107,7 @@
                 <a href="{{ route('projets.edit', $projet->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le projet -->
-                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3)
+                <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 3]))
                   data-bs-target="#confirmationModal{{$projet->id}}" @endif
                   class="btn btn-sm btn-danger"> Supprimer
                 </button>

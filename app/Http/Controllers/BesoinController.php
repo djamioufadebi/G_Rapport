@@ -45,14 +45,17 @@ class BesoinController extends Controller
     public function pdfBesoin()
     {
         $user = Auth::user();
-        if ($user->id_profil == 2) {
+        // seul le profil 1 et 2 peuvent accéder à cette vue de generation de pdf (pdfBesoin)
+        if ($user->id_profil == 1 || $user->id_profil == 2) {
             $besoins = Besoin::all();
-            // $data = ['title' => 'Liste des utilisateurs'];
             $pdf = Pdf::loadView('PDF.besoins_pdf', ['besoins' => $besoins]);
-            // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {
-            return view('composants.acces_refuser');
+            // recuperer les besoins de l'utilisateur connecté
+            $besoins = Besoin::where('user_id', $user->id)->get();
+            $pdf = Pdf::loadView('PDF.besoins_pdf', ['besoins' => $besoins]);
+            return $pdf->stream();
+            // return view('composants.acces_refuser');
         }
 
 

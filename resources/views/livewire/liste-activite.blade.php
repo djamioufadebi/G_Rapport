@@ -112,7 +112,7 @@
                 <a href="{{ route('activites.edit', $activite->id) }}" class="btn btn-sm btn-warning">Modifier</a>
 
                 <!-- Un bouton pour supprimer le activite -->
-                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3)
+                <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 3]))
                   data-bs-target="#confirmationModal{{ $activite->id }}" @endif
                   class="btn btn-sm btn-danger">Supprimer
                 </button>

@@ -5,15 +5,7 @@
         @csrf
         @method('POST')
 
-        @if (Session::get('error'))
-        <div class="p-5">
-          <div class="alert alert-danger" role="alert">
-            {{ Session::get('error')}}
-          </div>
-        </div>
-        @endif
-
-        @if(session('dejatiliser'))
+        @if(session('dejautiliser'))
         <script>
         Swal.fire({
           title: ' Erreur d\'enregistrement!',

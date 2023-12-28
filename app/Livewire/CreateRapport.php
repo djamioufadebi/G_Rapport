@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\Projet;
 use App\Models\Rapport;
 use Livewire\Component;
-use App\Models\Notification;
+use App\Models\Notifications;
 use Illuminate\Support\Facades\Auth;
 
 class CreateRapport extends Component
@@ -37,28 +37,30 @@ class CreateRapport extends Component
             try {
                 $rapport = new Rapport();
                 $rapport->libelle = $this->libelle;
+                $rapport->user_id = Auth::user()->id;
                 $rapport->contenu = $this->contenu;
                 $rapport->id_projet = $this->id_projet;
 
+                $rapport->save();
+                
                 // recuperer le projet choisi
                 $projet = Projet::find($this->id_projet);
 
                 // creer une notification pour la creation du rapport
-                $notification = new Notification;
+                $notification = new Notifications;
+                $notification->rapport_id = $rapport->id;
                 $notification->user_id = Auth::user()->id;
-                //$notification->id_rapport = $this->id;
+                $notification->type = "rapport";
                 $notification->titre = "Creation d'un rapport";
                 $notification->message = "Le rapport : " . $this->libelle . " viens d'etre creer pour le projet :" . $projet->libelle;
                 $notification->read = false;
 
                 $notification->save();
-                $rapport->save();
 
                 return redirect()->Route('rapports')->with(
                     'success',
                     'Nouveau rapport ajoutée !'
                 );
-
             } catch (\Exception $e) {
                 return redirect()->back()->with(
                     'error',

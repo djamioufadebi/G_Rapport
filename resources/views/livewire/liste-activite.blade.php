@@ -48,7 +48,8 @@
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
         <button type="button" class="btn btn-secondary">
-          <a href="" class="text-white fs-6" style="text-decoration:none;">Génerer PDF</a></button>
+          <a href="{{route('activites.pdf')}}" class="text-white fs-6" style="text-decoration:none;">Génerer
+            PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('activites.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
             Nouvelle</a></button>
@@ -165,6 +166,5 @@
 
       </div>
     </div>
-    </di
- v>
+    </di v>
   </div>

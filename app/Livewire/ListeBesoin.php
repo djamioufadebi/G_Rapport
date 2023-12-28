@@ -6,6 +6,7 @@ use App\Models\Besoin;
 use App\Models\Projet;
 use Livewire\Component;
 use App\Models\Notification;
+use App\Models\Notifications;
 use Illuminate\Support\Facades\Auth;
 
 class ListeBesoin extends Component
@@ -14,20 +15,21 @@ class ListeBesoin extends Component
     public $statut;
     public $search;
 
-    public function s () {}
+    public function s()
+    {
+    }
 
     public function confirmDelete($id)
     {
         $besoin = Besoin::find($id);
 
-        // creer une notification pour la suppresion du besoin
-        $notification = new Notification;
-        // selectionner l'utilisateur qui a supprimer le besoin
+        // creer une notification pour la suppression du besoin
+        $notification = new Notifications;
+        $notification->besoin_id = $id;
+        $notification->type = "besoin";
         $notification->user_id = Auth::user()->id;
-        // donner le titre de la notification
         $notification->titre = "Suppression d'un besoin";
-        // donner le message de la notification en le concaténant avec le nom du besoin et l'email de l'utilisateur qui a supprimer le besoin.
-        $notification->message = "Le besoin : " . $besoin->libelle . " viens d'etre supprimer par :" . Auth::user()->email;
+        $notification->message = "Le besoin : " . $besoin->libelle . " viens d'etre supprimer.";
         $notification->read = false;
 
         $notification->save();
@@ -43,28 +45,25 @@ class ListeBesoin extends Component
 
         if ($this->statut == "Validé") {
             // creer une notification pour la validation du besoin
-            $notification = new Notification;
-            // selectionner l'utilisateur qui a valider le besoin
+            $notification = new Notifications;
+            $notification->besoin_id = $id;
+            $notification->type = "besoin";
             $notification->user_id = Auth::user()->id;
-            // donner le titre de la notification (le statut du besoin)
             $notification->titre = "Validation d'un besoin";
-            // donner le message de la notification en le concaténant avec le nom du besoin et l'email de l'utilisateur qui a valider le besoin.
-            $notification->message = "Le besoin : " . $besoin->libelle . " viens d'etre valider par :" . Auth::user()->email;
-            // marquer la notification comme lu ou non lu
+            $notification->message = "Le besoin : " . $besoin->libelle . " viens d'etre validé.";
             $notification->read = false;
 
             $notification->save();
         } else if ($this->statut == "rejeté") {
             // creer une notification pour la rejet du besoin
-            $notification = new Notification;
-            // selectionner l'utilisateur qui a rejeter le besoin
+            $notification = new Notifications;
+            $notification->besoin_id = $id;
+            $notification->type = "besoin";
             $notification->user_id = Auth::user()->id;
-            // donner le titre de la notification (le statut du besoin)
             $notification->titre = "Rejet d'un besoin";
-            // donner le message de la notification en le concaténant avec le nom du besoin et l'email de l'utilisateur qui a rejeter le besoin.
-            $notification->message = "Le besoin : " . $besoin->libelle . " viens d'etre rejeter par :" . Auth::user()->email;
-            // marquer la notification comme lu ou non lu
+            $notification->message = "Le besoin : " . $besoin->libelle . " viens d'etre rejeté.";
             $notification->read = false;
+
             $notification->save();
         }
 
@@ -94,7 +93,17 @@ class ListeBesoin extends Component
 
     public function render()
     {
-        $listeBesoins = Besoin::where('libelle', 'like', '%' . $this->search . '%')->paginate(10);
+        $listeBesoins = Besoin::where('libelle', 'like', '%' . $this->search . '%');
+
+        $user = Auth::user();
+
+        // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer
+        if ($user->id_profil != 2 && $user->id_profil != 1) {
+            // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer
+            $listeBesoins->where('user_id', $user->id);
+        }
+
+        $listeBesoins = $listeBesoins->paginate(10);
 
         return view('livewire.liste-besoin', compact('listeBesoins'));
     }

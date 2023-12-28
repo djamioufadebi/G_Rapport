@@ -47,6 +47,13 @@ route::middleware('auth')->group(function () {
     // route pour la géneration de PDF de la liste des besoins
     Route::get('/generate_pdf', [PdfGenerateController::class, 'generatepdf'])->name('generate_pdf');
     Route::get('/user-pdf', [UserController::class, 'generatepdf'])->name('users.pdf');
+    Route::get('/generate-profil-pdf', [ProfilController::class, 'pdfProfil'])->name('profils.pdf');
+    Route::get('/generate-projet-pdf', [ProjetController::class, 'pdfProjet'])->name('projets.pdf');
+    Route::get('/generate-besoin-pdf', [BesoinController::class, 'pdfBesoin'])->name('besoins.pdf');
+    Route::get('/generate-rapport-pdf', [RapportController::class, 'pdfRapport'])->name('rapports.pdf');
+    Route::get('/generate-activite-pdf', [ActiviteController::class, 'pdfActivite'])->name('activites.pdf');
+    Route::get('/generate-client-pdf', [ClientController::class, 'pdfClient'])->name('clients.pdf');
+    Route::get('/generate-intervenant-pdf', [IntervenantController::class, 'pdfIntervenant'])->name('intervenants.pdf');
 
     Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 
@@ -135,6 +142,12 @@ route::middleware('auth')->group(function () {
             Route::get('/create', [IntervenantController::class, 'create'])->name('intervenants.create');
             Route::get('/edit-intervenant/{intervenant}', [IntervenantController::class, 'edit'])->name('intervenants.edit');
             Route::get('/{intervenant}', [IntervenantController::class, 'show'])->name('intervenants.show');
+        }
+    );
+
+    Route::prefix('notifications')->group(
+        function () {
+            Route::get('/', [NotificationController::class, 'index'])->name('notifications');
         }
     );
 

@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\Besoin;
 use App\Models\Projet;
 use Livewire\Component;
-use App\Models\Notification;
+use App\Models\Notifications;
 use Illuminate\Support\Facades\Auth;
 
 class CreateBesoin extends Component
@@ -37,20 +37,24 @@ class CreateBesoin extends Component
             try {
                 $besoin = new Besoin;
                 $besoin->libelle = $this->libelle;
+                $besoin->user_id = Auth::user()->id;
                 $besoin->contenu = $this->contenu;
                 $besoin->id_projet = $this->id_projet;
+
+                $besoin->save();
 
                 // recuperer le projet choisi
                 $projet = Projet::find($this->id_projet);
 
-                // creer une notification pour la creation du besoin
-                $notification = new Notification;
+                // creer une notification pour la creation du rapport
+                $notification = new Notifications;
+                $notification->besoin_id = $besoin->id;
+                $notification->type = "besoin";
                 $notification->user_id = Auth::user()->id;
                 $notification->titre = "Creation d'un besoin";
                 $notification->message = "Le besoin : " . $this->libelle . " viens d'etre creer pour le projet :" . $projet->libelle;
                 $notification->read = false;
 
-                $besoin->save();
                 $notification->save();
 
                 return redirect()->Route('besoins')->with(

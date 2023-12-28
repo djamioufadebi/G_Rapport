@@ -41,13 +41,13 @@ class UserController extends Controller
     public function generatepdf()
     {
         $user = Auth::user();
-        if ($user->id_profil == 1) {
+        if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
             $users = User::all();
             $pdf = Pdf::loadView('PDF.user_pdf', ['users' => $users]);
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {
-            return view('composants.redirection-new-user');
+            return view('composants.acces_refuser');
         }
     }
 

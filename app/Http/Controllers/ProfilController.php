@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profil;
+use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
 
@@ -31,4 +33,13 @@ class ProfilController extends Controller
     {
         return view('Profils.show', compact('profil'));
     }
+
+    public function pdfProfil()
+    {
+        $profils = Profil::all();
+        $pdf = Pdf::loadView('PDF.profils_pdf', ['profils' => $profils]);
+        // return $pdf->download('liste_des_utilisateurs.pdf');
+        return $pdf->stream();
+    }
+
 }

@@ -28,7 +28,8 @@
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
         <button type="button" class="btn btn-secondary">
-          <a href="" class="text-white fs-6" style="text-decoration:none;">Génerer PDF</a></button>
+          <a href="{{route('intervenants.pdf')}}" class="text-white fs-6" style="text-decoration:none;">Génerer
+            PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('intervenants.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
             Nouveau</a></button>
@@ -90,5 +91,6 @@
 
       </div>
     </div>
-  </div>
+  </di
+v>
 </div>

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Besoin;
 use App\Models\Projet;
 use Livewire\Component;
+use App\Models\Notifications;
 
 class EditBesoin extends Component
 {
@@ -38,6 +39,20 @@ class EditBesoin extends Component
             $besoin->contenu = $this->contenu;
             $besoin->id_projet = $this->id_projet;
             $besoin->save();
+
+            // recuperer le projet choisi
+            $projet = Projet::find($this->id_projet);
+
+            // creer une notification pour la creation du rapport
+            $notification = new Notifications;
+            $notification->besoin_id = $besoin->id;
+            $notification->type = "besoin";
+            $notification->user_id = Auth::user()->id;
+            $notification->titre = "Mise a jour d'un besoin";
+            $notification->message = "Le besoin : " . $this->libelle . " viens d'etre mis a jour pour le projet :" . $projet->libelle;
+            $notification->read = false;
+
+            $notification->save();
 
             return redirect()->Route('besoins')->with(
                 'success',

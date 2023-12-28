@@ -5,13 +5,6 @@
         @csrf
         @method('POST')
 
-        @if (Session::get('error'))
-        <div class="p-5">
-          <div class="alert alert-danger" role="alert">
-            {{ Session::get('error')}}
-          </div>
-        </div>
-        @endif
 
         @if(session('dejatiliser'))
         <script>
@@ -22,12 +15,6 @@
           confirmButtonText: 'OK'
         })
         </script>
-        @endif
-
-        @if(session('success'))
-        <div class="alert alert-success">
-          {{ session('success') }}
-        </div>
         @endif
 
         <div class="mb-3">

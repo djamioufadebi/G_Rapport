@@ -5,6 +5,8 @@ namespace App\Livewire;
 use App\Models\Projet;
 use App\Models\Rapport;
 use Livewire\Component;
+use App\Models\Notifications;
+use Illuminate\Support\Facades\Auth;
 
 class EditRapport extends Component
 {
@@ -36,6 +38,20 @@ class EditRapport extends Component
             $rapport->contenu = $this->contenu;
             $rapport->id_projet = $this->id_projet;
             $rapport->save();
+
+            // recuperer le projet choisi
+            $projet = Projet::find($this->id_projet);
+
+            // creer une notification pour la creation du rapport
+            $notification = new Notifications;
+            $notification->rapport_id = $rapport->id;
+            $notification->user_id = Auth::user()->id;
+            $notification->type = "rapport";
+            $notification->titre = "Mise a jour d'un rapport";
+            $notification->message = "Le rapport : " . $this->libelle . " viens d'etre mis a jour pour le projet :" . $projet->libelle;
+            $notification->read = false;
+
+            $notification->save();
 
             return redirect()->Route('rapports')->with(
                 'success',

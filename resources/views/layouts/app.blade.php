@@ -118,16 +118,21 @@
                 </li>
               </ul>
             </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('notifications')}}">{{ __('Notifications') }}</a>
+            </li>
+
           </ul>
 
           <!-- center side navbar: notification-->
           <!-- center side navbar: notification-->
-          <div class="nav-item dropdown">
-            <a class="dropdown-toggle" href="{{ route('notifications')}}" role="button" id="notificationDropdown"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <!-- <div class="nav-item dropdown">
+            <a class="dropdown-toggle" style="text-decoration: none; " href="{{ route('notifications')}}" role="button"
+              id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Notifications
             </a>
-          </div>
+          </div> -->
           <!-- fin : notification -->
 
           <!-- Le code de l'onglet notification avec le logo -->

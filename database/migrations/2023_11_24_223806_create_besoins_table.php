@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('besoins', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
+            $table->integer('user_id');
             $table->text('contenu');
             $table->string('fichier')->nullable();
             $table->enum('statut', ['en attente', 'Validé', 'rejeté'])->default('en attente');

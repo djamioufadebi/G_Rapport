@@ -2,45 +2,46 @@
 
 namespace App\Livewire;
 
-use App\Models\Notification;
+use App\Models\Besoin;
+use App\Models\Rapport;
 use Livewire\Component;
+use App\Models\Notifications;
+use Illuminate\Support\Facades\Auth;
 
 class ListeNotification extends Component
 {
-
-    public $notifications;
-    public function mount()
+    public function read($id)
     {
-        // pour récuperer les notifications
-        // $this->notifications = auth()->user()->notifications;
-    }
-
-    public function marquerLu($id)
-    {
-        $notification = Notification::find($id);
+        $notification = Notifications::find($id);
         $notification->read = true;
         $notification->save();
-        // Rafraîchir les notifications après le marquage
-        $this->mount();
     }
 
+    public function readAll()
+    {
+        $notifications = Notifications::where('read', false)->get();
+
+        foreach ($notifications as $n) {
+            $n->read = true;
+            $n->save();
+        }
+    }
 
     public function render()
     {
-        // les notifications non lues
-        //$NotReadNotificationsCount = Notification::where('read', false)->get();
+        $user = Auth::user();
 
-        // recuperation des notifications d'un utilisateur sp"écifique qui ont été validé ou réjeté
-
-
-        $NotReadNotifications = Notification::where('read', false)->where('user_id', '=', auth()->user()->id)->get();
-
-        //$NotReadNotificationsCount = count($NotReadNotifications);
-
-        // dd($NotReadNotificationsCount);
-        // Les notification des rapports qui ont été validé et rejeté
-        // $allNotifications = Notification::where('statut', '=', 'Validé')->orwhere('statut', '=', 'réjeté')->get();
-        // dd($NotReadNotificationsCount);
+        // Les notifications
+        $NotReadNotifications = Notifications::where('read', false)
+            // jointure avec les rapports et les besoins de l'utilisateur connecter
+            ->leftJoin('rapports', 'notifications.rapport_id', '=', 'rapports.id') //Notifications concernant les rapports de l'utilisateur connecter
+            ->leftJoin('besoins', 'notifications.besoin_id', '=', 'besoins.id') //Notifications concernant les besoins de l'utilisateur connecter
+            ->where(function ($query) use ($user) {
+                $query->where('rapports.user_id', $user->id) //Rapports de l'utilisateur connecter
+                    ->orWhere('besoins.user_id', $user->id); //Besoins de l'utilisateur connecter
+            })
+            ->select('notifications.*')
+            ->paginate(10);
 
         return view('livewire.liste-notification', compact('NotReadNotifications'));
     }

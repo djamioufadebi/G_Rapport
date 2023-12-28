@@ -59,7 +59,7 @@ class IntervenantController extends Controller
             return $pdf->stream();
         } else {
 
-            return view('composants.redirection-new-user');
+            return view('composants.acces_refuser');
         }
 
 

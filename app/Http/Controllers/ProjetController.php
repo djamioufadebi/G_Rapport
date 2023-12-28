@@ -51,14 +51,14 @@ class ProjetController extends Controller
     {
 
         $user = Auth::user();
-        if ($user->id_profil == 2 || $user->id_profil == 3) {
+        if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
             $projets = Projet::all();
             // $data = ['title' => 'Liste des utilisateurs'];
             $pdf = Pdf::loadView('PDF.projets_pdf', ['projets' => $projets]);
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {
-            return view('composants.redirection-new-user');
+            return view('composants.acces_refuser');
         }
 
     }

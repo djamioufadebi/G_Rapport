@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('rapports', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
+            $table->integer('user_id');
             $table->text('contenu');
             // $table->boolean('statut')->default(0);
             $table->string('fichier')->nullable();

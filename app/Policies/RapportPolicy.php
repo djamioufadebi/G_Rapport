@@ -20,8 +20,8 @@ class RapportPolicy
 
     public function create(User $user)
     {
-        // Seuls les administrateurs peuvent créer un rapport
-        return true;
+        //Tout le monde peut créer un rapport
+        return in_array($user->id_profil, [1, 2, 3, 4, 6]);
     }
 
     public function edit(User $user, Rapport $rapport)

@@ -36,7 +36,7 @@ class ClientPolicy
     public function create(User $user)
     {
         // Seuls les administrateurs peuvent créer une activité
-        return $user->id_profil === 3;
+        return $user->id_profil === 3 || $user->id_profil === 2;
     }
 
     public function edit(User $user, Client $client)
@@ -47,8 +47,8 @@ class ClientPolicy
 
     public function view(User $user, Client $client)
     {
-        // Autoriser tous les utilisateurs à voir une activité
-        return $user->id_profil === 2 || $user->id_profil === 3;
+        // Autoriser les utilisateurs ayant l'id_profil 2 et 3 à voir une activité
+        return $user->id_profil === 1 || $user->id_profil === 2 || $user->id_profil === 3;
     }
 
     /**

@@ -10,10 +10,10 @@ class IntervenantPolicy
 {
 
     use HandlesAuthorization;
-    public function accessIntervenantCreation(User $user, $id_profil)
-    {
-        return $user->id_profil === 3;
-    }
+    // public function accessIntervenantCreation(User $user, $id_profil)
+    //  {
+    //      return $user->id_profil === 3;
+    //  }
 
     public function autoriseIntervenantAccess(User $user)
     {
@@ -31,19 +31,19 @@ class IntervenantPolicy
     public function create(User $user)
     {
         // Seuls les administrateurs peuvent créer un intervenant
-        return $user->id_profil === 3;
+        return $user->id_profil === 1 || $user->id_profil === 3;
     }
 
     public function edit(User $user, Intervenant $intervenant)
     {
         // Seuls l'utilisateur ayant l'id profil 3 ou 2 ou l'utilisateur propriétaire de l'activité peuvent éditer un intervenant
-        return $user->id_profil === 3 || $user->id === $intervenant->user_id;
+        return $user->id_profil === 1 || $user->id_profil === 3 || $user->id === $intervenant->user_id;
     }
 
     public function view(User $user, Intervenant $intervenant)
     {
         // Autoriser tous les utilisateurs à voir un intervenant
-        return $user->id_profil === 2 || $user->id_profil === 3;
+        return $user->id_profil === 1 || $user->id_profil === 2 || $user->id_profil === 3;
     }
 
     /**

@@ -51,7 +51,7 @@ class IntervenantController extends Controller
     public function pdfIntervenant()
     {
         $user = Auth::user();
-        if ($user->id_profil == 3) {
+        if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
             $intervenants = Intervenant::all();
             // $data = ['title' => 'Liste des utilisateurs'];
             $pdf = Pdf::loadView('PDF.intervenants_pdf', ['intervenants' => $intervenants]);

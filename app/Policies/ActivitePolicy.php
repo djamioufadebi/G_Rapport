@@ -39,19 +39,19 @@ class ActivitePolicy
     public function create(User $user)
     {
         // Seuls les administrateurs peuvent créer une activité
-        return $user->id_profil === 3;
+        return $user->id_profil === 1 || $user->id_profil === 3;
     }
 
     public function edit(User $user, Activite $activite)
     {
         // Seuls l'utilisateur ayant l'id profil 3 ou 2 ou l'utilisateur propriétaire de l'activité peuvent éditer une activité
-        return $user->id_profil === 2 || $user->id_profil === 3;
+        return $user->id_profil === 1 || $user->id_profil === 2 || $user->id_profil === 3;
     }
 
     public function view(User $user, Activite $activite)
     {
         // Autoriser tous les utilisateurs à voir une activité
-        return true;
+        return $user->id_profil === 1 || $user->id_profil === 2 || $user->id_profil === 3;
     }
     /**
      * Create a new policy instance.

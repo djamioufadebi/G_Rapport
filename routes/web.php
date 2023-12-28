@@ -37,11 +37,12 @@ route::middleware('auth')->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/acces-refuser', function () {
-        return view('composants.acces_refuser');
-    });
     Route::get('/redirection-new-user', function () {
         return view('composants.redirection-new-user');
+    });
+
+    Route::get('/acces-refuser', function () {
+        return view('composants.acces_refuser');
     });
 
     // route pour la géneration de PDF de la liste des besoins
@@ -55,7 +56,7 @@ route::middleware('auth')->group(function () {
     Route::get('/generate-client-pdf', [ClientController::class, 'pdfClient'])->name('clients.pdf');
     Route::get('/generate-intervenant-pdf', [IntervenantController::class, 'pdfIntervenant'])->name('intervenants.pdf');
 
-    Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
+    //Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 
     Route::get('/mon-profil', [UserProfilController::class, 'profil'])->name('mon_profile');
     Route::get('/update', [UserProfilController::class, 'update'])->name('mon_profile.update');
@@ -85,7 +86,7 @@ route::middleware('auth')->group(function () {
         function () {
             Route::get('/', [RoleController::class, 'index'])->name('roles');
             Route::get('/create', [RoleController::class, 'create'])->name('roles.create');
-            Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('roles.edit');
+            Route::get('/edit/{role}', [RoleController::class, 'edit'])->name('roles.edit');
             Route::get('/{role}', [RoleController::class, 'show'])->name('roles.show');
         }
     );
@@ -103,7 +104,7 @@ route::middleware('auth')->group(function () {
         function () {
             Route::get('/', [ActiviteController::class, 'index'])->name('activites');
             Route::get('/create', [ActiviteController::class, 'create'])->name('activites.create');
-            Route::get('/edit/{id}', [ActiviteController::class, 'edit'])->name('activites.edit');
+            Route::get('/edit/{activite}', [ActiviteController::class, 'edit'])->name('activites.edit');
             Route::get('/{activite}', [ActiviteController::class, 'show'])->name('activites.show');
         }
     );
@@ -147,7 +148,7 @@ route::middleware('auth')->group(function () {
 
     Route::prefix('notifications')->group(
         function () {
-            Route::get('/', [NotificationController::class, 'index'])->name('notifications');
+            Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
         }
     );
 

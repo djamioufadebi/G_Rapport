@@ -5,6 +5,9 @@
   font-size: 14px;
   font-weight: bold;
   border-radius: 20px;
+  animation: blink-animation 3s infinite;
+  /* Animation du clignotement */
+
 }
 
 .badge-warning {
@@ -15,6 +18,20 @@
 .badge-danger {
   background-color: #dc3545;
   color: #fff;
+}
+
+@keyframes blink-animation {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 </style>
 
@@ -87,11 +104,11 @@
                 @else
                     badge-danger
                 @endif
+                 badge-blink
             @endif
         "> {{ $CountNotReadNotifications }}</span>
         </a>
       </li>
     </ul>
   </div>
-  @livewireScripts
 </div>

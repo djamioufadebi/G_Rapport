@@ -16,10 +16,9 @@
     @if(session('delete'))
     <script>
     Swal.fire({
-      title: 'Le client supprimé !',
-      text: '{{ session('
-      success ') }}',
-      icon: 'error',
+      title: 'Suppression',
+      text: 'Le client a supprimé !',
+      icon: 'info',
       confirmButtonText: 'OK'
     })
     </script>

@@ -46,6 +46,7 @@ class ListeProjet extends Component
         // selectionner l'utilisateur qui a supprimer le projet
         $notification->user_id = Auth::user()->id;
         // donner le titre de la notification
+        $notification->type = "Projet";
         $notification->titre = "Suppression d'une Projet";
         // donner le message de la notification en le concaténant avec le nom du Projet et l'email de l'utilisateur qui a supprimer le Projet.
         $notification->message = "Le Projet : " . $projet->libelle . " viens d'etre supprimer par :" . Auth::user()->email;
@@ -70,6 +71,8 @@ class ListeProjet extends Component
             $notification->user_id = Auth::user()->id;
             // donner le titre de la notification (le statut du Projet)
             $notification->titre = "Finition d'un Projet";
+            // donner le type de la notification (le statut du Projet)
+            $notification->type = "Projet";
             // donner le message de la notification en le concaténant avec le nom du Projet et l'email de l'utilisateur qui a valider le Projet.
             $notification->message = "La finition du Projet : " . $projet->libelle . " viens d'etre valider par :" . Auth::user()->email;
             // marquer la notification comme lu ou non lu
@@ -83,6 +86,7 @@ class ListeProjet extends Component
             $notification->user_id = Auth::user()->id;
             // donner le titre de la notification (le statut du projet)
             $notification->titre = "Arrestation de Projet";
+            $notification->type = "Projet";
             // donner le message de la notification en le concaténant avec le nom du Projet et l'email de l'utilisateur qui a rejeter le Projet.
             $notification->message = "Le Projet : " . $projet->libelle . " viens d'etre arrêter par :" . Auth::user()->email;
             // marquer la notification comme lu ou non lu

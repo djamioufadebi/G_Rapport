@@ -74,7 +74,7 @@
         @if(count($users))
         @foreach ($users as $user)
         <tr class="tr-off">
-          <th scope="row">{{ $user->id }}</th>
+          <th>{{ $user->id }}</th>
           <td>{{ $user->nom }}</td>
           <td>{{ $user->prenom }}</td>
           <td>{{ $user->contact }}</td>

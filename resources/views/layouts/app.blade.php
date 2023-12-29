@@ -49,10 +49,10 @@
   <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="{{route('home')}}">
+        <a class="navbar-brand" href="{{ url('/home') }}">
           <img src="images/innov2b.jpg" class="img-fluid" width="100" height="auto" alt="" srcset="">
         </a>
-        <a class="navbar-brand" href="{{route('home')}}">
+        <a class="navbar-brand" href="{{ url('/home') }}">
           {{ config('app.name', 'Laravel') }}
         </a>
 
@@ -62,128 +62,54 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Left Side Of Navbar -->
-          <ul class="navbar-nav me-auto">
+        @livewire('menu-layout')
 
-            <li class="nav-item dropdown" onmouseover="showDropdown(this)">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Administration
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <!-- Sous-menu Administration -->
-                <li><a class="dropdown-item" href="{{ route('profils') }}">Profils</a></li>
-                <!-- <li><a class="dropdown-item" href="{{ route('roles') }}">Rôles</a></li> -->
-                <li><a class="dropdown-item" href="{{ route('users') }}">Utilisateurs</a></li>
-              </ul>
-            </li>
+        <!-- fin : notification -->
 
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('projets')}}">{{ __('Projets') }}</a>
-            </li>
+        <!-- Right Side Of Navbar -->
+        <ul class="navbar-nav ms-auto">
+          <!-- Authentication Links -->
+          @guest
+          @if(Route::has('login'))
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+          </li>
+          @endif
 
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('activites')}}">{{ __('Activités') }}</a>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Partenaires
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <!-- Sous-menu Administration -->
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('clients')}}">{{ __('Nos Clients') }}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('intervenants')}}">{{ __('Intervenants') }}</a>
-                </li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Demandes
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <!-- Sous-menu Administration -->
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('rapports')}}">{{ __('Rapports') }}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('besoins')}}">{{ __('Besoins') }}</a>
-                </li>
-              </ul>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('notifications')}}">{{ __('Notifications') }}</a>
-            </li>
-
-          </ul>
-
-          <!-- center side navbar: notification-->
-          <!-- center side navbar: notification-->
-          <!-- <div class="nav-item dropdown">
-            <a class="dropdown-toggle" style="text-decoration: none; " href="{{ route('notifications')}}" role="button"
-              id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Notifications
+          @if (Route::has('register'))
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+          </li>
+          @endif
+          @else
+          <li class="nav-item dropdown">
+            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false" v-pre>
+              {{ Auth::user()->nom }} {{ Auth::user()->prenom }}
             </a>
-          </div> -->
-          <!-- fin : notification -->
 
-          <!-- Le code de l'onglet notification avec le logo -->
-
-
-          <!-- fin : notification -->
-
-          <!-- Right Side Of Navbar -->
-          <ul class="navbar-nav ms-auto">
-            <!-- Authentication Links -->
-            @guest
-            @if (Route::has('login'))
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-            </li>
-            @endif
-
-            @if (Route::has('register'))
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-            </li>
-            @endif
-            @else
-            <li class="nav-item dropdown">
-              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ Auth::user()->nom }} {{ Auth::user()->prenom }}
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{ route('mon_profile') }}">Mon Profil </a>
+              <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                      document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
               </a>
 
-              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('mon_profile') }}">Mon Profil </a>
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                      document.getElementById('logout-form').submit();">
-                  {{ __('Logout') }}
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                  @csrf
-                </form>
-              </div>
-            </li>
-            @endguest
-          </ul>
-        </div>
-        @endif
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+              </form>
+            </div>
+          </li>
+          @endguest
+        </ul>
       </div>
-    </nav>
+      @endif
+  </div>
+  </nav>
 
-    <main class="py-4">
-      @yield('content')
-    </main>
+  <main class="py-4">
+    @yield('content')
+  </main>
   </div>
 
   <script src="{{ asset('js/app.js') }}"></script>

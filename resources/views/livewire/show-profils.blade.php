@@ -48,12 +48,8 @@
           <tr>
             <th scope="row">Liste des utilisateurs ayant cet profil</th>
             <td>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
               @foreach ($Users as $item)
-              <li>{{$item->nom}} {{$item->prenom}}</li>
+              <li>{{$item->nom}}</li>
               @endforeach
             </td>
           </tr>

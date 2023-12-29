@@ -15,7 +15,9 @@ class ListeActivite extends Component
 
     use WithPagination;
 
-    public function s () {}
+    public function s()
+    {
+    }
 
     public function confirmDelete($id)
     {

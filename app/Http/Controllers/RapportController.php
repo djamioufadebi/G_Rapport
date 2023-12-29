@@ -37,7 +37,7 @@ class RapportController extends Controller
 
     public function show(Rapport $rapport)
     {
-        if (Gate::allows('wiew', $rapport)) {
+        if (Gate::allows('view', $rapport)) {
             return view('rapports.show', compact('rapport'));
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé

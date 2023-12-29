@@ -16,7 +16,7 @@
     Swal.fire({
       title: 'Suppression du projet',
       text: 'Le Projet a été supprimé !',
-      icon: 'success',
+      icon: 'error',
       confirmButtonText: 'OK'
     })
     </script>
@@ -27,7 +27,7 @@
     Swal.fire({
       title: 'Finition  !',
       text: 'Le Projet est finalisé',
-      icon: 'success',
+      icon: 'info',
       confirmButtonText: 'OK'
     })
     </script>
@@ -38,7 +38,7 @@
     Swal.fire({
       title: 'Arrêt!',
       text: 'Le Projet a été arrêté',
-      icon: 'success',
+      icon: 'info',
       confirmButtonText: 'OK'
     })
     </script>

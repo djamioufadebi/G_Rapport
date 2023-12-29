@@ -32,7 +32,7 @@ class RapportPolicy
     public function view(User $user, Rapport $rapport)
     {
         // Autoriser tous les utilisateurs à voir un rapport
-        return $user->id_profil === 1 || $user->id_profil === 2 || $user->id === $rapport->user_id;
+        return $user->id_profil === 1 || $user->id_profil === 2;
     }
 
     /**

@@ -1,3 +1,23 @@
+<style>
+.notification-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.badge-warning {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+</style>
+
 <div>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <!-- Left Side Of Navbar -->
@@ -60,12 +80,12 @@
         <a class="nav-link" href="{{ route('notifications')}}">
           {{ __('Notifications') }}
           <!-- Conditions pour afficher le nombre du notification -->
-          <span class="text-success
+          <span class="notification-badge
             @if ($CountNotReadNotifications > 0)
                 @if ($CountNotReadNotifications <= 5)
-                    text-warning
+                    badge-warning
                 @else
-                    text-danger
+                    badge-danger
                 @endif
             @endif
         "> {{ $CountNotReadNotifications }}</span>

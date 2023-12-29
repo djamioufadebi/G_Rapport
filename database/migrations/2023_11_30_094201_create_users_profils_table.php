@@ -18,6 +18,7 @@ return new class extends Migration {
 
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -25,6 +26,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::table('users_profils', function (Blueprint $table) {
+            $table->dropForeign(['user_id', 'profil_id']);
+            $table->dropForeign(['user_id', 'profil_id']);
+        });
         Schema::dropIfExists('users_profils');
     }
 };

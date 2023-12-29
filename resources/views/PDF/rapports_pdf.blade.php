@@ -64,6 +64,7 @@
           <th scope="col" text-align="left">ID</th>
           <th scope="col" text-align="left">Libelle</th>
           <th scope="col" text-align="left">Date du rapport</th>
+          <th scope="col" text-align="left">Contenu </th>
 
           <th scope="col" text-align="right">Statut</th>
         </tr>
@@ -75,6 +76,7 @@
           <th scope="row">{{ $rapport->id }}</th>
           <td>{{ $rapport->libelle }}</td>
           <td>{{ $rapport->created_at }}</td>
+          <td>{{ $rapport->contenu }}</td>
           <td>{{ $rapport->statut }}</td>
         </tr>
         @endforeach

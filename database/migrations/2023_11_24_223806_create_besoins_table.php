@@ -34,8 +34,8 @@ return new class extends Migration {
     {
 
         Schema::table('besoins', function (Blueprint $table) {
-            $table->dropForeign('id_projet');
-            $table->dropColumn('id_projet');
+            $table->dropForeign(['id_projet', 'user_id']);
+            $table->dropColumn(['id_projet', 'user_id']);
         });
 
         Schema::dropIfExists('besoins');

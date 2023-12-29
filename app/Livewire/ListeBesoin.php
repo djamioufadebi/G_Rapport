@@ -93,10 +93,12 @@ class ListeBesoin extends Component
 
     public function render()
     {
-        $listeBesoins = Besoin::where('libelle', 'like', '%' . $this->search . '%');
+
+        $word = '%' . $this->search . '%';
+
+        $listeBesoins = Besoin::where('libelle', 'like', $word)->orwhere('created_at', 'like', $word)->orwhere('contenu', 'like', $word);
 
         $user = Auth::user();
-
         // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer
         if ($user->id_profil != 1 && $user->id_profil != 2) {
             // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer

@@ -18,14 +18,11 @@ return new class extends Migration {
             // $table->boolean('statut')->default(0);
             $table->string('fichier')->nullable();
             $table->enum('statut', ['en attente', 'Validé', 'rejeté'])->default('en attente');
-
             $table->unsignedBigInteger('id_projet');
             $table->foreign('id_projet')->
                 references('id')->on('projets');
-
             $table->timestamps();
         });
-
         schema::enableForeignKeyConstraints();
     }
 
@@ -36,8 +33,8 @@ return new class extends Migration {
     {
         // cet code permet de supprimer la colonne du champs clé etrangère au cas ou nous voulons la supprimer
         Schema::table('rapports', function (Blueprint $table) {
-            $table->dropForeign('id_projet');
-            $table->dropColumn('id_projet');
+            $table->dropForeign(['id_projet', 'user_id']);
+            $table->dropColumn(['id_projet', 'user_id']);
         });
         Schema::dropIfExists('rapports');
     }

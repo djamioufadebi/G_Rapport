@@ -41,8 +41,8 @@ return new class extends Migration {
     {
 
         Schema::table('projets', function (Blueprint $table) {
-            $table->dropForeign(['id_client', 'id_projet']);
-            $table->dropForeign(['id_client', 'id_projet']);
+            $table->dropForeign(['id_client', 'id_user']);
+            $table->dropForeign(['id_client', 'id_user']);
         });
 
         Schema::dropIfExists('projets');

@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->integer('projet_id');
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -23,6 +24,11 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::table('intervenants_projets', function (Blueprint $table) {
+            $table->dropForeign(['intervenant_id', 'projet_id']);
+            $table->dropForeign(['intervenant_id', 'projet_id']);
+        });
+
         Schema::dropIfExists('intervenants_projets');
     }
 };

@@ -16,3 +16,5 @@ window.Swal = Swal;
       $('.dropdown-menu').removeClass('show');
     }
   });
+
+

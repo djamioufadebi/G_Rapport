@@ -3,3 +3,4 @@ document.addEventListener('livewire:load', function () {
         $('.modal').modal('show');
     });
 });
+

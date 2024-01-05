@@ -28,11 +28,12 @@
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
         <button type="button" class="btn btn-secondary">
-          <a href="{{route('clients.pdf')}}" class="text-white fs-6" style="text-decoration:none;">Génerer
+          <a href="{{route('clients.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
+              class="far fa-file-pdf"></i>
             PDF</a></button>
         <button type="button" class="btn btn-primary">
-          <a href="{{route('clients.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
-            Nouveau</a></button>
+          <a href="{{route('clients.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+              class="fas fa-plus"></i>Ajouter</a></button>
       </div>
       <div class="col-md-5">
         <input wire:change="s" wire:model="search" type="text" class="form-control"
@@ -65,15 +66,20 @@
               <td>{{$client->created_at}}</td>
               <td>
                 <!-- Par exemple, un lien pour afficher le clients détaillé -->
-                <a href="{{ route('clients.show', $client->id) }}" class="btn btn-sm btn-info">Détails</a>
+                <a href="{{ route('clients.show', $client->id) }}" class="btn btn-sm btn-info"><i
+                    class="fas fa-info-circle"></i> </a>
                 <!-- Un bouton pour modifier le client -->
-                <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-warning">Modifier</a>
+                <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-warning"><i
+                    class="fas fa-pen"></i></a>
 
                 <!-- Un bouton pour supprimer le client -->
                 <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 3]))
                   data-bs-target="#confirmationModal"
-                  @endif class="btn btn-sm btn-danger">Supprimer
+                  @endif class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
+                <button type="button" class="btn btn-primary">
+                  <a href="{{route('clients.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+                      class="fas fa-download"></i></a></button>
               </td>
           </tbody>
 

@@ -7,11 +7,11 @@
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
         <button type="button" class="btn btn-secondary">
-          <a href="{{route('profils.pdf')}}" class="text-white fs-6" style="text-decoration:none;">Génerer
+          <a href="{{route('profils.pdf')}}" class="text-white fs-6" style="text-decoration:none;">
             PDF</a></button>
         <button type="button" class="btn btn-primary">
-          <a href="{{route('profils.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
-            Nouveau
+          <a href="{{route('profils.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+              class="fas fa-plus">Ajouter
           </a>
         </button>
       </div>
@@ -43,14 +43,19 @@
                 <td>{{ $profil->created_at }}</td>
                 <td>
                   <!-- Par exemple, un lien pour afficher le profils détaillé -->
-                  <a href="{{ route('profils.show', $profil->id) }}" class="btn btn-sm btn-info">Détails</a>
+                  <a href="{{ route('profils.show', $profil->id) }}" class="btn btn-sm btn-info"><i
+                      class="fas fa-info-circle"></i> </a>
                   <!-- Un bouton pour modifier le profil -->
-                  <a href="{{ route('profils.edit', $profil->id) }}" class="btn btn-sm btn-warning">Modifier</a>
+                  <a href="{{ route('profils.edit', $profil->id) }}" class="btn btn-sm btn-warning"><i
+                      class="fas fa-pen"></i></a>
 
                   <!-- Un bouton pour supprimer le profil -->
                   <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal"
-                    class="btn btn-sm btn-danger">Supprimer
+                    class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                   </button>
+                  <button type="button" class="btn btn-primary">
+                    <a href="{{route('profils.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+                        class="fas fa-download"></i></a></button>
                 </td>
               </tr>
 

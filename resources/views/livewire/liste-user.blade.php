@@ -56,8 +56,8 @@
           <a href="{{route('users.pdf')}}" class="text-white fs-6" style="text-decoration:none;">Génerer
             PDF</a></button>
         <button type="button" class="btn btn-primary">
-          <a href="{{route('users.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
-            Nouveau</a></button>
+          <a href="{{route('users.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+              class="fas fa-plus">Ajouter</a></button>
       </div>
       <div class="col-md-5">
         <input wire:change="s" wire:model="search" type="text" class="form-control"
@@ -97,14 +97,19 @@
               </td>
               <td>
                 <!-- Par exemple, un lien pour afficher le user détaillé -->
-                <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-info">Détails</a>
+                <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-info"><i
+                    class="fas fa-info-circle"></i> </a>
                 <!-- Un bouton pour modifier le user -->
-                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">Modifier</a>
+                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning"><i
+                    class="fas fa-pen"></i></a>
 
                 <!-- Un bouton pour supprimer le user -->
                 <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $user->id }}"
-                  class="btn btn-sm btn-danger">Supprimer
+                  class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
+                <button type="button" class="btn btn-primary">
+                  <a href="{{route('users.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+                      class="fas fa-download"></i></a></button>
               </td>
 
               <!-- Modal pour la confirmation de la suppression -->

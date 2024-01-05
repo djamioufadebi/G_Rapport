@@ -1,24 +1,3 @@
-<style>
-@media print {
-
-  /* Styles spécifiques pour l'impression */
-  body * {
-    visibility: hidden;
-  }
-
-  #detailsBesoin,
-  #detailsBesoin * {
-    visibility: visible;
-  }
-
-  #detailsBesoin {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-}
-</style>
-
 <link href="{{ asset('css/style-table.css') }}" rel="stylesheet">
 
 <div class="container mt-5">
@@ -106,7 +85,6 @@
   <!-- Bouton pour imprimer les détails du besoin -->
 </div>
 
-
 @livewireScripts
 <script>
 function imprimerDetailsBesoin() {
@@ -124,5 +102,6 @@ function imprimerDetailsBesoin() {
     fenetreImprimer.focus(); // Focus sur la fenêtre d'impression
     fenetreImprimer.print(); // Lancer l'impression
   };
-} <
-/script
+}
+imprimerDetailsBesoin();
+</script>

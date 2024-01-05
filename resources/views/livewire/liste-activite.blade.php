@@ -48,11 +48,11 @@
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
         <button type="button" class="btn btn-secondary">
-          <a href="{{route('activites.pdf')}}" class="text-white fs-6" style="text-decoration:none;">Génerer
-            PDF</a></button>
+          <a href="{{route('activites.pdf')}}" class="text-white fs-6" style="text-decoration:none;">PDF</a></button>
         <button type="button" class="btn btn-primary">
-          <a href="{{route('activites.create')}}" class="text-white fs-6" style="text-decoration:none;">Ajouter
-            Nouvelle</a></button>
+          <a href="{{route('activites.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+              class="fas fa-plus">Ajouter
+          </a></button>
       </div>
       <div class="col-md-3">
         <input wire:change="s" wire:model="search" type="text" class="form-control"
@@ -107,15 +107,20 @@
 
               <td>
                 <!-- Par exemple, un lien pour afficher le activites détaillé -->
-                <a href="{{ route('activites.show', $activite->id) }}" class="btn btn-sm btn-info">Détails</a>
+                <a href="{{ route('activites.show', $activite->id) }}" class="btn btn-sm btn-info"><i
+                    class="fas fa-info-circle"></i> </a>
                 <!-- Un bouton pour modifier le activite -->
-                <a href="{{ route('activites.edit', $activite->id) }}" class="btn btn-sm btn-warning">Modifier</a>
+                <a href="{{ route('activites.edit', $activite->id) }}" class="btn btn-sm btn-warning"><i
+                    class="fas fa-pen"></i></a>
 
                 <!-- Un bouton pour supprimer le activite -->
                 <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 3]))
                   data-bs-target="#confirmationModal{{ $activite->id }}" @endif
-                  class="btn btn-sm btn-danger">Supprimer
+                  class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
+                <button type="button" class="btn btn-primary">
+                  <a href="{{route('activites.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+                      class="fas fa-download"></i></a></button>
               </td>
 
               @include('modals.modals-status.modal-activite-statut')

@@ -57,8 +57,15 @@ class BesoinController extends Controller
             return $pdf->stream();
             // return view('composants.acces_refuser');
         }
+    }
 
+    // fonction de generation de pdf d'un besoin spécifique
 
+    public function besoinpdf(Besoin $besoin)
+    {
+        $besoins = Besoin::find($besoin);
+        $pdf = Pdf::loadView('PDF.besoin_pdf', compact('besoins'));
+        return $pdf->stream();
     }
 
 }

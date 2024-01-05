@@ -56,6 +56,11 @@ route::middleware('auth')->group(function () {
     Route::get('/generate-client-pdf', [ClientController::class, 'pdfClient'])->name('clients.pdf');
     Route::get('/generate-intervenant-pdf', [IntervenantController::class, 'pdfIntervenant'])->name('intervenants.pdf');
 
+    // route pour la géneration le PDF d'un utilisateur spécifique
+    Route::get('/profil-pdf', [ProfilController::class, 'profilpdf'])->name('profil.pdf');
+    Route::get('/besoin-pdf', [BesoinController::class, 'besoinpdf'])->name('besoin.pdf');
+    Route::get('/rapport-pdf', [RapportController::class, 'rapportpdf'])->name('rapport.pdf');
+
     //Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 
     Route::get('/mon-profil', [UserProfilController::class, 'profil'])->name('mon_profile');

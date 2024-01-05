@@ -46,6 +46,7 @@
   .table-besoin tr td {
     padding: 3px;
     font-size: 15px;
+
   }
   </style>
 
@@ -55,7 +56,7 @@
   <div class="container">
     <table class="table table-striped table-bordered" class=" table table-besoin" id="dataTable" cellspacing="0">
       <caption>
-        <h2> Liste des besoins</h2>
+        <h2> Les détails du besoin </h2>
       </caption>
       <br>
       <thead class="thead-dark">
@@ -67,8 +68,7 @@
           <th scope="col" text-align="right">Statut</th>
         </tr>
       </thead>
-      <tbody id="tablbody">
-        @if(count($besoins))
+      <tbody id="tablebody">
         @foreach ($besoins as $besoin)
         <tr class="tr-off">
           <th scope="row">{{ $besoin->id }}</th>
@@ -78,15 +78,14 @@
           <td>{{ $besoin->statut }}</td>
         </tr>
         @endforeach
-        @else
-        <tr class="tr-off">
-          <td colspan="4" class="div-tot">Aucun besoin enregisté</td>
-        </tr>
-        @endif
       </tbody>
     </table>
   </div>
+  <!-- Intégration du script Bootstrap (facultatif si non déjà présent) -->
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+  <!-- Pour Bootstrap 5, utilisez le script suivant -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 
 </html>

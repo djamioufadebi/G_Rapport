@@ -22,10 +22,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{{route('home')}}">Accueil</a>
+            <a class="nav-link" href="{{route('projets')}}">Les projets</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="{{route('projets')}}">Nos partenaires</a>
+            <a class="nav-link" href="{{route('clients')}}">Nos clients</a>
           </li>
           <!-- Ajoutez d'autres liens de navigation -->
         </ul>
@@ -36,7 +36,7 @@
   <!-- Contenu de la page d'accueil -->
   <div class="container mt-4">
     <div class="jumbotron">
-      <h1 class="display-4">Bienvenue chez INOV'2B</h1>
+      <h2 class="display-4">Bienvenue sur GRB_Inov'2b</h2>
       <p class="lead">Votre plateforme de gestion de projets, rapports et besoins.</p>
       <hr class="my-4">
       <p>Explorez nos fonctionnalités et gérez vos activités plus efficacement.</p>
@@ -54,6 +54,19 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="col">
+        <div class="col-md-10">
+          <div class="card mb-8">
+            <div class="card-body">
+              <h5 class="card-title">Activités</h5>
+              <p class="card-text">Gérez vos activités quotidiennes avec facilité et précision.</p>
+              <a href="{{route('activites')}}" class="btn btn-primary">Accéder aux projets</a>
+            </div>
+          </div>
+        </div>
+        <!-- Ajoutez d'autres cartes pour les fonctionnalités -->
       </div>
 
 
@@ -83,18 +96,7 @@
         </div>
       </div>
 
-      <div class="col">
-        <div class="col-md-10">
-          <div class="card mb-8">
-            <div class="card-body">
-              <h5 class="card-title">Activités</h5>
-              <p class="card-text">Gérez vos activités quotidiennes avec facilité et précision.</p>
-              <a href="{{route('activites')}}" class="btn btn-primary">Accéder aux projets</a>
-            </div>
-          </div>
-        </div>
-        <!-- Ajoutez d'autres cartes pour les fonctionnalités -->
-      </div>
+
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>

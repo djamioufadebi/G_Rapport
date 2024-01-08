@@ -15,4 +15,10 @@ class Intervenant extends Model
         return $this->belongsToMany(Projet::class);
     }
 
+    // un intervenant peut intervenir à plusieurs activités
+    public function activite()
+    {
+        return $this->belongsToMany(Activite::class, 'id_activite');
+    }
+
 }

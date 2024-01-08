@@ -8,10 +8,10 @@
       <div class="col-md-3">
         <button type="button" class="btn btn-secondary">
           <a href="{{route('profils.pdf')}}" class="text-white fs-6" style="text-decoration:none;">
-            PDF</a></button>
+            <i class="far fa-file-pdf"></i>PDF</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('profils.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
-              class="fas fa-plus">Ajouter
+              class="fas fa-plus"></i>Ajouter
           </a>
         </button>
       </div>
@@ -44,7 +44,7 @@
                 <td>
                   <!-- Par exemple, un lien pour afficher le profils détaillé -->
                   <a href="{{ route('profils.show', $profil->id) }}" class="btn btn-sm btn-info"><i
-                      class="fas fa-info-circle"></i> </a>
+                      class="fas fa-eye"></i> </a>
                   <!-- Un bouton pour modifier le profil -->
                   <a href="{{ route('profils.edit', $profil->id) }}" class="btn btn-sm btn-warning"><i
                       class="fas fa-pen"></i></a>
@@ -54,7 +54,7 @@
                     class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                   </button>
                   <button type="button" class="btn btn-primary">
-                    <a href="{{route('profils.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+                    <a href="{{route('profil.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
                         class="fas fa-download"></i></a></button>
                 </td>
               </tr>

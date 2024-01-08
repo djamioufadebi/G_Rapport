@@ -13,6 +13,7 @@ class EditActivite extends Component
     public $date_debut;
     public $date_fin;
     public $id_projet;
+    public $taux_de_realisation;
     public $activite;
     public $activites;
     public function mount()
@@ -22,6 +23,7 @@ class EditActivite extends Component
         $this->date_debut = $this->activites->date_debut;
         $this->date_fin = $this->activites->date_fin;
         $this->id_projet = $this->activites->id_projet;
+        $this->taux_de_realisation = $this->activites->taux_de_realisation;
 
     }
 
@@ -36,6 +38,7 @@ class EditActivite extends Component
             'date_debut' => 'date|required',
             'date_fin' => 'date|required',
             'id_projet' => 'required',
+            'taux_de_realisation' => 'required|numeric|between:0,100',
         ]);
 
         try {

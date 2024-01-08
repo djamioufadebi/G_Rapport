@@ -6,7 +6,6 @@
     <div class="col-md-5">
       <div class="card border-secondary">
         <div class="card-header bg-body-secondary ">{{ __('Connexion') }}</div>
-
         <div class="card-body">
           <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -48,7 +47,7 @@
                     {{ old('remember') ? 'checked' : '' }}>
 
                   <label class="form-check-label" for="remember">
-                    {{ __('Remember Me') }}
+                    {{ __('Se rappeler de moi') }}
                   </label>
                 </div>
               </div>

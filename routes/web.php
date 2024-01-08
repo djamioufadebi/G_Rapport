@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActiviteController;
 use App\Http\Controllers\BesoinController;
+use App\Http\Controllers\BilanController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IntervenantController;
@@ -60,6 +61,10 @@ route::middleware('auth')->group(function () {
     Route::get('/profil-pdf', [ProfilController::class, 'profilpdf'])->name('profil.pdf');
     Route::get('/besoin-pdf', [BesoinController::class, 'besoinpdf'])->name('besoin.pdf');
     Route::get('/rapport-pdf', [RapportController::class, 'rapportpdf'])->name('rapport.pdf');
+    Route::get('/client-pdf', [ClientController::class, 'clientpdf'])->name('client.pdf');
+    Route::get('/intervenant-pdf', [IntervenantController::class, 'intervenantpdf'])->name('intervenant.pdf');
+    Route::get('/projet-pdf', [ProjetController::class, 'projetpdf'])->name('projet.pdf');
+    Route::get('/activite-pdf', [ActiviteController::class, 'activitepdf'])->name('activite.pdf');
 
     //Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 
@@ -154,6 +159,13 @@ route::middleware('auth')->group(function () {
     Route::prefix('notifications')->group(
         function () {
             Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+        }
+    );
+
+    Route::prefix('bilans')->group(
+        function () {
+            Route::get('/bilan', [BilanController::class, 'index'])->name('bilans');
+            Route::get('/bilan-generate', [BilanController::class, 'generate_bilan'])->name('bilans.pdf');
         }
     );
 

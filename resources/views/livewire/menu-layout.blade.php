@@ -53,13 +53,22 @@
         </ul>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('projets')}}">{{ __('Projets') }}</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Gestion de Projets
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <!-- Sous-menu Administration -->
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('projets')}}">{{ __('Projets') }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('activites')}}">{{ __('Activités') }}</a>
+          </li>
+        </ul>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('activites')}}">{{ __('Activités') }}</a>
-      </li>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
@@ -80,7 +89,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
-          Demandes
+          Gestion et suivi
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <!-- Sous-menu Administration -->
@@ -90,12 +99,14 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ route('besoins')}}">{{ __('Besoins') }}</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('bilans')}}">{{ __('Bilan') }}</a>
+          </li>
         </ul>
       </li>
-
+      <!-- Pour notifications -->
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('notifications')}}">
-          {{ __('Notifications') }}
+        <a class="nav-link" href="{{ route('notifications')}}"><i class="fas fa-envelope"></i>
           <!-- Conditions pour afficher le nombre du notification -->
           <span class="notification-badge
             @if ($CountNotReadNotifications > 0)
@@ -109,6 +120,8 @@
         "> {{ $CountNotReadNotifications }}</span>
         </a>
       </li>
+
+
     </ul>
   </div>
 </div>

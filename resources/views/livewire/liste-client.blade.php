@@ -67,7 +67,7 @@
               <td>
                 <!-- Par exemple, un lien pour afficher le clients détaillé -->
                 <a href="{{ route('clients.show', $client->id) }}" class="btn btn-sm btn-info"><i
-                    class="fas fa-info-circle"></i> </a>
+                    class="fas fa-eye"></i> </a>
                 <!-- Un bouton pour modifier le client -->
                 <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-warning"><i
                     class="fas fa-pen"></i></a>
@@ -78,7 +78,7 @@
                   @endif class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
                 <button type="button" class="btn btn-primary">
-                  <a href="{{route('clients.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+                  <a href="{{route('client.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
                       class="fas fa-download"></i></a></button>
               </td>
           </tbody>

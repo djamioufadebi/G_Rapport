@@ -62,4 +62,11 @@ class RapportController extends Controller
 
     }
 
+    public function rapportpdf(Rapport $rapport)
+    {
+        $rapports = Rapport::find($rapport);
+        $pdf = Pdf::loadView('PDF.rapport_pdf', compact('rapports'));
+        return $pdf->stream();
+    }
+
 }

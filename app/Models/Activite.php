@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Intervenant;
 use App\Models\Projet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,4 +16,10 @@ class Activite extends Model
     {
         return $this->belongsTo(Projet::class, 'id_projet');
     }
+    // un projet a plusieurs activites
+    public function intervenant()
+    {
+        return $this->belongsTo(Intervenant::class);
+    }
+
 }

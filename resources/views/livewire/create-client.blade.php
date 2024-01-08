@@ -68,7 +68,6 @@
             <button type="submit" class="btn btn-primary text text-bold">Enregistrer</button>
           </div>
         </div>
-
       </form>
     </div>
   </div>

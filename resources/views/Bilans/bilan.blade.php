@@ -5,7 +5,7 @@
   <div class="row justify-content-center">
     <div class="col-md-10">
       <div class="card">
-        <div class="card-header">{{ __('Création de rapport') }}</div>
+        <div class="card-header">{{ __('Bilan') }}</div>
 
         <div class="card-body">
           @if (session('status'))
@@ -15,7 +15,7 @@
           @endif
 
           <div>
-            @livewire('create-rapport')
+            @livewire('show-bilan')
           </div>
         </div>
 

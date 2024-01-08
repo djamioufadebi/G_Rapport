@@ -66,8 +66,6 @@
               <!-- affiche la liste des projets en cours pour cet client seul -->
             </td>
           </tr>
-
-
         </tbody>
       </table>
     </div>

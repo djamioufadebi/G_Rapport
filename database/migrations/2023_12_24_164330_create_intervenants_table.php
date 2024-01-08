@@ -18,9 +18,12 @@ return new class extends Migration {
             $table->string('contact');
             $table->string('email');
             $table->string('adresse');
+            $table->unsignedBigInteger('id_activite');
+            $table->foreign('id_activite')->
+                references('id')->on('activites');
             $table->timestamps();
         });
-
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -28,6 +31,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::table('intervenants', function (Blueprint $table) {
+            $table->dropForeign('id_activite');
+            $table->dropForeign('id_activite');
+        });
         Schema::dropIfExists('intervenants');
     }
 };

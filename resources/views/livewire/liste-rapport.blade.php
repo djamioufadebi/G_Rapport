@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-11">
     @if(session('success'))
     <script>
     Swal.fire({
@@ -81,17 +81,17 @@
               <td>
                 <!-- href : le lien vers la page de modification du statut/ à mettre en place -->
                 @if ($rapport->statut == 'Validé')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
                   data-bs-target="#confirmProfilModal{{ $rapport->id }}" @endif
                   class="btn btn-sm badge bg-success">{{$rapport->statut}}</a>
 
                 @elseif ($rapport->statut == 'en attente')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
                   data-bs-target="#confirmProfilModal{{ $rapport->id }}" @endif
                   class="btn btn-sm badge bg-warning">{{$rapport->statut}}</a>
 
                 @elseif ($rapport->statut == 'rejeté')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
                   data-bs-target="#confirmProfilModal{{ $rapport->id }}" @endif
                   class="btn btn-sm badge bg-danger">{{$rapport->statut}}</a>
                 @endif
@@ -100,18 +100,18 @@
               <td>
                 <!-- Par exemple, un lien pour afficher le rapports détaillé -->
                 <a href="{{ route('rapports.show', $rapport->id) }}" class="btn btn-sm btn-info"><i
-                    class="fas fa-info-circle"></i> </a>
+                    class="fas fa-eye"></i> </a>
                 <!-- Un bouton pour modifier le rapport -->
                 <a href="{{ route('rapports.edit', $rapport->id) }}" class="btn btn-sm btn-warning"><i
                     class="fas fa-pen"></i></a>
 
                 <!-- Un bouton pour supprimer le rapport -->
-                <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 2]) )
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
                   data-bs-target="#confirmationModal{{ $rapport->id }}"@endif
                   class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
                 <button type="button" class="btn btn-primary">
-                  <a href="{{route('rapports.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+                  <a href="{{route('rapport.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
                       class="fas fa-download"></i></a></button>
 
               </td>
@@ -152,7 +152,7 @@
           @endforeach
           </tbody>
         </table>
-        <div class="mx-2">
+        <div class="mx-1">
           {{-- $listeRapport->links('Pagination.bootstrap-pagination') --}}
         </div>
 

@@ -67,5 +67,4 @@ class BesoinController extends Controller
         $pdf = Pdf::loadView('PDF.besoin_pdf', compact('besoins'));
         return $pdf->stream();
     }
-
 }

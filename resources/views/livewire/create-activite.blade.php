@@ -16,9 +16,25 @@
         </script>
         @endif
 
+        @if(session('date_error2'))
+        <script>
+        Swal.fire({
+          title: 'Erreur de date !',
+          text: 'la date de fin ne pas être postérieure à la date de debut !',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
+        @endif
+
         @if(session('success'))
         <div class="alert alert-success">
           {{ session('success') }}
+        </div>
+        @endif
+        @if(session('error'))
+        <div class="alert alert-success">
+          {{ session('error') }}
         </div>
         @endif
 
@@ -59,6 +75,17 @@
           <!-- afiche le message d'erreur si le champs est vide  -->
           @error('date_fin')
           <div class=" invalid-feedback">Le champ date_fin est requis.</div>
+          @enderror
+        </div>
+        <!-- Taux de réalisation avec barre de progression -->
+        <div class="mb-3">
+          <label for="taux_de_realisation" class="form-label">Taux de réalisation :</label>
+          <input type="range" class="form-range @error('taux_de_realisation') is-invalid @enderror"
+            id="taux_de_realisation" wire:model="taux_de_realisation" name="taux_de_realisation" min="0" max="100"
+            step="0.1" step="1" required>
+          <output id="taux_value" class="mt-2">{{$taux_de_realisation}}%</output>
+          @error('taux_de_realisation')
+          <div class="invalid-feedback">Le champ taux_de_realisation est requis.</div>
           @enderror
         </div>
 

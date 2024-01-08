@@ -19,6 +19,12 @@
             <br>
             <div class="form-group">
               <div>
+                <input type="radio" id="statutEnAttente{{$activite->id}}" wire:model="statut" value="en attente"
+                  name="statut" @if($activite->statut === 'en attente') checked @endif>
+                <label for="statutEnAttente{{$activite->id}}">En attente</label>
+              </div>
+
+              <div>
                 <input type="radio" id="statutEnCours{{$activite->id}}" wire:model="statut" value="en cours"
                   name="statut" @if($activite->statut === 'en cours') checked @endif>
                 <label for="statutEnCours{{$activite->id}}">En cours</label>

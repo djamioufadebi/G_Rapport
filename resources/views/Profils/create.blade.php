@@ -5,7 +5,7 @@
   <div class="row justify-content-center">
     <div class="col-md-10">
       <div class="card">
-        <div class="card-header">{{ __('Création des Profils') }}</div>
+        <div class="card-header">{{ __('Création de Profil') }}</div>
 
         <div class="card-body">
           @if (session('status'))

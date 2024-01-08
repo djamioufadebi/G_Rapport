@@ -13,7 +13,6 @@
           <p class="card-text">Contactez léquipe de l'application ou l'administrateur</p>
           <p class="card-text">Téléphone : 06 66 66 66 66</p>
           <p class="card-text">Email : contact@exemple.com</p>
-
         </div>
       </div>
     </div>

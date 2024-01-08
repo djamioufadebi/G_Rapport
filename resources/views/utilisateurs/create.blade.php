@@ -6,7 +6,7 @@
     <div class="col-md-10">
       <div class="card">
         <div class="card-header text-black text-bold ">
-          {{ __('Création des utilisateurs') }}
+          {{ __('Création d\'un utilisateur') }}
         </div>
 
         <div class="card-body">

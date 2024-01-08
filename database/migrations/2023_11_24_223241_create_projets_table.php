@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('projets', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
+            $table->string('lieu');
             $table->text('description')->nullable();
             $table->date('date_debut');
             $table->date('date_fin_prevue');
@@ -39,7 +40,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-
         Schema::table('projets', function (Blueprint $table) {
             $table->dropForeign(['id_client', 'id_user']);
             $table->dropForeign(['id_client', 'id_user']);

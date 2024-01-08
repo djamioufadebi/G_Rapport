@@ -59,8 +59,7 @@
           <tr>
             <th scope="row">Nom du Gestionnaire</th>
             <td>
-
-              <!-- libelle du demandeur -->
+              {{ $userProjet->nom }} {{ $userProjet->prenom }}
             </td>
           </tr>
           <tr>

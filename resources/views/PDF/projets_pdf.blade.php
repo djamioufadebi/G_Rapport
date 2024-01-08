@@ -46,7 +46,6 @@
   .table-projet tr td {
     padding: 3px;
     font-size: 15px;
-
   }
   </style>
 

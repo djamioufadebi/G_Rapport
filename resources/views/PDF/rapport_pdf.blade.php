@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liste des rapports</title>
+  <title>Les détails du rapport</title>
 
   <!-- Styles -->
   <style type="text/css">
@@ -56,7 +56,7 @@
   <div class="container">
     <table class="table table-striped table-bordered" class=" table table-rapport" id="dataTable" cellspacing="0">
       <caption>
-        <h2> Liste des rapports</h2>
+        <h2> Les détails du rapport</h2>
       </caption>
       <br>
       <thead class="thead-dark">

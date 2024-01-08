@@ -19,7 +19,7 @@ class BesoinPolicy
 
     public function viewliste(User $user)
     {
-        return in_array($user->id_profil, [1, 2, 3, 4, 6]);
+        return in_array($user->id_profil, [1, 2]);
     }
 
     public function create(User $user)
@@ -31,13 +31,13 @@ class BesoinPolicy
     public function edit(User $user, Besoin $besoin)
     {
         // Seuls l'utilisateur ayant l'id profil 2 ou l'utilisateur propriétaire de l'activité peuvent éditer une activité
-        return $user->id_profil === 1 || $user->id_profil === 2 || $user->id === $besoin->user_id;
+        return $user->id === $besoin->user_id;
     }
 
     public function view(User $user, Besoin $besoin)
     {
         // Autoriser tous les utilisateurs à voir une activité
-        return $user->id_profil === 1 || $user->id_profil === 2 || $user->id === $besoin->user_id;
+        return $user->id_profil === 1 || $user->id === $besoin->user_id;
     }
 
     /**

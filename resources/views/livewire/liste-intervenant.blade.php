@@ -15,10 +15,9 @@
     @if(session('delete'))
     <script>
     Swal.fire({
-      title: 'Le client supprimé !',
-      text: '{{ session('
-      success ') }}',
-      icon: 'error',
+      title: 'Suppression !',
+      text: 'Le client est supprimé !',
+      icon: 'success',
       confirmButtonText: 'OK'
     })
     </script>
@@ -68,7 +67,7 @@
               <td>
                 <!-- Par exemple, un lien pour afficher le intervenants détaillé -->
                 <a href="{{ route('intervenants.show', $intervenant->id) }}" class="btn btn-sm btn-info"><i
-                    class="fas fa-info-circle"></i> </a>
+                    class="fas fa-eye"></i> </a>
                 <!-- Un bouton pour modifier le intervenant -->
                 <a href="{{ route('intervenants.edit', $intervenant->id) }}" class="btn btn-sm btn-warning"><i
                     class="fas fa-pen"></i></a>
@@ -79,7 +78,7 @@
                   class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
                 <button type="button" class="btn btn-primary">
-                  <a href="{{route('intervenants.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+                  <a href="{{route('intervenant.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
                       class="fas fa-download"></i></a></button>
               </td>
 
@@ -97,5 +96,5 @@
 
       </div>
     </div>
-    </di div>
   </div>
+</div>

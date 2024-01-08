@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-11">
     <!-- le bouton ajouter -->
 
     @if(session('success'))
@@ -84,16 +84,16 @@
               <td>{{$besoin->created_at}}</td>
               <td>
                 @if ($besoin->statut == 'Validé')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
                   data-bs-target="#confirmProfilModal{{ $besoin->id }}" @endif
                   class="btn btn-sm badge bg-success">{{$besoin->statut}}</a>
 
                 @elseif ($besoin->statut == 'en attente')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
                   data-bs-target="#confirmProfilModal{{ $besoin->id }}" @endif
                   class="btn btn-sm badge bg-warning">{{$besoin->statut}}</a>
                 @elseif ($besoin->statut == 'rejeté')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
                   data-bs-target="#confirmProfilModal{{ $besoin->id }}" @endif
                   class="btn btn-sm badge bg-danger">{{$besoin->statut}}</a>
                 @endif
@@ -101,19 +101,19 @@
               <td>
                 <!-- Par exemple, un lien pour afficher le besoins détaillé -->
                 <a href="{{ route('besoins.show', $besoin->id) }}" class="btn btn-sm btn-info"><i
-                    class="fas fa-info-circle"></i> </a>
+                    class="fas fa-eye"></i> </a>
                 <!-- Un bouton pour modifier le besoin -->
                 <a href="{{ route('besoins.edit', $besoin->id) }}" class="btn btn-sm btn-warning"><i
                     class="fas fa-pen"></i>
                 </a>
 
                 <!-- Un bouton pour supprimer le besoin -->
-                <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 2]) )
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
                   data-bs-target="#confirmationModal{{ $besoin->id }}" @endif
                   class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
                 <button type="button" class="btn btn-primary">
-                  <a href="{{route('besoins.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
+                  <a href="{{route('besoin.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
                       class="fas fa-download"></i></a></button>
               </td>
 
@@ -159,6 +159,5 @@
 
       </div>
     </div>
-    </di
- v>
+    </di v>
   </div>

@@ -16,7 +16,7 @@ class ProfilPolicy
 
     public function viewliste(User $user)
     {
-        // Seuls les utilisateurs ayant le profil  2 ou 3 ou 4 ou 5 peuvent voir la liste des projets
+        // Seul l'admin peut voir la liste des profils
         return $user->id_profil === 1;
     }
 

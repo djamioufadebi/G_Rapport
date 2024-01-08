@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liste des besoins</title>
+  <title>Les détails du besoin</title>
 
   <!-- Styles -->
   <style type="text/css">
@@ -54,6 +54,18 @@
 
 <body>
   <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <!-- Insérez le logo de la société ici -->
+        <img src="{{ asset('images/innov2b.jpg')}}" alt="Logo de la société" class="img-fluid" width="100" height="auto"
+          srcset="">
+
+      </div>
+      <div class="col-md-6 text-center">
+        <!-- Nom de la société -->
+        <h3>INNOVATION BULDING BUSINESS </h3>
+      </div>
+    </div>
     <table class="table table-striped table-bordered" class=" table table-besoin" id="dataTable" cellspacing="0">
       <caption>
         <h2> Les détails du besoin </h2>

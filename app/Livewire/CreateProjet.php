@@ -14,6 +14,8 @@ class CreateProjet extends Component
     public $date_debut;
     public $date_fin_prevue;
 
+    public $lieu;
+
     public $projet;
     public $id_user;
     public $id_client;
@@ -29,6 +31,7 @@ class CreateProjet extends Component
         $this->validate([
             'libelle' => 'string|required|unique:projets,libelle',
             'description' => 'string|required',
+            'lieu' => 'string|required',
             'date_debut' => 'date|required',
             'date_fin_prevue' => 'date|required',
             'id_user' => '',
@@ -49,6 +52,7 @@ class CreateProjet extends Component
                 $projet = new Projet;
                 $projet->libelle = $this->libelle;
                 $projet->description = $this->description;
+                $projet->lieu = $this->lieu;
                 $projet->date_debut = $this->date_debut;
                 $projet->date_fin_prevue = $this->date_fin_prevue;
                 $projet->id_client = $this->id_client;

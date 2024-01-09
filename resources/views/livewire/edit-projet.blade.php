@@ -31,6 +31,16 @@
           </div>
 
           <div class="mb-3">
+            <label for="lieu" class="form-label">localisation :</label>
+            <input type="text" class="form-control  @error('lieu')is-invalid
+           @enderror" name="lieu" wire:model="lieu" required>
+            <!-- afiche le message d'erreur si le champs est vide  -->
+            @error('lieu')
+            <div class="invalid-feedback">Le champ lieu est requis.</div>
+            @enderror
+          </div>
+
+          <div class="mb-3">
             <label for="description" class="form-label">Description :</label>
             <textarea class="form-control  @error('description')is-invalid
            @enderror" id="description" wire:model="description" name="description" required></textarea>
@@ -95,6 +105,32 @@
       </div>
     </div>
   </div>
-
-
 </div>
+
+@livewireScripts()
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  let dateDebut = document.getElementById('date_debut');
+  let dateFin = document.getElementById('date_fin_prevue');
+  let dateFinError = document.getElementById('date_fin_prevue_error');
+
+  dateDebut.addEventListener('change', function() {
+    dateFin.min = dateDebut.value; // Définit la date minimum pour le champ de date de fin
+    if (dateFin.value !== '' && dateFin.value < dateDebut.value) {
+      dateFin.value = ''; // Réinitialise la date de fin si elle est antérieure à la date de début
+      dateFinError.style.display = 'block'; // Affiche le message d'erreur
+    } else {
+      dateFinError.style.display = 'none'; // Masque le message d'erreur si les dates sont valides
+    }
+  });
+
+  dateFin.addEventListener('change', function() {
+    if (dateFin.value !== '' && dateFin.value < dateDebut.value) {
+      dateFin.value = ''; // Réinitialise la date de fin si elle est antérieure à la date de début
+      dateFinError.style.display = 'block'; // Affiche le message d'erreur
+    } else {
+      dateFinError.style.display = 'none'; // Masque le message d'erreur si les dates sont valides
+    }
+  });
+});
+</script>

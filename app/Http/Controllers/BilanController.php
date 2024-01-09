@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activite;
+use App\Models\Besoin;
+use App\Models\Bilan;
 use App\Models\Projet;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class BilanController extends Controller
 {
 
-    public function index()
+    public function index(Bilan $bilan)
     {
-        return view('Bilans.bilan');
+        return view('Bilans.bilan', compact('bilan'));
     }
 
-    public function generate_bilan($projet)
+    public function generateBilan()
     {
-        // recuperer les projets et les afficher dans le pdf
-        $projets = Projet::where('id', $this->$projet);
-        dd($projets);
-        // récuperer les activités de chaque projet et les afficher dans le pdf
-        // $projets = Projet::all()->where('id', 1)->with('activites');
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadView('Bilans.bilan_pdf', compact('projets'));
+        // recuperer le user et les afficher dans le pdf
+        $user = User::all();
+        dd($user);
+        $pdf = Pdf::loadView('Bilans.bilan_pdf', compact('user'));
         return $pdf->stream();
 
     }

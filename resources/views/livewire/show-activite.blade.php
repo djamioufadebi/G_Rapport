@@ -22,17 +22,21 @@
         <thead>
           <tr>
             <th colspan="2">
-              @if ($activites->statut == 'en cours')
+              @if ($activites->statut == 'en attente')
+              <div class="border-info text-info p-2">
+                INFORMATIONS SUR L'ACTIVICTE : {{ $activites->nom }}
+              </div>
+              @elseif ($activites->statut == 'en cours')
               <div class="bg-success text-white p-2">
-                Informations sur l'activité : {{ $activites->nom }}
+                INFORMATIONS SUR L'ACTIVICTE : {{ $activites->nom }}
               </div>
               @elseif ($activites->statut == 'terminé')
               <div class="bg-warning text-white p-2">
-                Informations sur l'activité : {{ $activites->nom }}
+                INFORMATIONS SUR L'ACTIVICTE : {{ $activites->nom }}
               </div>
               @elseif ($activites->statut == 'arrêté')
               <div class="bg-danger text-white p-2">
-                Informations sur l'activité : {{ $activites->nom }}
+                INFORMATIONS SUR L'ACTIVICTE : {{ $activites->nom }}
               </div>
               @endif
             </th>
@@ -40,41 +44,38 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Nom du Gestionnaire</th>
-            <td>
-
-              <!-- nom du demandeur -->
+            <th scope="row" class="col-md-3">NOM DU PROJET</th>
+            <td class="col-md-9">
+              {{ $projets->libelle }}
             </td>
           </tr>
           <tr>
-            <th scope="row">Nom du projet</th>
-            <td>
-
-              <!-- nom du demandeur -->
-            </td>
+            <th scope="row" class="col-md-3">DESCRIPTION</th>
+            <td class="col-md-9">{{ $activites->description }}</td>
           </tr>
           <tr>
-            <th scope="row">DESCRIPTION</th>
-            <td>{{ $activites->description }}</td>
-          </tr>
-          <tr>
-            <th scope="row">Date de début</th>
-            <td>
+            <th scope="row" class="col-md-3">DATE DEBUT ACTIVITE</th>
+            <td class="col-md-9">
               <p>Date : {{ $activites->date_debut}}</p>
 
             </td>
           </tr>
           <tr>
-            <th scope="row">Date de fin</th>
+            <th scope="row" class="col-md-3">DATE DE FIN ACTIVITE</th>
             <td>
               <p>Date : {{ $activites->date_fin }}</p>
 
             </td>
           </tr>
           <tr>
-            <th scope="row">STATUT</th>
+            <th scope="row" class="col-md-3">STATUT</th>
 
             <td>{{ $activites->statut }}</td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-md-3">TAUX DE REALISATION</th>
+
+            <td>{{ $activites->taux_de_realisation}}</td>
           </tr>
         </tbody>
       </table>

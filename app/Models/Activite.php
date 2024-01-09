@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Bilan;
 use App\Models\Intervenant;
 use App\Models\Projet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,12 @@ class Activite extends Model
     public function intervenant()
     {
         return $this->belongsTo(Intervenant::class);
+    }
+
+    // relation entre activité et bilan : pour une activité on peut faire plusieurs bilans
+    public function bilan()
+    {
+        return $this->hasMany(Bilan::class, 'activite_id');
     }
 
 }

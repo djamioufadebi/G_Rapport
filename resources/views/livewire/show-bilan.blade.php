@@ -14,7 +14,7 @@
 <body>
   <div class="container mt-5">
     <hr>
-    <a href="{{ route('bilans.pdf') }}">
+    <a href="{{ route('bilans.pdf')}}">
       <button class="btn btn-primary">
         Rapport Journalier
       </button>

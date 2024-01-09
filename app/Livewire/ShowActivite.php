@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Projet;
 use Livewire\Component;
 
 class ShowActivite extends Component
@@ -10,6 +11,7 @@ class ShowActivite extends Component
     public function render()
     {
         $activites = $this->activites;
-        return view('livewire.show-activite', compact('activites'));
+        $projets = Projet::where('id', $activites->id_projet)->first();
+        return view('livewire.show-activite', compact('activites', 'projets'));
     }
 }

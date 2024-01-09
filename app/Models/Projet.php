@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Activite;
 use App\Models\Besoin;
+use App\Models\Bilan;
 use App\Models\Client;
 use App\Models\Rapport;
 use App\Models\User;
@@ -20,6 +21,12 @@ class Projet extends Model
     public function intervenant()
     {
         return $this->belongsToMany(Intervenant::class, 'id_projet');
+    }
+
+    // rélation entre projet et bilan : Pour un projet on peut faire plusieurs bilans
+    public function bilan()
+    {
+        return $this->belongsToMany(Bilan::class, 'projet_id');
     }
 
     // un projet a un seul chef chantier

@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('libelle');
             $table->integer('user_id');
             $table->text('contenu');
+            $table->text('commentaires')->nullable();
             // $table->boolean('statut')->default(0);
             $table->string('fichier')->nullable();
             $table->enum('statut', ['en attente', 'Validé', 'rejeté'])->default('en attente');

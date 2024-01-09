@@ -46,6 +46,7 @@ class RapportController extends Controller
 
     public function pdfRapport()
     {
+        // recuperer les rapports de l'utilisateur connecté et les afficher
         $user = Auth::user();
         if ($user->id_profil == 1 || $user->id_profil == 2) {
             $rapports = Rapport::all();
@@ -57,7 +58,6 @@ class RapportController extends Controller
             $rapports = Rapport::where('user_id', $user->id)->get();
             $pdf = Pdf::loadView('PDF.rapports_pdf', ['rapports' => $rapports]);
             return $pdf->stream();
-            // return view('composants.acces_refuser');
         }
 
     }

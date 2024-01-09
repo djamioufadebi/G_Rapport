@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Bilan;
 use App\Models\Profil;
+use App\Models\Rapport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,6 +14,13 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+
+    // un user peut faire plusieurs rapports
+    public function rapport()
+    {
+        return $this->hasMany(Rapport::class);
+    }
 
     // un user a un profil
     public function profil()
@@ -22,7 +31,13 @@ class User extends Authenticatable
     // un user peut être responsable de plusieurs projets
     public function projet()
     {
-        return $this->belongsToMany(Projet::class);
+        return $this->belongsToMany(Projet::class, 'id_projet');
+    }
+
+    // un user peut faire plusieurs bilans
+    public function bilan()
+    {
+        return $this->hasMany(Bilan::class, 'user_id');
     }
 
     /**

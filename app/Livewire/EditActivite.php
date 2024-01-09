@@ -47,6 +47,7 @@ class EditActivite extends Component
             $activite->date_debut = $this->date_debut;
             $activite->date_fin = $this->date_fin;
             $activite->id_projet = $this->id_projet;
+            $activite->taux_de_realisation = $this->taux_de_realisation;
             $activite->save();
 
             return redirect()->Route('activites')->with(
@@ -63,7 +64,10 @@ class EditActivite extends Component
 
     public function render()
     {
+
         $listeProjet = Projet::all();
+
         return view('livewire.edit-activite', compact('listeProjet'));
     }
+
 }

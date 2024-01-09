@@ -12,6 +12,7 @@ class EditProjet extends Component
     public $description;
     public $date_debut;
     public $date_fin_prevue;
+    public $lieu;
     public $id_client;
 
     public $projets;
@@ -19,10 +20,10 @@ class EditProjet extends Component
     {
         $this->libelle = $this->projets->libelle;
         $this->description = $this->projets->description;
+        $this->lieu = $this->projets->lieu;
         $this->date_debut = $this->projets->date_debut;
         $this->date_fin_prevue = $this->projets->date_fin_prevue;
         $this->id_client = $this->projets->id_client;
-
     }
 
     public function update()
@@ -33,6 +34,7 @@ class EditProjet extends Component
         $this->validate([
             'libelle' => 'string|required',
             'description' => 'string|required',
+            'lieu' => 'string|required',
             'date_debut' => 'date|required',
             'date_fin_prevue' => 'date|required',
             'id_client' => 'required',
@@ -41,6 +43,7 @@ class EditProjet extends Component
         try {
             $projet->libelle = $this->libelle;
             $projet->description = $this->description;
+            $projet->lieu = $this->lieu;
             $projet->date_debut = $this->date_debut;
             $projet->date_fin_prevue = $this->date_fin_prevue;
             $projet->id_client = $this->id_client;

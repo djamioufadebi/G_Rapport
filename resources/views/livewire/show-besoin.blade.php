@@ -24,15 +24,15 @@
             <th colspan="2">
               @if ($besoins->statut == 'Validé')
               <div class="bg-success text-white p-2">
-                Informations du Besoin : {{ $besoins->libelle }}
+                INFORMATIONS DU BESOIN : {{ $besoins->libelle }}
               </div>
               @elseif ($besoins->statut == 'en attente')
               <div class="bg-warning text-white p-2">
-                Informations du Besoin : {{ $besoins->libelle }}
+                INFORMATIONS DU BESOIN : {{ $besoins->libelle }}
               </div>
               @elseif ($besoins->statut == 'rejeté')
               <div class="bg-danger text-white p-2">
-                Informations du Besoin : {{ $besoins->libelle }}
+                INFORMATIONS DU BESOIN : {{ $besoins->libelle }}
               </div>
               @endif
             </th>
@@ -47,7 +47,7 @@
             </td>
           </tr>
           <tr>
-            <th scope="row">Nom du projet</th>
+            <th scope="row">NOM DU PROJET</th>
             <td>
               {{ $besoins->projet->libelle }}
             </td>
@@ -64,7 +64,7 @@
             </td>
           </tr>
           <tr>
-            <th scope="row">Statut du besoin</th>
+            <th scope="row">STATUT</th>
 
             <td>{{ $besoins->statut }}</td>
           </tr>

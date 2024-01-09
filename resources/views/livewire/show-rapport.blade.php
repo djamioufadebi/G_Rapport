@@ -45,15 +45,15 @@
             <th colspan="2">
               @if ($rapport->statut == 'Validé')
               <div class="bg-success text-white p-2">
-                Informations du rapport : {{ $rapport->libelle }}
+                INFORMATIONS DU RAPPORT : {{ $rapport->libelle }}
               </div>
               @elseif ($rapport->statut == 'en attente')
               <div class="bg-warning text-white p-2">
-                Informations du rapport : {{ $rapport->libelle }}
+                INFORMATIONS DU RAPPORT : {{ $rapport->libelle }}
               </div>
               @elseif ($rapport->statut == 'rejeté')
               <div class="bg-danger text-white p-2">
-                Informations du rapport : {{ $rapport->libelle }}
+                INFORMATIONS DU RAPPORT : {{ $rapport->libelle }}
               </div>
               @endif
             </th>
@@ -67,7 +67,7 @@
             </td>
           </tr>
           <tr>
-            <th scope="row">Nom du projet</th>
+            <th scope="row">NOM DU PROJET</th>
             <td>
               {{ $rapport->projet->libelle }}
             </td>
@@ -120,7 +120,7 @@ function imprimerDetailsRapport() {
   // Lancer la commande d'impression après le chargement de la page
   fenetreImprimer.onload = function() {
     fenetreImprimer
-  .focus(); // Focus sur la fenêtre d'impression (pour éviter que l'on ne voie pas la page d'accueil)
+      .focus(); // Focus sur la fenêtre d'impression (pour éviter que l'on ne voie pas la page d'accueil)
     fenetreImprimer.print(); // Lancer l'impression
   };
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Bilan;
 use App\Models\Intervenant;
 use App\Models\Projet;
+use App\Models\Rapport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,10 +24,16 @@ class Activite extends Model
         return $this->belongsTo(Intervenant::class);
     }
 
-    // relation entre activité et bilan : pour une activité on peut faire plusieurs bilans
-    public function bilan()
+    // Une activité peut avoir plusieurs rapports
+    public function rapport()
     {
-        return $this->hasMany(Bilan::class, 'activite_id');
+        return $this->belongsToMany(Rapport::class, 'id_activite');
     }
+
+    // relation entre activité et bilan : pour une activité on peut faire plusieurs bilans
+    //public function bilan()
+    // {
+    //     return $this->hasMany(Bilan::class, 'activite_id');
+    //  }
 
 }

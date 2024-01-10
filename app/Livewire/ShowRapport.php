@@ -15,6 +15,7 @@ class ShowRapport extends Component
 
         $userRapport = User::where('id', $rapport->user_id)->first();
 
+
         $projets = User::where('id', $rapport->id_projet)->first();
 
         return view('livewire.show-rapport', compact('rapport', 'userRapport', 'projets'));

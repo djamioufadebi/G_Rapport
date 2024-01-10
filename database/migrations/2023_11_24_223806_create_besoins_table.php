@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->text('commentaires')->nullable();
             $table->string('fichier')->nullable();
             $table->enum('statut', ['en attente', 'Validé', 'rejeté'])->default('en attente');
-            $table->unsignedBigInteger('id_projet');
-            $table->foreign('id_projet')->
+            $table->unsignedBigInteger('id_activite');
+            $table->foreign('id_activite')->
                 references('id')->on('projets');
 
             $table->timestamps();
@@ -35,8 +35,8 @@ return new class extends Migration {
     {
 
         Schema::table('besoins', function (Blueprint $table) {
-            $table->dropForeign(['id_projet', 'user_id']);
-            $table->dropColumn(['id_projet', 'user_id']);
+            $table->dropForeign(['id_activite', 'user_id']);
+            $table->dropColumn(['id_activite', 'user_id']);
         });
 
         Schema::dropIfExists('besoins');

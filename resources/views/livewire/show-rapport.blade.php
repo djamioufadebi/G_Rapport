@@ -61,22 +61,6 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Nom du demandeur</th>
-            <td>
-              {{ $userRapport->nom }} {{ $userRapport->prenom }}
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">NOM DU PROJET</th>
-            <td>
-              {{ $rapport->projet->libelle }}
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">CONTENU</th>
-            <td>{{ $rapport->contenu }}</td>
-          </tr>
-          <tr>
             <th scope="row">Date et Heure de la demande</th>
             <td>
               <p class="card-text">Date : {{ $rapport->created_at->format('Y-m-d') }}</p>
@@ -84,9 +68,45 @@
             </td>
           </tr>
           <tr>
+            <th scope="row">Nom du réalisateur</th>
+            <td>
+              {{ $userRapport->nom }} {{ $userRapport->prenom }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">NOM DU PROJET</th>
+            <td>
+              {{ $rapport->activite->nom }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">NOM DE L'ACTIVITE</th>
+            <td>
+              {{ $rapport->activite->nom }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">CONTENU</th>
+            <td>{{ $rapport->contenu }}</td>
+          </tr>
+          <tr>
+            <th scope="row">DIFFICULTES RENCONTREES</th>
+            <td>{{ $rapport->difficultes_rencontrees }}</td>
+          </tr>
+          <tr>
+            <th scope="row">SOLUTIONS APPORTEES</th>
+            <td>{{ $rapport->solutions_apportees }}</td>
+          </tr>
+
+          <tr>
             <th scope="row">STATUT</th>
 
             <td>{{ $rapport->statut }}</td>
+          </tr>
+          <tr>
+            <th scope="row">TAUX</th>
+
+            <td>{{ $rapport->taux_de_realisation }}</td>
           </tr>
         </tbody>
       </table>

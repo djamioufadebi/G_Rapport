@@ -10,23 +10,22 @@ use Livewire\Component;
 class ShowBilan extends Component
 {
 
+    public $activites;
+    public $projets;
     public function mount()
     {
-        //$projets = Projet::all();
-        // dd($projets);
+        $this->projets = Projet::all();
     }
     public function render()
     {
-        $projets = Projet::with('projet')->get();
-        dd($projets);
-
-        $projets = Projet::all();
-
-        // Récupérer les rapports avec les détails associés depuis les différentes tables liées
-        $rapports = Rapport::with('projet', 'activite', 'intervenant', 'user')->get();
-
         $activites = Activite::all();
 
-        return view('livewire.show-bilan', compact('projets', 'activites'));
+        // récuperer automatique le projet auquel appartient l'activité sélectionnée
+        // recupérer le projet de l'activité sélectionnée
+        //$projet = Projet::where('id', $activites->id_projet)->first();
+
+
+        return view('livewire.show-bilan', compact('activites', 'projets'));
     }
+
 }

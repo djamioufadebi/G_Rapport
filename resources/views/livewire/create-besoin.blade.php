@@ -17,7 +17,7 @@
         @endif
 
         <div class="mb-3">
-          <label for="libelle" class="form-label">libellé :</label>
+          <label for="libelle" class="form-label">libellé (*) :</label>
           <input type="text" class="form-control  @error('libelle')is-invalid
            @enderror" name="libelle" wire:model="libelle" id="libelle" required>
           <!-- afiche le message d'erreur si le champs est vide  -->
@@ -27,7 +27,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="contenu" class="form-label">Contenu :</label>
+          <label for="contenu" class="form-label">Contenu (*) :</label>
           <textarea class="form-control  @error('contenu') is-invalid
            @enderror" wire:model="contenu" name="contenu" id="contenu" rows="4" required></textarea>
 
@@ -37,21 +37,21 @@
           @enderror
         </div>
 
-        <!-- Champs choix de projet -->
+        <!-- Champs choix de l'Activite -->
         <!-- Le client -->
         <div class="mb-3">
-          <label>Projet</label>
-          <select class="form-select @error('id_projet') is-invalid @enderror" id="id_projet" wire:model="id_projet"
-            name="id_projet">
+          <label>Activite (*)</label>
+          <select class="form-select @error('id_activite') is-invalid @enderror" id="id_activite"
+            wire:model="id_activite" name="id_activite">
             <option value=""></option>
             <!--  La boucle pour afficher la liste des clients -->
-            @foreach ($listeProjet as $item )
-            <option value="{{$item->id}}">{{$item->libelle}}</option>
+            @foreach ($listeActivite as $item )
+            <option value="{{$item->id}}">{{$item->nom}}</option>
             @endforeach
 
           </select>
           <!-- afiche le message d'erreur si le champs est vide  -->
-          @error('id_projet')
+          @error('id_activite')
           <div class="invalid-feedback">Le projet est requis.</div>
           @enderror
         </div>

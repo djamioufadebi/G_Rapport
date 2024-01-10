@@ -22,7 +22,7 @@ class ListeRapport extends Component
 
     public function mount()
     {
-        $rapport = Rapport::with('projet')->get();
+        $rapport = Rapport::with('activite')->get();
     }
 
     public function s()
@@ -104,7 +104,10 @@ class ListeRapport extends Component
 
     public function render()
     {
-        $listeRapport = Rapport::where('libelle', 'like', '%' . $this->search . '%');
+        $word = '%' . $this->search . '%';
+        $listeRapport = Rapport::where('libelle', 'like', $word)
+            ->orwhere('contenu', 'like', $word)
+            ->orwhere('difficultes_rencontrees', 'like', $word);
 
         $user = Auth::user();
 

@@ -2,32 +2,44 @@
 
 namespace App\Livewire;
 
-use App\Models\Projet;
 use App\Models\Rapport;
 use Livewire\Component;
 use App\Models\Notifications;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Activite;
+
 
 class CreateRapport extends Component
 {
 
     public $libelle;
     public $contenu;
-    public $id_projet;
-
+    public $taux_de_realisation;
+    public $materiels_utilises;
+    public $difficultes_rencontrees;
+    public $solutions_apportees;
+    public $id_activite;
+    public $user_id;
     public $rapport;
 
     public function store()
     {
         $this->validate([
-            'libelle' => 'string|required',
-            'contenu' => 'string|required',
-            'id_projet' => 'required',
+            'libelle' => 'string|required|unique:rapports,libelle',
+            //'contenu' => 'string|required',
+            //'taux_de_realisation' => 'numeric|min:0|max:100',
+            //'materiels_utilises' => 'string|required',
+            //'difficultes_rencontrees' => 'string|required',
+            //'solutions_apportees' => 'string|required',
+            //'id_activite' => 'required',
+            //'user_id' => 'required',
         ]);
+        dd($this->libelle);
+
 
         // pour verifier si le Rapport existe déjà
         $query = Rapport::where('libelle', $this->libelle)->get();
-        // pour verifier si Rapport existe déjà
+        //  pour verifier si Rapport existe déjà
         if (count($query) > 0) {
 
             $message = 'Ce Rapport existe déjà!';
@@ -37,22 +49,26 @@ class CreateRapport extends Component
             try {
                 $rapport = new Rapport();
                 $rapport->libelle = $this->libelle;
-                $rapport->user_id = Auth::user()->id;
                 $rapport->contenu = $this->contenu;
-                $rapport->id_projet = $this->id_projet;
+                $rapport->taux_de_realisation = $this->taux_de_realisation;
+                $rapport->materiels_utilises = $this->materiels_utilises;
+                $rapport->difficultes_rencontrees = $this->difficultes_rencontrees;
+                $rapport->solutions_apportees = $this->solutions_apportees;
+                $rapport->id_activite = $this->id_activite;
+                $rapport->user_id = Auth::user()->id;
 
                 $rapport->save();
 
-                // recuperer le projet choisi
-                $projet = Projet::find($this->id_projet);
+                // recuperer le Activte$Activte choisi
+                $activite = Activite::find($this->id_activite);
 
-                // creer une notification pour la creation du rapport
+                //creer une notification pour la creation du rapport
                 $notification = new Notifications;
                 $notification->rapport_id = $rapport->id;
                 $notification->user_id = Auth::user()->id;
                 $notification->type = "rapport";
                 $notification->titre = "Creation d'un rapport";
-                $notification->message = "Le rapport : " . $this->libelle . " viens d'etre creer pour le projet :" . $projet->libelle;
+                $notification->message = "Le rapport : " . $this->libelle . " viens d'etre creer pour l'activité :" . $activite->nom;
                 $notification->read = false;
 
                 $notification->save();
@@ -62,6 +78,7 @@ class CreateRapport extends Component
                     'Nouveau rapport ajoutée !'
                 );
             } catch (\Exception $e) {
+                dd($e);
                 return redirect()->back()->with(
                     'error',
                     'Erreur d\'enregistrement du rapport'
@@ -72,8 +89,9 @@ class CreateRapport extends Component
 
     public function render()
     {
-        $listeProjet = Projet::all();
 
-        return view('livewire.create-rapport', compact('listeProjet'));
+        $listeActivite = Activite::all();
+
+        return view('livewire.create-rapport', compact('listeActivite'));
     }
 }

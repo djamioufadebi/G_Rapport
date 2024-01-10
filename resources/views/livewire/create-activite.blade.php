@@ -1,3 +1,13 @@
+<style>
+/* Style pour la barre de progression */
+.form-range {
+  width: 100%;
+  /* Utilise toute la largeur disponible */
+  margin: 10px 0;
+  /* Ajoute un espacement autour de la barre */
+}
+</style>
+
 <div class="row">
   <div class="card">
     <div class="card-body container-fluid ">
@@ -60,9 +70,9 @@
 
         <div class="mb-3">
           <label for="date_debut" class="form-label">Date Debut :</label>
-          <input type="date" class="form-control  @error('date_debut')
-            is-invalid @enderror " id="date_debut" wire:model="date_debut" name="date_debut" required>
-          <!-- afiche le message d'erreur si le champs est vide  -->
+          <input type="date" class="form-control @error('date_debut') is-invalid @enderror" id="date_debut"
+            wire:model="date_debut" name="date_debut" required>
+          <!-- Affiche le message d'erreur si le champ est vide -->
           @error('date_debut')
           <div class="invalid-feedback">Le champ date_debut est requis.</div>
           @enderror
@@ -70,24 +80,28 @@
 
         <div class="mb-3">
           <label for="date_fin" class="form-label">Date Fin :</label>
-          <input type="date" class="form-control  @error('date_fin')
-            is-invalid @enderror" id="date_fin" wire:model="date_fin" name="date_fin" required>
-          <!-- afiche le message d'erreur si le champs est vide  -->
+          <input type="date" class="form-control @error('date_fin') is-invalid @enderror" id="date_fin"
+            wire:model="date_fin" name="date_fin" required>
+          <div id="date_fin_error" class="invalid-feedback" style="display: none;">La date de fin ne peut pas être
+            antérieure à la date de début.</div>
+          <!-- Affiche le message d'erreur si le champ est vide -->
           @error('date_fin')
-          <div class=" invalid-feedback">Le champ date_fin est requis.</div>
+          <div class="invalid-feedback">Le champ date_fin est requis.</div>
           @enderror
         </div>
+
         <!-- Taux de réalisation avec barre de progression -->
         <div class="mb-3">
           <label for="taux_de_realisation" class="form-label">Taux de réalisation :</label>
           <input type="range" class="form-range @error('taux_de_realisation') is-invalid @enderror"
             id="taux_de_realisation" wire:model="taux_de_realisation" name="taux_de_realisation" min="0" max="100"
-            step="0.1" step="1" required>
+            step="0.1" required>
           <output id="taux_value" class="mt-2">{{$taux_de_realisation}}%</output>
           @error('taux_de_realisation')
           <div class="invalid-feedback">Le champ taux_de_realisation est requis.</div>
           @enderror
         </div>
+
 
         <!-- Champs choix de projet -->
         <div class="mb-3">
@@ -147,6 +161,17 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
       dateFinError.style.display = 'none'; // Masque le message d'erreur si les dates sont valides
     }
+  });
+});
+
+// pour la barre de progession : affichage de sa valeur
+document.addEventListener("DOMContentLoaded", function() {
+  const tauxDeRealisation = document.getElementById('taux_de_realisation');
+  const tauxValue = document.getElementById('taux_value');
+
+  tauxDeRealisation.addEventListener('input', function() {
+    // Met à jour la valeur affichée
+    tauxValue.innerText = tauxDeRealisation.value + '%';
   });
 });
 </script>

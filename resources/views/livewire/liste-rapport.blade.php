@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-11">
+  <div class="col-md-12">
     @if(session('success'))
     <script>
     Swal.fire({
@@ -63,10 +63,10 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th scope="col">Libellé du rapport </th>
-              <th scope="col">date </th>
-              <th scope="col">Projet</th>
+              <th scope="col">Libellé </th>
+              <th scope="col">Activité</th>
               <th scope="col">Statut</th>
+              <th scope="col">Taux de réalisation </th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -75,8 +75,7 @@
             @foreach ($listeRapport as $rapport)
             <tr>
               <td>{{$rapport->libelle}}</td>
-              <td>{{$rapport->created_at}}</td>
-              <td>{{$rapport->projet->libelle}}</td>
+              <td>{{$rapport->activite->nom}}</td>
               <!-- Le profil qui peut accéder à ces pages des bouttons -->
               <td>
                 <!-- href : le lien vers la page de modification du statut/ à mettre en place -->
@@ -96,6 +95,7 @@
                   class="btn btn-sm badge bg-danger">{{$rapport->statut}}</a>
                 @endif
               </td>
+              <td>{{$rapport->taux_de_realisation}}</td>
 
               <td>
                 <!-- Par exemple, un lien pour afficher le rapports détaillé -->

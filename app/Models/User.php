@@ -19,7 +19,7 @@ class User extends Authenticatable
     // un user peut faire plusieurs rapports
     public function rapport()
     {
-        return $this->hasMany(Rapport::class);
+        return $this->belongsToMany(Rapport::class);
     }
 
     // un user a un profil

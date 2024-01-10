@@ -12,7 +12,7 @@ class Bilan extends Model
 {
     use HasFactory;
 
-    // un bilan appartient à un projet et un projet à un client
+    // un bilan appartient à une activité et un projet à un client
     public function projet()
     {
         return $this->belongsTo(Projet::class);

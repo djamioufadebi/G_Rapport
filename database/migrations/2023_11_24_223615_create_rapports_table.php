@@ -13,15 +13,18 @@ return new class extends Migration {
         Schema::create('rapports', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
-            $table->integer('user_id');
             $table->text('contenu');
-            $table->text('commentaires')->nullable();
-            // $table->boolean('statut')->default(0);
-            $table->string('fichier')->nullable();
             $table->enum('statut', ['en attente', 'Validé', 'rejeté'])->default('en attente');
-            $table->unsignedBigInteger('id_projet');
-            $table->foreign('id_projet')->
-                references('id')->on('projets');
+            $table->unsignedBigInteger('id_activite');
+            $table->foreign('id_activite')->
+                references('id')->on('activites');
+            $table->decimal('taux_de_realisation', 5, 2)->default(0.00);
+            $table->text('materiels_utilises')->nullable();
+            $table->text('difficultes_rencontrees')->nullable();
+            $table->text('solutions_apportees')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->text('commentaires')->nullable();
             $table->timestamps();
         });
         schema::enableForeignKeyConstraints();
@@ -32,10 +35,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        // cet code permet de supprimer la colonne du champs clé etrangère au cas ou nous voulons la supprimer
         Schema::table('rapports', function (Blueprint $table) {
-            $table->dropForeign(['id_projet', 'user_id']);
-            $table->dropColumn(['id_projet', 'user_id']);
+            $table->dropForeign(['id_activite', 'user_id']);
+            $table->dropColumn(['id_activite', 'user_id']);
         });
         Schema::dropIfExists('rapports');
     }

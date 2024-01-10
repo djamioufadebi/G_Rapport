@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Activite;
 use App\Models\Besoin;
-use App\Models\Projet;
 use Livewire\Component;
 use App\Models\Notifications;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +13,7 @@ class CreateBesoin extends Component
 
     public $libelle;
     public $contenu;
-    public $id_projet;
+    public $id_activite;
 
     public function store()
     {
@@ -21,7 +21,7 @@ class CreateBesoin extends Component
         $this->validate([
             'libelle' => 'string|required|unique:besoins,libelle',
             'contenu' => 'string|required',
-            'id_projet' => 'required',
+            'id_activite' => 'required',
 
         ]);
 
@@ -39,12 +39,12 @@ class CreateBesoin extends Component
                 $besoin->libelle = $this->libelle;
                 $besoin->user_id = Auth::user()->id;
                 $besoin->contenu = $this->contenu;
-                $besoin->id_projet = $this->id_projet;
+                $besoin->id_activite = $this->id_activite;
 
                 $besoin->save();
 
-                // recuperer le projet choisi
-                $projet = Projet::find($this->id_projet);
+                // recuperer le activite choisi
+                $activite = Activite::find($this->id_activite);
 
                 // creer une notification pour la creation du rapport
                 $notification = new Notifications;
@@ -52,7 +52,7 @@ class CreateBesoin extends Component
                 $notification->type = "besoin";
                 $notification->user_id = Auth::user()->id;
                 $notification->titre = "Creation d'un besoin";
-                $notification->message = "Le besoin : " . $this->libelle . " viens d'etre creer pour le projet :" . $projet->libelle;
+                $notification->message = "Le besoin : " . $this->libelle . " viens d'etre creer pour l'activite :" . $activite->nom;
                 $notification->read = false;
 
                 $notification->save();
@@ -73,8 +73,8 @@ class CreateBesoin extends Component
     public function render()
     {
 
-        $listeProjet = Projet::all();
+        $listeActivite = Activite::all();
 
-        return view('livewire.create-besoin', compact('listeProjet'));
+        return view('livewire.create-besoin', compact('listeActivite'));
     }
 }

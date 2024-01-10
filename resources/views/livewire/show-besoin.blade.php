@@ -49,7 +49,13 @@
           <tr>
             <th scope="row">NOM DU PROJET</th>
             <td>
-              {{ $besoins->projet->libelle }}
+              {{ $besoins->activite->nom }}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">NOM DE L'ACTIVITE</th>
+            <td>
+              {{ $besoins->activite->nom }}
             </td>
           </tr>
           <tr>

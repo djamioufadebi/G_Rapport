@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\Activite;
 use App\Models\Besoin;
 use App\Models\Projet;
+use Auth;
 use Livewire\Component;
 use App\Models\Notifications;
 
@@ -12,14 +14,14 @@ class EditBesoin extends Component
 
     public $libelle;
     public $contenu;
-    public $id_projet;
+    public $id_activite;
 
     public $besoins;
     public function mount()
     {
         $this->libelle = $this->besoins->libelle;
         $this->contenu = $this->besoins->contenu;
-        $this->id_projet = $this->besoins->id_projet;
+        $this->id_activite = $this->besoins->id_activite;
 
     }
 
@@ -31,17 +33,17 @@ class EditBesoin extends Component
         $this->validate([
             'libelle' => 'string|required|unique:besoins,libelle',
             'contenu' => 'string|required',
-            'id_projet' => 'required',
+            'id_activite' => 'required',
         ]);
 
         try {
             $besoin->libelle = $this->libelle;
             $besoin->contenu = $this->contenu;
-            $besoin->id_projet = $this->id_projet;
+            $besoin->id_activite = $this->id_activite;
             $besoin->save();
 
             // recuperer le projet choisi
-            $projet = Projet::find($this->id_projet);
+            $projet = Projet::find($this->id_activite);
 
             // creer une notification pour la creation du rapport
             $notification = new Notifications;
@@ -67,7 +69,7 @@ class EditBesoin extends Component
     }
     public function render()
     {
-        $listeProjet = Projet::all();
-        return view('livewire.edit-besoin', compact('listeProjet'));
+        $listeactivite = Activite::all();
+        return view('livewire.edit-besoin', compact('listeactivite'));
     }
 }

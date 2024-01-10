@@ -80,7 +80,7 @@
             @foreach ($listeBesoins as $besoin)
             <tr>
               <td>{{$besoin->libelle}}</td>
-              <td>{{$besoin->projet->libelle}}</td>
+              <td>{{$besoin->activite->nom}}</td>
               <td>{{$besoin->created_at}}</td>
               <td>
                 @if ($besoin->statut == 'Validé')

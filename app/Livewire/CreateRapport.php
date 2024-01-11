@@ -24,24 +24,22 @@ class CreateRapport extends Component
 
     public function store()
     {
+
         $this->validate([
             'libelle' => 'string|required|unique:rapports,libelle',
-            //'contenu' => 'string|required',
-            //'taux_de_realisation' => 'numeric|min:0|max:100',
-            //'materiels_utilises' => 'string|required',
-            //'difficultes_rencontrees' => 'string|required',
-            //'solutions_apportees' => 'string|required',
-            //'id_activite' => 'required',
-            //'user_id' => 'required',
+            'contenu' => 'string|required',
+            'taux_de_realisation' => 'required|numeric|min:0|max:100',
+            'materiels_utilises' => 'string|required',
+            'difficultes_rencontrees' => 'string|required',
+            'solutions_apportees' => 'string|required',
+            'id_activite' => 'required',
+            'user_id' => '',
         ]);
-        dd($this->libelle);
-
 
         // pour verifier si le Rapport existe déjà
         $query = Rapport::where('libelle', $this->libelle)->get();
         //  pour verifier si Rapport existe déjà
         if (count($query) > 0) {
-
             $message = 'Ce Rapport existe déjà!';
             return redirect()->route('rapports.create')->with('dejautiliser', $message);
         } else {
@@ -56,9 +54,8 @@ class CreateRapport extends Component
                 $rapport->solutions_apportees = $this->solutions_apportees;
                 $rapport->id_activite = $this->id_activite;
                 $rapport->user_id = Auth::user()->id;
-
+                //  on enregistre le Rapport
                 $rapport->save();
-
                 // recuperer le Activte$Activte choisi
                 $activite = Activite::find($this->id_activite);
 
@@ -70,9 +67,7 @@ class CreateRapport extends Component
                 $notification->titre = "Creation d'un rapport";
                 $notification->message = "Le rapport : " . $this->libelle . " viens d'etre creer pour l'activité :" . $activite->nom;
                 $notification->read = false;
-
                 $notification->save();
-
                 return redirect()->Route('rapports')->with(
                     'success',
                     'Nouveau rapport ajoutée !'

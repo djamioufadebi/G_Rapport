@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Activite;
 use App\Models\Intervenant;
 use Exception;
 use Livewire\Component;
@@ -13,6 +14,7 @@ class CreateIntervenant extends Component
     public $contact;
     public $prenom;
     public $email;
+    public $id_activite;
 
     public $adresse;
 
@@ -26,6 +28,7 @@ class CreateIntervenant extends Component
             'contact' => 'integer|required',
             'email' => 'string|required|unique:intervenants,email',
             'adresse' => 'string|required',
+            'id_activite' => 'required',
         ]);
 
         // On recupère les intervenants existants avec le nom et le prenom
@@ -43,6 +46,7 @@ class CreateIntervenant extends Component
                 $intervenant->email = $this->email;
                 $intervenant->contact = $this->contact;
                 $intervenant->adresse = $this->adresse;
+                $intervenant->id_activite = $this->id_activite;
                 $intervenant->save();
 
                 return redirect()->Route('intervenants')->with(
@@ -60,6 +64,8 @@ class CreateIntervenant extends Component
     }
     public function render()
     {
-        return view('livewire.create-intervenant');
+        $listeActivite = Activite::all();
+
+        return view('livewire.create-intervenant', compact('listeActivite'));
     }
 }

@@ -1,13 +1,3 @@
-<style>
-/* Style pour la barre de progression */
-.form-range {
-  width: 100%;
-  /* Utilise toute la largeur disponible */
-  margin: 10px 0;
-  /* Ajoute un espacement autour de la barre */
-}
-</style>
-
 <div class="row">
   <div class="card">
     <div class="card-body container-fluid ">

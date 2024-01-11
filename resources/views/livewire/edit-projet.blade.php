@@ -79,8 +79,8 @@
               name="id_client">
               <option value=""></option>
               <!--  La boucle pour afficher la liste des clients -->
-              @foreach ($listeClient as $item )
-              <option value="{{$item->id}}">{{$item->nom}}</option>
+              @foreach ($listeClient as $client )
+              <option value="{{$client->id}}">{{$client->nom}}</option>
               @endforeach
 
             </select>

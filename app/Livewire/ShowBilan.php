@@ -18,14 +18,14 @@ class ShowBilan extends Component
     }
     public function render()
     {
+
+        // récuperer les activités de l'utilisateur connecté
+        $projets = Projet::all();
+
         $activites = Activite::all();
 
-        // récuperer automatique le projet auquel appartient l'activité sélectionnée
-        // recupérer le projet de l'activité sélectionnée
-        //$projet = Projet::where('id', $activites->id_projet)->first();
 
-
-        return view('livewire.show-bilan', compact('activites', 'projets'));
+        return view('livewire.show-bilan', compact('projets', 'activites'));
     }
 
 }

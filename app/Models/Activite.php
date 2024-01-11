@@ -30,10 +30,10 @@ class Activite extends Model
         return $this->belongsToMany(Rapport::class, 'id_activite');
     }
 
-    // relation entre activité et bilan : pour une activité on peut faire plusieurs bilans
-    //public function bilan()
-    // {
-    //     return $this->hasMany(Bilan::class, 'activite_id');
-    //  }
+    // Une activité peut avoir un ou plusieurs bilans
+    public function bilan()
+    {
+        return $this->hasMany(Bilan::class, 'id_activite');
+    }
 
 }

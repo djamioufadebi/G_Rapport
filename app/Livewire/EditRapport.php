@@ -37,7 +37,7 @@ class EditRapport extends Component
         $rapport = Rapport::find($this->rapports->id);
 
         $this->validate([
-            'libelle' => 'string|required|unique:rapports,libelle',
+            'libelle' => 'string|required',
             'contenu' => 'string|required',
             'taux_de_realisation' => 'required|numeric|min:0|max:100',
             'materiels_utilises' => 'string|required',

@@ -20,14 +20,13 @@
           <!-- Champs de sélection pour le activite -->
           <div class="col-md-3">
             <div class="form-group">
-              <label for="activite">Activité :</label>
+              <label for="id_projet">Projet :</label>
               <div class="input-group">
-                <select id="id_activite" name="id_activite" wire:model="id_activite"
-                  class="form-control form-control-md" required>
+                <select id="id_projet" name="id_projet" class="form-control form-control-md" required>
                   <option value=""></option>
                   <!-- Boucle pour les options -->
-                  @foreach ($activites as $activite)
-                  <option value="{{ $activite->id }}">{{ $activite->nom }}</option>
+                  @foreach ($projets as $item)
+                  <option value="{{ $item->id }}">{{ $item->libelle }}</option>
                   @endforeach
                 </select>
                 <div class="input-group-append">
@@ -37,12 +36,23 @@
             </div>
           </div>
 
-          <!-- Champs de sélection pour l'activité -->
+          <!-- Champs de sélection pour le activite -->
           <div class="col-md-3">
-            <div class="mb-3">
-              <label for="libelle" class="form-label">Projet lié :</label>
-              <input type="text" class="form-control" name="libelle" readonly>
-              <!-- afiche le message d'erreur si le champs est vide  -->
+            <div class="form-group">
+              <label for="activite">Activité :</label>
+              <div class="input-group">
+                <select id="id_activite" name="id_activite" wire:model="id_activite"
+                  class="form-control form-control-md" required>
+                  <option value=""></option>
+                  <!-- Boucle pour les options -->
+                  @foreach ($projets as $item)
+                  <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                  @endforeach
+                </select>
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fa fa-chevron-down"></i></span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -54,7 +64,7 @@
           </div>
           <div class="col-md-3 align-self-end">
             <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-sm"> PDF</button>
+              <button type="submit" class="btn btn-primary btn-sm"><i class="far fa-file-pdf"></i> PDF</button>
             </div>
           </div>
         </div>

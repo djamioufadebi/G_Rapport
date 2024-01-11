@@ -122,7 +122,7 @@ route::middleware('auth')->group(function () {
     Route::prefix('rapports')->group(
         function () {
             Route::get('/', [RapportController::class, 'index'])->name('rapports');
-            Route::any('/create', [RapportController::class, 'create'])->name('rapports.create');
+            Route::get('/create', [RapportController::class, 'create'])->name('rapports.create');
             Route::get('/edit-rapport/{rapport}', [RapportController::class, 'edit'])->name('rapports.edit');
             Route::get('/{rapport}', [RapportController::class, 'show'])->name('rapports.show');
         }
@@ -165,6 +165,7 @@ route::middleware('auth')->group(function () {
     Route::prefix('bilans')->group(
         function () {
             Route::get('/bilan', [BilanController::class, 'index'])->name('bilans');
+            Route::get('/create', [BilanController::class, 'create'])->name('bilans');
             Route::get('/bilan-generate', [BilanController::class, 'generateBilan'])->name('bilans.pdf');
         }
     );

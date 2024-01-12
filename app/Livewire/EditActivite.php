@@ -23,7 +23,6 @@ class EditActivite extends Component
         $this->date_debut = $this->activites->date_debut;
         $this->date_fin = $this->activites->date_fin;
         $this->id_projet = $this->activites->id_projet;
-        $this->taux_de_realisation = $this->activites->taux_de_realisation;
 
     }
 
@@ -36,22 +35,20 @@ class EditActivite extends Component
             'nom' => 'string|required',
             'description' => 'string|required',
             'date_debut' => 'date|required',
-            'date_fin' => 'date|required',
+            'date_fin' => 'required|date|after_or_equal:date_debut',
             'id_projet' => 'required',
-            'taux_de_realisation' => 'required|numeric|between:0,100',
         ]);
 
         try {
-            $activite->libelle = $this->libelle;
+            $activite->nom = $this->nom;
             $activite->description = $this->description;
             $activite->date_debut = $this->date_debut;
             $activite->date_fin = $this->date_fin;
             $activite->id_projet = $this->id_projet;
-            $activite->taux_de_realisation = $this->taux_de_realisation;
             $activite->save();
 
             return redirect()->Route('activites')->with(
-                'success',
+                'miseajour',
                 'Mise à jour du activite !'
             );
         } catch (\Exception $e) {

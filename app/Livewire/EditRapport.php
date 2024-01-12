@@ -18,6 +18,7 @@ class EditRapport extends Component
     public $materiels_utilises;
     public $difficultes_rencontrees;
     public $solutions_apportees;
+    public $statut;
 
     public $rapports;
     public function mount()
@@ -29,6 +30,7 @@ class EditRapport extends Component
         $this->materiels_utilises = $this->rapports->materiels_utilises;
         $this->difficultes_rencontrees = $this->rapports->difficultes_rencontrees;
         $this->solutions_apportees = $this->rapports->solutions_apportees;
+        $this->statut = $this->rapports->statut;
     }
 
     public function update()

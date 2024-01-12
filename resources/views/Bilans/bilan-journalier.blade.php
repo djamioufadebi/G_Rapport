@@ -58,6 +58,18 @@
     text-align: left;
   }
 
+  h2 {
+    text-align: center;
+    text-decoration: underline;
+  }
+
+  h3 {
+    font-size: 5px;
+    font-weight: italic;
+    margin-bottom: 5px;
+    /* text-decoration: underline; */
+  }
+
   .company-header {
     display: flex;
     align-items: center;
@@ -82,6 +94,8 @@
     font-size: 24px;
     font-weight: bold;
     text-align: right;
+    text-decoration: underline;
+    text-color: #000;
   }
 
   .report-detail {
@@ -115,7 +129,8 @@
     <div class="module">
       <div class="row">
         <div class="col-md-6">
-          <h3 class="module-title">Les projets en cours ce jour</h3>
+          <h2 class="module-title">Projets en cours</h2>
+          <br>
           <!-- Tableau pour afficher les détails des projets en cours -->
           @if (count($projetsEnCoursAujourdhui) > 0)
           <div class="table-responsive">
@@ -194,7 +209,7 @@
       <h2 class="module-title"> </h2>
       <div class="row">
         <div class="col-md-6">
-          <h3 class="module-title">Les besoins du jour</h3>
+          <h3 class="module-title">Besoins du jour</h3>
           <!-- Tableau pour afficher les détails des projets en cours -->
           @if (count($besoinsEnCoursAujourdhui) > 0)
           <div class="table-responsive">
@@ -204,7 +219,7 @@
                 <tr>
                   <th scope="col">Libellé</th>
                   <th scope="col">Activité</th>
-                  <th scope="col">Description</th>
+                  <th scope="col">Contenu</th>
                   <th scope="col">Date création</th>
                   <th scope="col">Statut</th>
                 </tr>
@@ -214,7 +229,7 @@
                 <tr>
                   <td>{{ $besoin->libelle }}</td>
                   <td>{{ $besoin->activite->nom }}</td>
-                  <td>{{ $besoin->description }}</td>
+                  <td>{{ $besoin->contenu }}</td>
                   <td>{{ $besoin->created_at }}</td>
                   <td>{{ $besoin->statut }}</td>
                 </tr>
@@ -234,7 +249,7 @@
     <!-- autre module -->
     <!-- module Les Rapports du jour -->
     <div class="module">
-      <h2 class="module-title">Les Rapports du jour</h2>
+      <h3 class="module-title">Rapports du jour</h3>
 
       @if (count($rapportsCreesAujourdhui) > 0)
       @foreach($rapportsCreesAujourdhui as $rapport)
@@ -309,7 +324,7 @@
       <h2 text-align="center">Prévision sur l'avenir</h2>
       <!-- module Projets en cours -->
       <div class="module">
-        <h2 class="module-title">Projets</h2>
+        <h4 class="module-title">Projets</h4>
         <div class="row">
           <div class="col-md-6">
             <h3 class="module-title">Projets en attentes</h3>
@@ -347,7 +362,7 @@
 
       <!-- Autre module -->
       <div class="module">
-        <h2 class="module-title">Activités</h2>
+        <h4 class="module-title">Activités</h4>
         <div class="row">
           <div class="col-md-6">
             <h3 class="module-title">Activité en attentes</h3>

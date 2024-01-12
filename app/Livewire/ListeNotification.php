@@ -7,9 +7,11 @@ use App\Models\Rapport;
 use Livewire\Component;
 use App\Models\Notifications;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithPagination;
 
 class ListeNotification extends Component
 {
+    use WithPagination;
     public function read($id)
     {
         $notification = Notifications::find($id);

@@ -62,6 +62,8 @@
             <label for="date_fin" class="form-label">Date Fin :</label>
             <input type="date" class="form-control @error('date_fin') is-invalid @enderror" id="date_fin"
               wire:model="date_fin" name="date_fin" required>
+            <div id="date_fin_error" class="invalid-feedback" style="display: none;">La date de fin ne peut pas
+              être antérieure à la date de début.</div>
             <!-- afiche le message d'erreur si le champs est vide  -->
             @error('date_fin')
             <div class="invalid-feedback">Le champ date_fin est requis.</div>
@@ -85,19 +87,47 @@
             @enderror
           </div>
 
-          <div class=" row d-flex justify-content-between mb-4">
-            <div class="col-md-3">
-              <button type="button" class="btn btn-danger">
-                <a href="{{route('activites')}}" class=" text-white fs-6" style="text-decoration:none;">Annuler</a>
-              </button>
-            </div>
-            <div class="col-md-4">
-              <button type="submit" class="btn btn-primary text text-bold">Mettre à jour</button>
-            </div>
-          </div>
-
-        </form>
       </div>
     </div>
+    <br>
+    <br>
+    <div class=" row d-flex justify-content-between mb-4">
+      <div class="col-md-3">
+        <button type="button" class="btn btn-danger">
+          <a href="{{route('activites')}}" class=" text-white fs-6" style="text-decoration:none;">Annuler</a>
+        </button>
+      </div>
+      <div class="col-md-4">
+        <button type="submit" class="btn btn-primary text text-bold">Mettre à jour</button>
+      </div>
+    </div>
+    </form>
   </div>
 </div>
+@livewireScripts()
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  let dateDebut = document.getElementById('date_debut');
+  let dateFin = document.getElementById('date_fin');
+  let dateFinError = document.getElementById('date_fin_error');
+
+  dateDebut.addEventListener('change', function() {
+    dateFin.min = dateDebut.value; // Définit la date minimum pour le champ de date de fin
+    if (dateFin.value !== '' && dateFin.value < dateDebut.value) {
+      dateFin.value = ''; // Réinitialise la date de fin si elle est antérieure à la date de début
+      dateFinError.style.display = 'block'; // Affiche le message d'erreur
+    } else {
+      dateFinError.style.display = 'none'; // Masque le message d'erreur si les dates sont valides
+    }
+  });
+
+  dateFin.addEventListener('change', function() {
+    if (dateFin.value !== '' && dateFin.value < dateDebut.value) {
+      dateFin.value = ''; // Réinitialise la date de fin si elle est antérieure à la date de début
+      dateFinError.style.display = 'block'; // Affiche le message d'erreur
+    } else {
+      dateFinError.style.display = 'none'; // Masque le message d'erreur si les dates sont valides
+    }
+  });
+});
+</script>

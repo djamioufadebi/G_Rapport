@@ -37,9 +37,13 @@ class BilanController extends Controller
             ->get();
 
         // Récupérer les projets en attentes aujourd'hui
-        $projetEnAttenteAjourdhui = Projet::where('statut', '=', 'en attente')
-            ->get();
+        // $projetEnAttenteAjourdhui = Projet::where('statut', '=', 'en attente')
+        //  ->get();
 
+        $projetEnAttenteAjourdhui = Projet::where('date_debut', '>', $dateToday)
+            ->where('date_fin_prevue', '>', $dateToday)
+            ->where('statut', '=', 'en attente')
+            ->get();
 
         // Récupérer les rapports créés aujourd'hui
         $rapportsCreesAujourdhui = Rapport::whereDate('created_at', $dateToday)->orwhere('updated_at', $dateToday)->get();
@@ -55,12 +59,21 @@ class BilanController extends Controller
         // récupérer les besoins qui ont été crés aujourdhui
         // $besoinsEnCoursAujourdhui = Besoin::where('statut', 'en cours')->get();
 
-        $activitesEnCours = Activite::where('statut', '=', 'en cours')->get();
+        $activitesEnCours = Activite::where('date_debut', '<=', $dateToday)
+            ->where('date_fin', '>=', $dateToday)
+            ->where('statut', '=', 'en cours')->get();
 
-        $activitesEnAttentes = Activite::where('statut', '=', 'en attente')->get();
+        $activitesEnAttentes = Activite::where('date_debut', '>', $dateToday)
+            ->where('date_fin', '>', $dateToday)
+            ->where('statut', '=', 'en attente')->get();
 
+        // récupérer les activités terminées aujourd'hui
+        $activitesTermineesAjourdhui = Activite::where('date_fin', '<=', $dateToday)
+            ->where('statut', '=', 'terminé')->get();
 
-        $activitesEnCoursTerminees = Activite::where('statut', '=', 'terminé')->get();
+        // récupérer les projets terminés aujourdhui
+        $projetsTerminesAujourdhui = Projet::where('date_fin_prevue', '<=', $dateToday)
+            ->where('statut', '=', 'terminé')->get();
 
         // récupérer les rapports créés aujourd'hui
         $rapportsCreesAujourdhui = Rapport::whereBetween(
@@ -74,13 +87,15 @@ class BilanController extends Controller
             'Bilans.bilan-journalier',
             compact(
                 'activitesEnAttentes',
-                'activitesEnCoursTerminees',
+                'activitesTermineesAjourdhui',
                 'dateToday',
                 'rapportsCreesAujourdhui',
                 'activitesEnCours',
                 'projetEnAttenteAjourdhui',
                 'projetsEnCoursAujourdhui',
-                'besoinsEnCoursAujourdhui'
+                'besoinsEnCoursAujourdhui',
+                'projetsTerminesAujourdhui',
+                'activitesTermineesAjourdhui'
             )
         );
 

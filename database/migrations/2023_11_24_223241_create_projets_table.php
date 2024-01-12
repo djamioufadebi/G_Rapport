@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->date('date_debut');
             $table->date('date_fin_prevue');
             $table->string('fichier')->nullable();
-            $table->enum('statut', ['en attente', 'en cours', 'terminé', 'arrêté'])->default('en cours');
+            $table->enum('statut', ['en attente', 'en cours', 'terminé', 'arrêté'])->default('en attente');
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->
                 references('id')->on('users');

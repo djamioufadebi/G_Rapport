@@ -18,6 +18,17 @@
     </div>
     @endif
 
+    @if(session(' miseajour'))
+    <script>
+    Swal.fire({
+      title: 'Mise à jour !',
+      text: 'Le Projet a été mise à jour !',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    })
+    </script>
+    @endif
+
     @if(session('delete'))
     <script>
     Swal.fire({

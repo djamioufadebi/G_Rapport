@@ -16,12 +16,15 @@ class EditBesoin extends Component
     public $contenu;
     public $id_activite;
 
+    public $statut;
+
     public $besoins;
     public function mount()
     {
         $this->libelle = $this->besoins->libelle;
         $this->contenu = $this->besoins->contenu;
         $this->id_activite = $this->besoins->id_activite;
+        $this->statut = $this->besoins->statut;
 
     }
 

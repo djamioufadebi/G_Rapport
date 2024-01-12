@@ -19,6 +19,21 @@
             {{ session('success') }}
           </div>
           @endif
+          @if(session('date_error2'))
+          <div class="alert alert-danger">
+            {{ session('date_error2') }}
+          </div>
+          @endif
+          @if(session('date_error2'))
+          <script>
+          Swal.fire({
+            title: 'Erreur de date !',
+            text: 'la date de fin ne pas être postérieure à la date de debut !',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+          </script>
+          @endif
 
           <div class="mb-3">
             <label for="libelle" class="form-label">libelle :</label>
@@ -62,13 +77,15 @@
           </div>
 
           <div class="mb-3">
-            <label for="date_fin" class="form-label">Date Fin :</label>
+            <label for="date_fin_prevue" class="form-label">Date Fin :</label>
             <input type="date" class="form-control  @error('date_fin_prevue')
             is-invalid @enderror" id="date_fin_prevue" wire:model="date_fin_prevue" name="date_fin_prevue" required>
-
+            <div id="date_fin_prevue_error" class="invalid-feedback" style="display: none;">La date de fin ne peut pas
+              être
+              antérieure à la date de début.</div>
             <!-- afiche le message d'erreur si le champs est vide  -->
             @error('date_fin_prevue')
-            <div class=" invalid-feedback">Le champ date_fin est requis.</div>
+            <div class=" invalid-feedback">Le champ date_fin_prevue est requis.</div>
             @enderror
           </div>
 

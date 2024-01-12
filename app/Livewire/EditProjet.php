@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Client;
 use App\Models\Projet;
 use Livewire\Component;
 
@@ -13,6 +14,7 @@ class EditProjet extends Component
     public $date_debut;
     public $date_fin_prevue;
     public $lieu;
+    public $statut;
     public $id_client;
 
     public $projets;
@@ -24,6 +26,7 @@ class EditProjet extends Component
         $this->date_debut = $this->projets->date_debut;
         $this->date_fin_prevue = $this->projets->date_fin_prevue;
         $this->id_client = $this->projets->id_client;
+        $this->statut = $this->projets->statut;
     }
 
     public function update()
@@ -50,7 +53,7 @@ class EditProjet extends Component
             $projet->save();
 
             return redirect()->Route('projets')->with(
-                'success',
+                'miseajour',
                 'Mise à jour du projet !'
             );
         } catch (\Exception $e) {
@@ -63,7 +66,7 @@ class EditProjet extends Component
 
     public function render()
     {
-        $listeClient = Projet::all();
+        $listeClient = Client::all();
         return view('livewire.edit-projet', compact('listeClient'));
     }
 }

@@ -22,7 +22,7 @@ class BilanController extends Controller
 
     public function create()
     {
-        return view('Bilans.bilan-journalier');
+        //return view('Bilans.bilan-journalier');
     }
 
     public function generateBilan()
@@ -31,38 +31,60 @@ class BilanController extends Controller
         $dateToday = Carbon::today();
 
         // Récupérer les projets en cours aujourd'hui
-        //$projetsEnCoursAujourdhui = Projet::whereDate('date_debut', '<=', $dateToday)
-        //   ->whereDate('date_fin_prevue', '>=', $dateToday)->where('statut', 'en cours')
-        //   ->get();
+        $projetsEnCoursAujourdhui = Projet::where('date_debut', '<=', $dateToday)
+            ->where('date_fin_prevue', '>=', $dateToday)
+            ->where('statut', '=', 'en cours')
+            ->get();
 
-        $projetsEnCoursAujourdhui = Projet::where('statut', 'en cours');
+        // Récupérer les projets en attentes aujourd'hui
+        $projetEnAttenteAjourdhui = Projet::where('statut', '=', 'en attente')
+            ->get();
 
-        //$projetsEnCoursAujourdhui = Projet::where('id', '!=', 1)->get();
-        //dd($projetsEnCoursAujourdhui);
 
         // Récupérer les rapports créés aujourd'hui
-        $rapportsEnCoursAujourdhui = Rapport::whereDate('created_at', $dateToday)->get();
+        $rapportsCreesAujourdhui = Rapport::whereDate('created_at', $dateToday)->orwhere('updated_at', $dateToday)->get();
 
-        $projetsEnAttente = Projet::where('statut', 'en cours')->get();
-        //dd($projetsEnAttente);
+        // Récupérer les besoins en cours aujourd'hui
 
-        // les activités en cours
-        $activitesEnCours = Activite::whereDate('date_debut', '<=', $dateToday)
-            ->whereDate('date_fin', '>=', $dateToday)->where('statut', 'en attente')
-            ->get();
-        $activitesEnCours = Activite::where('statut', 'en attente')->get();
-        //dd($activitesEnCours);
+        $besoinsEnCoursAujourdhui = Besoin::whereBetween(
+            'created_at',
+            [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
+        )
+            ->orwhere('updated_at', $dateToday)->get();
 
-        // récupérer les rapports créés aujourd'hui et les afficher dans le pdf
-        //$rapports = Rapport::whereDate('created_at', Carbon::today())->get();
-        $rapports = Rapport::whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->get();
+        // récupérer les besoins qui ont été crés aujourdhui
+        // $besoinsEnCoursAujourdhui = Besoin::where('statut', 'en cours')->get();
+
+        $activitesEnCours = Activite::where('statut', '=', 'en cours')->get();
+
+        $activitesEnAttentes = Activite::where('statut', '=', 'en attente')->get();
 
 
-        $pdf = Pdf::loadView('Bilans.bilan-journalier', compact('rapportsEnCoursAujourdhui', 'rapports', 'activitesEnCours', 'projetsEnAttente', 'projetsEnCoursAujourdhui'));
+        $activitesEnCoursTerminees = Activite::where('statut', '=', 'terminé')->get();
 
-        // Changer la disposition en mode paysage
-        //$pdf->setPaper('a4', 'landscape');
-        //  $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+        // récupérer les rapports créés aujourd'hui
+        $rapportsCreesAujourdhui = Rapport::whereBetween(
+            'created_at',
+            [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
+        )
+            ->orwhere('updated_at', $dateToday)->get();
+
+
+        $pdf = Pdf::loadView(
+            'Bilans.bilan-journalier',
+            compact(
+                'activitesEnAttentes',
+                'activitesEnCoursTerminees',
+                'dateToday',
+                'rapportsCreesAujourdhui',
+                'activitesEnCours',
+                'projetEnAttenteAjourdhui',
+                'projetsEnCoursAujourdhui',
+                'besoinsEnCoursAujourdhui'
+            )
+        );
+
+        $pdf->setPaper('a4', 'landscape');
 
         return $pdf->stream();
 

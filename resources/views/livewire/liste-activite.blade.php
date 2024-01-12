@@ -44,6 +44,12 @@
     </script>
     @endif
 
+    @if(session('error'))
+    <div class="alert alert-danger">
+      {{ session('error') }}
+    </div>
+    @endif
+
     <!-- le bouton ajouter -->
     <div class=" row d-flex justify-content-between mb-2">
       <div class="col-md-6">
@@ -88,21 +94,21 @@
               <td>{{$activite->taux_de_realisation}} %</td>
               <td>
                 @if ($activite->statut == 'en attente')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
                   data-bs-target="#confirmProfilModal{{ $activite->id }}" @endif
                   class=" btn btn-sm badge bg-success">{{$activite->statut}}</a>
                 @elseif ($activite->statut == 'en cours')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
                   data-bs-target="#confirmProfilModal{{ $activite->id }}" @endif
                   class=" btn btn-sm badge bg-success">{{$activite->statut}}</a>
 
                 @elseif ($activite->statut == 'arrêté')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
                   data-bs-target="#confirmProfilModal{{ $activite->id }}" @endif
                   class="btn btn-sm badge bg-warning">{{$activite->statut}}</a>
 
                 @elseif ($activite->statut == 'terminé')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
                   data-bs-target="#confirmProfilModal{{ $activite->id }}" @endif
                   class="btn btn-sm badge bg-danger">{{$activite->statut}}</a>
                 @endif
@@ -117,7 +123,7 @@
                     class="fas fa-pen"></i></a>
 
                 <!-- Un bouton pour supprimer le activite -->
-                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 2)
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1)
                   data-bs-target="#confirmationModal{{ $activite->id }}" @endif
                   class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
@@ -161,7 +167,7 @@
         </table>
 
         <div class=" my-4">
-          {{ $listeActivites->links()}}
+          {{ $listeActivites->links('Pagination.bootstrap-pagination')}}
         </div>
         <!-- 'Pagination.bootstrap-pagination' -->
 

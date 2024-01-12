@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Activite;
+use App\Models\Projet;
 use App\Models\User;
 use Livewire\Component;
 
@@ -15,9 +17,11 @@ class ShowRapport extends Component
 
         $userRapport = User::where('id', $rapport->user_id)->first();
 
+        $activites = Activite::where('id', $rapport->id_activite)->first();
 
-        $projets = User::where('id', $rapport->id_projet)->first();
+        $projet = Projet::where('id', $activites->id_projet)->first();
 
-        return view('livewire.show-rapport', compact('rapport', 'userRapport', 'projets'));
+
+        return view('livewire.show-rapport', compact('rapport', 'projet', 'activites', 'userRapport'));
     }
 }

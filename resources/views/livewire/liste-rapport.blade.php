@@ -153,7 +153,7 @@
           </tbody>
         </table>
         <div class="mx-1">
-          {{-- $listeRapport->links('Pagination.bootstrap-pagination') --}}
+          {{ $listeRapport->links('Pagination.bootstrap-pagination')}}
         </div>
 
       </div>

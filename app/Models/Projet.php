@@ -39,9 +39,14 @@ class Projet extends Model
 
 
     // un projet a plusieurs besoins
-    public function besoins()
+    public function besoin()
     {
         return $this->belongsToMany(Besoin::class, 'id_projet');
+    }
+
+    public function rapport()
+    {
+        return $this->belongsToMany(Rapport::class, 'id_projet');
     }
 
     // un projet a plusieurs activités

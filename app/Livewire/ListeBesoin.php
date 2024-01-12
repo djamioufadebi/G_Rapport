@@ -8,10 +8,12 @@ use Livewire\Component;
 use App\Models\Notification;
 use App\Models\Notifications;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithPagination;
 
 class ListeBesoin extends Component
 {
 
+    use WithPagination;
     public $statut;
     public $search;
 
@@ -99,8 +101,8 @@ class ListeBesoin extends Component
         $listeBesoins = Besoin::where('libelle', 'like', $word)->orwhere('created_at', 'like', $word)->orwhere('contenu', 'like', $word);
 
         $user = Auth::user();
-        // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer
-        if ($user->id_profil != 1 && $user->id_profil != 2) {
+        // Si l'utilisateur n'est pas admin, afficher uniquement les besoins qu'il a creer
+        if ($user->id_profil != 1) {
             // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer
             $listeBesoins->where('user_id', $user->id);
         }

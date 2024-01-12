@@ -18,6 +18,11 @@
         <br>
         <div class="form-group">
           <div>
+            <input type="radio" id="statutEnAttente{{$projet->id}}" wire:model="statut" value="en attente" name="statut"
+              @if($projet->statut === 'en attente') checked @endif>
+            <label for="statutEnAttente{{$projet->id}}">En attente</label>
+          </div>
+          <div>
             <input type="radio" id="statutEnCours{{$projet->id}}" wire:model="statut" value="en cours" name="statut"
               @if($projet->statut === 'en cours') checked @endif>
             <label for="statutEnCours{{$projet->id}}">En cours</label>

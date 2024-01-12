@@ -10,22 +10,6 @@ class ClientPolicy
 {
     use HandlesAuthorization;
 
-    // public function autoriseClientAccess(User $user)
-    // {
-    // Autoriser l'accès pour les utilisateurs ayant certains profils (par ID)
-    //    return in_array($user->id_profil, [2, 2, 4]); // Profils autorisés (exemple : 1, 2 et 2)
-    // }
-
-    // public function accessCreationClient(User $user, $id_profil)
-    // {
-    //    return $user->id_profil === 2;
-    //}
-
-    // public function edit(User $user, Client $client)
-    // {
-    // Seuls l'utilisateur ayant l'id profil 2 ou l'utilisateur propriétaire des clients peuvent éditer un client
-    //    return $user->id_profil === 2 || $user->id === $client->user_id;
-    // }
 
     public function viewliste(User $user)
     {

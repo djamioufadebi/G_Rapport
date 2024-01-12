@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Activite;
+use App\Models\Besoin;
 use App\Models\Projet;
 use App\Models\User;
 use Livewire\Component;
@@ -16,11 +18,10 @@ class ShowBesoin extends Component
         // pour recupérer l'utilisateur qui a fait le besoin
         $userBesoin = User::where('id', $besoins->user_id)->first();
 
-        $activites = User::where('id', $besoins->id_activite)->first();
+        // recupère
+        $activites = Activite::where('id', $besoins->id_activite)->first();
 
-        $projet = Projet::where('id', $activites->id)->get('libelle');
-
-        //dd($projet);
+        $projet = Projet::where('id', $activites->id_projet)->first();
 
         return view('livewire.show-besoin', compact('besoins', 'userBesoin', 'activites', 'projet'));
     }

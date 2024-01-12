@@ -83,7 +83,7 @@ class EditRapport extends Component
     }
     public function render()
     {
-        $listeProjet = Projet::all();
-        return view('livewire.edit-rapport', compact('listeProjet'));
+        $listeActivite = Activite::all();
+        return view('livewire.edit-rapport', compact('listeActivite'));
     }
 }

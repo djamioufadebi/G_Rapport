@@ -1,6 +1,12 @@
 <div class="row">
   <div class="col-md-12">
 
+    @if(session('error'))
+    <div class="alert alert-danger">
+      {{ session('error') }}
+    </div>
+    @endif
+
     <!-- le bouton ajouter -->
     @if(session('success'))
     <script>
@@ -77,9 +83,6 @@
                   data-bs-target="#confirmationModal"
                   @endif class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
-                <button type="button" class="btn btn-primary">
-                  <a href="{{route('client.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
-                      class="fas fa-download"></i></a></button>
               </td>
           </tbody>
 

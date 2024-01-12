@@ -14,6 +14,13 @@
 <body>
   <div class="container mt-5">
     <div class="container mt-8">
+
+      <a href="{{ route('bilans.pdf')}}">
+        <button class="btn btn-primary btn-sm">
+          Rapport Journalier
+        </button>
+      </a>
+      <hr>
       <form action="{{ route('bilans.pdf') }}" method="POST">
         @csrf
         <div class="row">
@@ -72,12 +79,7 @@
     </div>
     <hr>
     <hr>
-    <a href="{{ route('bilans.pdf')}}">
-      <button class="btn btn-primary btn-sm">
-        Rapport Journalier
-      </button>
-    </a>
-    <hr>
+
     <form action="{{ route('bilans.pdf') }}" method="POST">
       @csrf
       <hr>

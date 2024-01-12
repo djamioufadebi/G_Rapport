@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Projet;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,17 @@ class BesoinFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'libelle' => $this->faker->sentence,
+            'user_id' => function () {
+                return User::inRandomOrder()->first()->id;
+            },
+            'contenu' => $this->faker->paragraph,
+            'commentaires' => $this->faker->text,
+            'fichier' => $this->faker->word,
+            'statut' => $this->faker->randomElement(['en attente', 'Validé', 'rejeté']),
+            'id_activite' => function () {
+                return Projet::inRandomOrder()->first()->id;
+            },
         ];
     }
 }

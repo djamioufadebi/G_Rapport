@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Activite;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class ActiviteSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Activite::factory()->times(10)->create();
     }
 }

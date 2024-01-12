@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Activite;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,14 @@ class IntervenantFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nom' => $this->faker->lastName,
+            'prenom' => $this->faker->firstName,
+            'contact' => $this->faker->phoneNumber,
+            'email' => $this->faker->email,
+            'adresse' => $this->faker->address,
+            'id_activite' => function () {
+                return Activite::inRandomOrder()->first()->id;
+            },
         ];
     }
 }

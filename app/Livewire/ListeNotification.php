@@ -17,6 +17,7 @@ class ListeNotification extends Component
         $notification->save();
     }
 
+    //
     public function readAll()
     {
         $notifications = Notifications::where('read', false)->get();

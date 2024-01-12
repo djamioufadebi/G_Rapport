@@ -77,9 +77,6 @@
                   data-bs-target="#confirmationModal" @endif
                   class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
-                <button type="button" class="btn btn-primary">
-                  <a href="{{route('intervenant.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
-                      class="fas fa-download"></i></a></button>
               </td>
 
           </tbody>

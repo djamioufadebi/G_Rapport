@@ -69,7 +69,7 @@ class EditBesoin extends Component
     }
     public function render()
     {
-        $listeactivite = Activite::all();
-        return view('livewire.edit-besoin', compact('listeactivite'));
+        $listeActivite = Activite::all();
+        return view('livewire.edit-besoin', compact('listeActivite'));
     }
 }

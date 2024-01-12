@@ -26,45 +26,74 @@ class ListeProjet extends Component
     {
     }
 
-
-    // fonction pour supprimer un Projet avec une confirmation avant de suppression
-    // public function confirmDelete($id)
-    // {
-    //  selectionner le Projet à supprimer avec la fonction find() et le supprimer avec la fonction delete()
-    //    $selectedItemId = Projet::find($id)->delete();
-
-    //     $this->selectedItemId = $selectedItemId;
-    //    return redirect("projets")->with('delete', 'Le Projet à été supprimé');
-    // }
-
     public function confirmDelete($id)
     {
-        $projet = Projet::find($id);
+        try {
+            // Trouver le projet
+            $projet = Projet::findOrFail($id);
 
-        // creer une notification pour la suppresion du projet
-        $notification = new Notification;
-        // selectionner l'utilisateur qui a supprimer le projet
-        $notification->user_id = Auth::user()->id;
-        // donner le titre de la notification
-        $notification->type = "Projet";
-        $notification->titre = "Suppression d'une Projet";
-        // donner le message de la notification en le concaténant avec le nom du Projet et l'email de l'utilisateur qui a supprimer le Projet.
-        $notification->message = "Le Projet : " . $projet->libelle . " viens d'etre supprimer par :" . Auth::user()->email;
-        $notification->read = false;
+            if (!$this->canDeleteProjet($projet)) {
+                throw new \Exception('Impossible de supprimer ce projet.');
+            }
 
-        $notification->save();
-
-        //  selectionner le Projet à supprimer avec la fonction find() et le supprimer avec la fonction delete()
-        $projet->delete();
-        return redirect("projets")->with('delete', 'Le rapport à été supprimé');
+            // Créer une notification pour la suppression du projet
+            $notification = new Notification;
+            $notification->user_id = Auth::user()->id;
+            $notification->type = "Projet";
+            $notification->titre = "Suppression d'une Projet";
+            $notification->message = "Le Projet : " . $projet->libelle . " vient d'être supprimé par : " . Auth::user()->email;
+            $notification->read = false;
+            $notification->save();
+            // Supprimer le projet
+            $projet->delete();
+            return redirect("projets")->with('delete', 'Le projet a été supprimé avec succès');
+        } catch (\Exception $e) {
+            return redirect("projets")
+                ->with('error', 'Impossible de supprimer ce projet  : Vous devez supprimer tous les enregistrements liés à ce projet avant de le supprimer ');
+        }
     }
+
+    private function canDeleteProjet($projet)
+    {
+        // Vérifier s'il existe des relations avec d'autres modèles
+        $references = [
+            'activite',
+            'besoin',
+            'rapport',
+            'intervenant',
+        ];
+        foreach ($references as $relation) {
+            if ($projet->$relation()->count() > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
 
 
     public function ValidationStatutProjet($id)
     {
         $projet = Projet::find($id);
 
-        if ($this->statut == "terminé") {
+        if ($this->statut == "en cours") {
+            // creer une notification pour la Finition du Projet
+            $notification = new Notification;
+            // selectionner l'utilisateur qui a valider le Projet
+            $notification->user_id = Auth::user()->id;
+            // donner le titre de la notification (le statut du Projet)
+            $notification->titre = "Démarrage d'un Projet";
+            // donner le type de la notification (le statut du Projet)
+            $notification->type = "Projet";
+            // donner le message de la notification en le concaténant avec le nom du Projet et l'email de l'utilisateur qui a valider le Projet.
+            $notification->message = "Le démarrage du Projet : " . $projet->libelle . " viens d'être notifié démarré par :" . Auth::user()->email;
+            // marquer la notification comme lu ou non lu
+            $notification->read = false;
+
+            $notification->save();
+        } else if ($this->statut == "terminé") {
             // creer une notification pour la Finition du Projet
             $notification = new Notification;
             // selectionner l'utilisateur qui a valider le Projet
@@ -94,24 +123,26 @@ class ListeProjet extends Component
             $notification->save();
         }
 
-
         // associer le statut du projet
         if ($this->statut != null) {
             $projet->statut = $this->statut;
-            if ($projet->statut == "terminé") {
+            if ($projet->statut == "en cours") {
                 // Sauvegardez les modifications avec la fonction save()
                 $projet->save();
+                return redirect("projets")->with('Encours', 'Le Projet est en cours');
+            } else if ($projet->statut == "terminé") {
+                $projet->save();
                 return redirect("projets")->with('terminer', 'Vous venez de notifier la finalisation du projet');
+                // Sauvegardez les modifications avec la fonction save() et retourner sur la page des projets
             } else if ($projet->statut == "arrêté") {
                 $projet->save();
                 return redirect("projets")->with('rejeter', 'Le Projet a été arrêté');
             }
         } else {
-            $projet->statut = "en cours";
-
+            $projet->statut = "en attente";
             // Sauvegardez les modifications avec la fonction save() et retourner sur la page des projets
             $projet->save();
-            return redirect("projets")->with('En cours', 'Le Projet est toujours en cours');
+            return redirect("projets")->with('Enattente', 'Le Projet est toujours en cours');
         }
 
         // retourner sur la page des projets si aucun statut n'est selectionner

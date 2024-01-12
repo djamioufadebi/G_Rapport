@@ -11,6 +11,13 @@
     })
     </script>
     @endif
+
+    @if(session('error'))
+    <div class="alert alert-danger">
+      {{ session('error') }}
+    </div>
+    @endif
+
     @if(session('delete'))
     <script>
     Swal.fire({
@@ -84,17 +91,21 @@
               <td>{{$projet->client->nom}}</td>
               <td>
                 <!-- href : le lien vers la page de modification du statut/ à mettre en place -->
-                @if ($projet->statut == 'en cours')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3 )
+                @if ($projet->statut == 'en attente')
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
+                  data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
+                  class=" btn btn-sm badge bg-success">{{$projet->statut}}</a>
+                @elseif ($projet->statut == 'en cours')
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
                   data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-success">{{$projet->statut}}</a>
                 @elseif ($projet->statut == 'arrêté')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
                   data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-warning">{{$projet->statut}}</a>
 
                 @elseif ($projet->statut == 'terminé')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 3 )
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
                   data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-danger">{{$projet->statut}}</a>
                 @endif
@@ -110,13 +121,11 @@
                     class="fas fa-pen"></i></a>
 
                 <!-- Un bouton pour supprimer le projet -->
-                <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 3]))
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1)
                   data-bs-target="#confirmationModal{{$projet->id}}" @endif
                   class="btn btn-sm btn-danger"> <i class="fas fa-trash-alt"></i>
                 </button>
-                <button type="button" class="btn btn-primary">
-                  <a href="{{route('projet.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
-                      class="fas fa-download"></i></a></button>
+
               </td>
           </tbody>
 
@@ -173,5 +182,5 @@
 
       </div>
     </div>
-    </di v>
   </div>
+</div>

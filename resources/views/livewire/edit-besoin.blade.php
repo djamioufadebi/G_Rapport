@@ -41,21 +41,21 @@
         </div>
 
         <!-- Champs choix de projet -->
-        <!-- Le client -->
+        <!-- L'actvité -->
         <div class="mb-3">
-          <label>Projet</label>
-          <select class="form-select @error('id_projet') is-invalid @enderror" id="id_projet" wire:model="id_projet"
-            name="id_projet">
+          <label>Activité</label>
+          <select class="form-select @error('id_activite') is-invalid @enderror" id="id_activite"
+            wire:model="id_activite" name="id_activite">
             <option value=""></option>
-            <!--  La boucle pour afficher la liste des clients -->
-            @foreach ($listeProjet as $item )
-            <option value="{{$item->id}}">{{$item->libelle}}</option>
+            <!--  La boucle pour afficher la liste de'actvité  -->
+            @foreach ($listeActivite as $item )
+            <option value="{{$item->id}}">{{$item->nom}}</option>
             @endforeach
 
           </select>
           <!-- afiche le message d'erreur si le champs est vide  -->
-          @error('id_projet')
-          <div class="invalid-feedback">Le client est requis.</div>
+          @error('id_activite')
+          <div class="invalid-feedback">L'actvité est requis.</div>
           @enderror
         </div>
     </div>

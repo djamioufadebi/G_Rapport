@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Besoin;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class BesoinSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Besoin::factory()->times(10)->create();
     }
 }

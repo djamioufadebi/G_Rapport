@@ -53,9 +53,6 @@
                   <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal"
                     class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                   </button>
-                  <button type="button" class="btn btn-primary">
-                    <a href="{{route('profil.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
-                        class="fas fa-download"></i></a></button>
                 </td>
               </tr>
 

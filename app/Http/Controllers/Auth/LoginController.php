@@ -47,12 +47,6 @@ class LoginController extends Controller
                 return route('profils'); // Rediriger vers le tableau de bord pour les administrateurs
             } elseif ($user->profil()->pluck('nom')->contains('Gestionnaire')) {
                 return route('projets'); // Rediriger vers le tableau de bord du profil 2
-            } elseif ($user->profil()->pluck('nom')->contains('Chef chantier')) {
-                return route('besoins'); // Rediriger vers le tableau de bord du profil 3
-            } elseif ($user->profil()->pluck('nom')->contains('Manager')) {
-                return route('home'); // Rediriger vers le tableau de bord du profil 4
-            } elseif ($user->profil()->pluck('nom')->contains('Magasinier')) {
-                return route('rapports'); // Rediriger vers le tableau de bord du profil 4
             } else {
                 return view('composants.redirection-new-user');
             }

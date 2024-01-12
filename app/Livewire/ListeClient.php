@@ -16,16 +16,42 @@ class ListeClient extends Component
 
     public $search;
 
-    public function s () {}
+    public function s()
+    {
+    }
 
     // fonction pour supprimer un Client avec une confirmation avant de suppression
     public function confirmDelete($id)
     {
-        //  selectionner le Client à supprimer avec la fonction find() et le supprimer avec la fonction delete()
-        $selectedItemId = Client::find($id)->delete();
+        try {
+            $selectedItemId = Client::findOrFail($id);
+            if (!$this->canDeleteClient($selectedItemId)) {
+                throw new \Exception('Impossible de supprimer ce client.');
+            }
 
-        $this->selectedItemId = $selectedItemId;
-        return redirect("clients")->with('delete', 'Le client à été supprimé');
+            $selectedItemId->delete();
+
+            $this->selectedItemId = $selectedItemId;
+            return redirect("clients")->with('delete', 'Le client à été supprimé');
+        } catch (\Exception $e) {
+            return redirect("clients")
+                ->with('error', 'Impossible de supprimer ce client : Vous devez supprimer tous les enregistrements liés à ce client avant de le supprimer ');
+        }
+
+    }
+
+    private function canDeleteClient($client)
+    {
+        // Vérifier s'il existe des relations avec le modèle projet
+        $references = [
+            'projet',
+        ];
+        foreach ($references as $relation) {
+            if ($client->$relation()->count() > 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function render()

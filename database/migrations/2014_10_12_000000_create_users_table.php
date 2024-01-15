@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->rememberToken();
 
             // valeur par defaut pour les champs id_profil (5)
-            $table->unsignedBigInteger('id_profil')->default(5);
+            $table->unsignedBigInteger('id_profil')->default(3);
             $table->foreign('id_profil')->
                 references('id')->on('profils')->onDelete('cascade');
 

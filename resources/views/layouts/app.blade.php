@@ -8,27 +8,20 @@
   <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-
-
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>{{ config('app.name', 'Laravel') }}</title>
 
-  <!-- Importation de jQuery pour faire -->
-  <!--
+  <!-- Importation de jQuery (si nécessaire) -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> -->
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-
   <!-- Lien vers Font Awesome -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css"
-    integrity="sha512-d0olNN35C6VLiulAobxYHZiXJmq+vl+BGIgAxQtD5+kqudro/xNMvv2yIHAciGHpExsIbKX3iLg+0B6d0k4+ZA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -44,7 +37,6 @@
   <!-- Importation de sweetalert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 
   <!-- importation tab.js pour les onglets -->
   <script src="{{ asset('js/tab.js') }}"></script>
@@ -69,65 +61,61 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        @livewire('menu-layout')
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Ajoutez vos éléments de menu ici -->
+          @livewire('menu-layout')
 
-        <!-- fin : notification -->
+          <!-- Right Side Of Navbar -->
+          <ul class="navbar-nav ms-auto">
+            <!-- Authentication Links -->
+            @guest
+            @if(Route::has('login'))
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+            @endif
 
-        <!-- Right Side Of Navbar -->
-        <ul class="navbar-nav ms-auto">
-
-
-          <!-- Authentication Links -->
-          @guest
-          @if(Route::has('login'))
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-          </li>
-          @endif
-
-          @if (Route::has('register'))
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-          </li>
-          @endif
-          @else
-          <li class="nav-item dropdown">
-            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false" v-pre>
-              {{ Auth::user()->nom }} {{ Auth::user()->prenom }}
-            </a>
-
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{{ route('mon_profile') }}">Mon Profil </a>
-              <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                      document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
+            @if (Route::has('register'))
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+            </li>
+            @endif
+            @else
+            <li class="nav-item dropdown">
+              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->nom }} {{ Auth::user()->prenom }}
               </a>
 
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-              </form>
-            </div>
-          </li>
-          @endguest
-        </ul>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('mon_profile') }}">Mon Profil</a>
+                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                      document.getElementById('logout-form').submit();">
+                  {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                  @csrf
+                </form>
+              </div>
+            </li>
+            @endguest
+          </ul>
+        </div>
+        @endif
       </div>
-      @endif
-  </div>
-  </nav>
+    </nav>
 
-  <main class="py-4">
-    @yield('content')
-  </main>
+    <main class="py-4">
+      @yield('content')
+    </main>
   </div>
 
+  <!-- Placer vos scripts ici, après les déclarations des bibliothèques -->
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
     integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 </body>
-
-
 
 </html>

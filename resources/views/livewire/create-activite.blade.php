@@ -59,26 +59,48 @@
         </div>
 
         <div class="mb-3">
+          <!-- Checkbox pour afficher ou cache le champ -->
+          <label for="toggleCheckbox">Afficher </label>
+          <input type="checkbox" id="toggleCheckbox">
+        </div>
+        <br>
+        <!-- mise de checkbox pour afficher ou cacher le champs de statut de l'activité -->
+        <div class="mb-3">
+          <div class="form-check form-switch">
+            <select id="statut" class="form-select @error('statut') is-invalid @enderror" wire:model="statut"
+              name="statut" style="display: none;">
+              <!-- <option value="" selected disabled>Choisir le statut</option> -->
+              <option value="en attente">En attente</option>
+              <option value="en cours">En cours</option>
+              <option value="terminé">Terminé</option>
+              <option value="arrêté">Arrêté</option>
+            </select>
+          </div>
+          @error('statut')
+          <div class="invalid-feedback">Le champ statut est requis.</div>
+          @enderror
+        </div>
+
+        <div class="mb-3">
           <label for="date_debut" class="form-label">Date Debut :</label>
           <input type="date" class="form-control @error('date_debut') is-invalid @enderror" id="date_debut"
             wire:model="date_debut" name="date_debut" required>
-          <!-- Affiche le message d'erreur si le champ est vide -->
-          @error('date_debut')
-          <div class="invalid-feedback">Le champ date_debut est requis.</div>
-          @enderror
+          <div class="error-message invalid-feedback" style="display: none;">Le champ date_debut est requis.</div>
         </div>
 
         <div class="mb-3">
           <label for="date_fin" class="form-label">Date Fin :</label>
           <input type="date" class="form-control @error('date_fin') is-invalid @enderror" id="date_fin"
             wire:model="date_fin" name="date_fin" required>
-          <div id="date_fin_error" class="invalid-feedback" style="display: none;">La date de fin ne peut pas être
+          <div id="date_fin_error" class="error-message invalid-feedback" style="display: none;">La date de fin ne peut
+            pas être
             antérieure à la date de début.</div>
           <!-- Affiche le message d'erreur si le champ est vide -->
           @error('date_fin')
-          <div class="invalid-feedback">Le champ date_fin est requis.</div>
+          <div class="error-message invalid-feedback">Le champ date_fin est requis.</div>
           @enderror
         </div>
+
 
         <!-- Taux de réalisation avec barre de progression -->
         <div class="mb-3">
@@ -91,77 +113,53 @@
           <div class="invalid-feedback">Le champ taux_de_realisation est requis.</div>
           @enderror
         </div>
-
-
-        <!-- Champs choix de projet -->
-        <div class="mb-3">
-          <label>Le nom du projet</label>
-          <select class="form-select @error('id_projet') is-invalid @enderror" id="id_projet" wire:model="id_projet"
-            name="id_projet">
-            <option value=""></option>
-            <!--  La boucle pour afficher la liste des projets -->
-            @foreach ($listeProjet as $item )
-            <option value="{{$item->id}}">{{$item->libelle}}</option>
-            @endforeach
-          </select>
-
-          <!-- afiche le message d'erreur si le champs est vide  -->
-          @error('id_projet')
-          <div class="text text-red-500 mt-1 animate-pulse">Le niveau est requis.</div>
-          @enderror
+        <!-- Barre de progression -->
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: {{$taux_de_realisation}}%;"></div>
         </div>
 
-        <div class=" row d-flex justify-content-between mb-3">
-          <div class="col-md-3">
-            <button type="button" class="btn btn-danger">
-              <a href="{{route('activites')}}" class=" text-white fs-6"
-                style="text-decoration:none;">Annuler</a></button>
-          </div>
-          <div class="col-md-2">
-            <button type="submit" class="btn btn-primary text text-bold">Enregistrer</button>
-          </div>
-        </div>
 
-      </form>
     </div>
+
+    <!-- Champs choix de projet -->
+    <div class="mb-3">
+      <label for="id_projet" class="form-label">Choix du projet :</label>
+      <select class="form-select @error('id_projet') is-invalid @enderror" id="id_projet" wire:model="id_projet"
+        name="id_projet">
+        <option value="">Choisir le projet</option>
+
+        @foreach ($listeProjet as $item )
+        <option value="{{$item->id}}">{{$item->libelle}}</option>
+        @endforeach
+      </select>
+
+      <!-- afiche le message d'erreur si le champs est vide  -->
+      @error('id_projet')
+      <div class="text text-red-500 mt-1 animate-pulse">Le niveau est requis.</div>
+      @enderror
+    </div>
+
+    <div class=" row d-flex justify-content-between mb-3">
+      <div class="col-md-3">
+        <button type="button" class="btn btn-danger">
+          <a href="{{route('activites')}}" class=" text-white fs-6" style="text-decoration:none;">Annuler</a></button>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary text text-bold">Enregistrer</button>
+      </div>
+    </div>
+
+    </form>
   </div>
+</div>
 </div>
 
 @livewireScripts()
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  let dateDebut = document.getElementById('date_debut');
-  let dateFin = document.getElementById('date_fin');
-  let dateFinError = document.getElementById('date_fin_error');
 
-  dateDebut.addEventListener('change', function() {
-    dateFin.min = dateDebut.value; // Définit la date minimum pour le champ de date de fin
-    if (dateFin.value !== '' && dateFin.value < dateDebut.value) {
-      dateFin.value = ''; // Réinitialise la date de fin si elle est antérieure à la date de début
-      dateFinError.style.display = 'block'; // Affiche le message d'erreur
-    } else {
-      dateFinError.style.display = 'none'; // Masque le message d'erreur si les dates sont valides
-    }
-  });
+<script src="{{asset('js\js_activite\condition-statut_dates.js')}}"></script>
 
-  dateFin.addEventListener('change', function() {
-    if (dateFin.value !== '' && dateFin.value < dateDebut.value) {
-      dateFin.value = ''; // Réinitialise la date de fin si elle est antérieure à la date de début
-      dateFinError.style.display = 'block'; // Affiche le message d'erreur
-    } else {
-      dateFinError.style.display = 'none'; // Masque le message d'erreur si les dates sont valides
-    }
-  });
-});
+<script src="{{asset('js\js_activite\date-condition_activite.js')}}"></script>
 
-// pour la barre de progession : affichage de sa valeur
-document.addEventListener("DOMContentLoaded", function() {
-  const tauxDeRealisation = document.getElementById('taux_de_realisation');
-  const tauxValue = document.getElementById('taux_value');
+<script src="{{asset('js\js_activite\barre-progression.js')}}"></script>
 
-  tauxDeRealisation.addEventListener('input', function() {
-    // Met à jour la valeur affichée
-    tauxValue.innerText = tauxDeRealisation.value + '%';
-  });
-});
-</script>
+<script src="{{asset('js\js_activite\checkbox-statut.js')}}"></script>

@@ -21,28 +21,10 @@
         </button>
       </a>
       <hr>
-      <form action="{{ route('bilans.pdf') }}" method="POST">
+      <form action="{{ route('bilans.activite') }}" method="POST">
         @csrf
+        @method('POST')
         <div class="row">
-          <!-- Champs de sélection pour le activite -->
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="id_projet">Projet :</label>
-              <div class="input-group">
-                <select id="id_projet" name="id_projet" class="form-control form-control-md" required>
-                  <option value=""></option>
-                  <!-- Boucle pour les options -->
-                  @foreach ($projets as $item)
-                  <option value="{{ $item->id }}">{{ $item->libelle }}</option>
-                  @endforeach
-                </select>
-                <div class="input-group-append">
-                  <span class="input-group-text"><i class="fa fa-chevron-down"></i></span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- Champs de sélection pour le activite -->
           <div class="col-md-3">
             <div class="form-group">
@@ -52,8 +34,8 @@
                   class="form-control form-control-md" required>
                   <option value=""></option>
                   <!-- Boucle pour les options -->
-                  @foreach ($projets as $item)
-                  <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                  @foreach ($activites as $item)
+                  <option value="{{ $item->id }}">{{ $item->nom }}</option>
                   @endforeach
                 </select>
                 <div class="input-group-append">
@@ -82,6 +64,7 @@
 
     <form action="{{ route('bilans.pdf') }}" method="POST">
       @csrf
+      @method('POST')
       <hr>
       <div class="container mt-5">
         <div class="row">

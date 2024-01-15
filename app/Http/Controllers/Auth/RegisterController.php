@@ -81,18 +81,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
 
         ]);
-        //  attacher le profil ayant le nom "Utilisateur simple" à l'utilisateur
-        $profil = Profil::select('id')->Where('nom', 'Utilisateur simple')->first();
+        $profil = Profil::select('id')->where('nom', '=', 'Utilisateur simple')->first();
         $user = $user->profil()->associate($profil);
-
-        // l'envoie de mail au nouveau utilisateur
-        // Notification::route('mail', $data['email'])->notify(new NewSuser());
-        // ou ceci simplement
-        // Notification::send($user, new NewSuser());
-        // Mail::to($user->email)->send(new NewSuser($user));
-
         return $user;
-
 
     }
 }

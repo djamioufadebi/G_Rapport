@@ -7,7 +7,6 @@
   border-radius: 20px;
   animation: blink-animation 3s infinite;
   /* Animation du clignotement */
-
 }
 
 .badge-warning {
@@ -100,7 +99,7 @@
             <a class="nav-link" href="{{ route('besoins')}}">{{ __('Besoins') }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('bilans')}}">{{ __('Bilan') }}</a>
+            <a class="nav-link" href="{{ route('bilans')}}">{{ __('Bilans') }}</a>
           </li>
         </ul>
       </li>
@@ -120,8 +119,6 @@
         "> {{ $CountNotReadNotifications }}</span>
         </a>
       </li>
-
-
     </ul>
   </div>
 </div>

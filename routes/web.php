@@ -167,6 +167,8 @@ route::middleware('auth')->group(function () {
             Route::get('/bilan', [BilanController::class, 'index'])->name('bilans');
             Route::get('/create', [BilanController::class, 'create'])->name('bilans.create');
             Route::get('/bilan-generate', [BilanController::class, 'generateBilan'])->name('bilans.pdf');
+            Route::get('/bilan-activite', [BilanController::class, 'generateActiviteBilan'])->name('bilans.activite');
+            Route::get('/bilan-periode', [BilanController::class, 'generatePeriodeBilan'])->name('bilans.periode');
         }
     );
 

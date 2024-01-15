@@ -67,6 +67,16 @@ class ListeBesoin extends Component
             $notification->read = false;
 
             $notification->save();
+        } else if ($this->statut == "en attente") {
+            $notification = new Notifications;
+            $notification->besoin_id = $id;
+            $notification->type = "besoin";
+            $notification->user_id = Auth::user()->id;
+            $notification->titre = "Attente d'un besoin";
+            $notification->message = "Le besoin : " . $besoin->libelle . " est en attente.";
+            $notification->read = false;
+
+            $notification->save();
         }
 
 
@@ -82,7 +92,7 @@ class ListeBesoin extends Component
                 return redirect("besoins")->with('rejeter', 'Le besoin a été rejeté');
             }
         } else {
-            $besoin->statut = "en attente";
+            $besoin->statut == "en attente";
 
             // Sauvegardez les modifications avec la fonction save() et retourner sur la page des besoins
             $besoin->save();

@@ -69,7 +69,7 @@
           <thead>
             <tr>
               <th scope="col">Libellé </th>
-              <th scope="col">Projet </th>
+              <th scope="col">Activité </th>
               <th scope="col">Date</th>
               <th scope="col">Statut</th>
               <th scope="col">Actions</th>
@@ -112,9 +112,7 @@
                   data-bs-target="#confirmationModal{{ $besoin->id }}" @endif
                   class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
-                <button type="button" class="btn btn-primary">
-                  <a href="{{route('besoin.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
-                      class="fas fa-download"></i></a></button>
+
               </td>
 
 

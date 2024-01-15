@@ -24,15 +24,15 @@
             <th colspan="2">
               @if ($projets->statut == 'en cours')
               <div class="bg-success text-white p-2">
-                Informations sur l'activité : {{ $projets->libelle }}
+                Informations sur le projet : {{ $projets->libelle }}
               </div>
               @elseif ($projets->statut == 'terminé')
               <div class="bg-warning text-white p-2">
-                Informations sur l'activité : {{ $projets->libelle }}
+                Informations sur le projet : {{ $projets->libelle }}
               </div>
               @elseif ($projets->statut == 'arrêté')
               <div class="bg-danger text-white p-2">
-                Informations sur l'activité : {{ $projets->libelle }}
+                Informations sur le projet : {{ $projets->libelle }}
               </div>
               @endif
             </th>
@@ -63,10 +63,10 @@
             </td>
           </tr>
           <tr>
-            <th scope="row"> projet :</th>
+            <th scope="row"> Client :</th>
             <td>
-              <p>Nom : {{ $projets->nom }}</p>
-              <p>Contact : {{ $projets->contact }}</p>
+              <p>Nom : {{ $projets->client->nom }}</p>
+              <p>Contact : {{ $projets->client->contact }}</p>
             </td>
           </tr>
           <tr>

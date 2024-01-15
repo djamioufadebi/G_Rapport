@@ -11,6 +11,8 @@ use Livewire\WithPagination;
 class ListeActivite extends Component
 {
     public $statut;
+    public $date_debut;
+    public $date_fin;
     public $search;
 
     use WithPagination;
@@ -67,6 +69,43 @@ class ListeActivite extends Component
         return true;
     }
 
+    // les fonctions pour gérer le statut de l'activité (en cours, terminé, arrêté, en attente) en fonction des dates de début et de fin
+    public function dateDebutChange()
+    {
+        // Appliquer des conditions en fonction du statut et de la date de début
+        if ($this->statut == 'en attente') {
+            // Empêcher la sélection d'une date de début inférieure à la date du jour
+            $this->date_debut = max($this->date_debut, now()->toDateString()); // Met à jour la date de début à la date du jour si elle est inférieure
+        } elseif ($this->statut == 'en cours') {
+            // La date de début doit être inférieure ou égale à la date du jour
+            $this->date_debut = max($this->date_debut, now()->toDateString()); // Met à jour la date de début à la date du jour si elle est inférieure
+        } elseif ($this->statut == 'terminé') {
+            // Ne pas permettre de changer la date de début une fois qu'elle est définie pour le statut "terminé"
+            $this->date_fin = now()->toDateString(); // Met à jour la date de début à la date du jour
+        } else {
+            // Ne pas permettre de changer la date de début une fois qu'elle est définie pour le statut "terminé"
+            $this->date_fin = now()->toDateString(); // Met à jour la date de début à la date du jour
+        }
+    }
+
+    public function dateFinChange()
+    {
+        // Appliquer des conditions en fonction du statut et de la date de fin prévue
+        if ($this->statut == 'en attente') {
+            // Logique pour le statut "en attente"
+            // Par exemple, vous pourriez empêcher l'utilisateur de sélectionner une date de fin inférieure à la date du jour
+            $this->date_fin = max($this->date_fin, now()->toDateString()); // Met à jour la date de fin à la date du jour si elle est inférieure
+        } elseif ($this->statut == 'en cours') {
+            // Logique pour le statut "en cours"
+            // Par exemple, assurez-vous que la date de fin est supérieure à la date du jour
+            $this->date_fin = max($this->date_fin, now()->toDateString()); // Met à jour la date de fin à la date du jour si elle est inférieure
+        } elseif ($this->statut == 'terminé') {
+            // Logique pour le statut "terminé"
+            // Par exemple, vous pourriez empêcher l'utilisateur de changer la date de fin une fois qu'elle est définie
+        }
+    }
+
+
     public function ValidationStatutActivite($id)
     {
         $activite = Activite::find($id);
@@ -108,29 +147,64 @@ class ListeActivite extends Component
             // marquer la notification comme lu ou non lu
             $notification->read = false;
             $notification->save();
+        } else {
+            // creer une notification pour la rejet du activite
+            $notification = new Notification;
+            // selectionner l'utilisateur qui a rejeter le activite
+            $notification->user_id = Auth::user()->id;
+            // donner le titre de la notification (le statut du activite)
+            $notification->titre = "Mise en attente d'une activite";
+            // donner le message de la notification en le concaténant avec le nom du activite et l'email de l'utilisateur qui a rejeter le activite.
+            $notification->message = "L'activite : " . $activite->libelle . " est mise en attente par :" . Auth::user()->email;
+            // marquer la notification comme lu ou non lu
+            $notification->read = false;
+            $notification->save();
         }
 
 
         // associer le statut du activite
-        if ($this->statut != null) {
+        if ($this->statut != null && $this->date_debut != null && $this->date_fin != null) {
             $activite->statut = $this->statut;
+            $activite->date_debut = $this->date_debut;
+            $activite->date_fin = $this->date_fin;
             if ($activite->statut == "en cours") {
+
+                $this->date_debut = now()->toDateString();
+                // Assurez-vous que la date de fin est supérieure ou égale à la date de début
+                $this->date_fin = max($this->date_debut, $this->date_fin);
+
                 $activite->save();
+
                 return redirect("activites")->with('En cours', 'L\'activite vient de démarré');
+
             } else if ($activite->statut == "terminé") {
+
+                $this->date_fin = now()->toDateString();
+                $this->date_debut = null;
+
                 // Sauvegardez les modifications avec la fonction save()
                 $activite->save();
-                return redirect("activites")->with('terminer', 'Vous venez de notifier la finalisation de l\'activité');
-            } else if ($activite->statut == "arrêté") {
-                $activite->save();
-                return redirect("activites")->with('rejeter', 'Le activite a été arrêté');
-            }
-        } else {
-            $activite->statut = "en attente";
 
-            // Sauvegardez les modifications avec la fonction save() et retourner sur la page des activites
-            $activite->save();
-            return redirect("activites")->with('En cours', 'L\'activite est toujours en attente');
+                return redirect("activites")->with('terminer', 'Vous venez de notifier la finalisation de l\'activité');
+
+            } else if ($activite->statut == "arrêté") {
+                // La date de fin doit être égale à la date du jour
+                $this->date_fin = now()->toDateString(); // Met à jour la date de fin à la date du jour
+                // Réinitialise la date de début
+                $this->date_debut = null;
+
+                $activite->save();
+
+                return redirect("activites")->with('rejeter', 'Le activite a été arrêté');
+
+            } else if ($activite->statut == "en attente") {
+                // Empêcher la sélection d'une date de début inférieure à la date du jour
+                $this->date_debut = now()->toDateString(); // Met à jour la date de début à la date du jour si elle est inférieure
+                $this->date_fin = null; // Réinitialise la date de fin prévue
+                // Sauvegardez les modifications avec la fonction save() et retourner sur la page des activites
+                $activite->save();
+                return redirect("activites")->with('Enattente', 'L\'activite est toujours en attente');
+            }
         }
 
         // retourner sur la page des activites si aucun statut n'est selectionner

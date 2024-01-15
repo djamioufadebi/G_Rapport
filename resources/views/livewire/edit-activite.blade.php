@@ -40,15 +40,25 @@
             @enderror
           </div>
 
+          <!-- Checkbox pour afficher ou cache le champ -->
+
+          <!-- mise de checkbox pour afficher ou cacher le champs de statut de l'activité -->
           <div class="mb-3">
-            <label for="date_debut" class="form-label">Date Debut :</label>
-            <input type="date" class="form-control @error('date_debut') is-invalid @enderror" id="date_debut"
-              wire:model="date_debut" name="date_debut" required>
-            <!-- afiche le message d'erreur si le champs est vide  -->
-            @error('date_debut')
-            <div class="invalid-feedback">Le champ date debut est requis.</div>
+            <div class="form-check form-switch">
+              <select id="statut" class="form-select @error('statut') is-invalid @enderror" wire:model="statut"
+                name="statut" required>
+                <!-- <option value="" selected disabled>Choisir le statut</option> -->
+                <option value="en attente">En attente</option>
+                <option value="en cours">En cours</option>
+                <option value="terminé">Terminé</option>
+                <option value="arrête">Arrêté</option>
+              </select>
+            </div>
+            @error('statut')
+            <div class="invalid-feedback">Le champ statut est requis.</div>
             @enderror
           </div>
+
         </form>
       </div>
     </div>
@@ -58,6 +68,17 @@
     <div class="card">
       <div class="card-body container-fluid">
         <form method="POST" wire:submit.prevent="update">
+          @csrf
+          @method('POST')
+          <div class="mb-3">
+            <label for="date_debut" class="form-label">Date Debut :</label>
+            <input type="date" class="form-control @error('date_debut') is-invalid @enderror" id="date_debut"
+              wire:model="date_debut" name="date_debut" required>
+            <!-- afiche le message d'erreur si le champs est vide  -->
+            @error('date_debut')
+            <div class="invalid-feedback">Le champ date debut est requis.</div>
+            @enderror
+          </div>
           <div class="mb-3">
             <label for="date_fin" class="form-label">Date Fin :</label>
             <input type="date" class="form-control @error('date_fin') is-invalid @enderror" id="date_fin"
@@ -67,6 +88,18 @@
             <!-- afiche le message d'erreur si le champs est vide  -->
             @error('date_fin')
             <div class="invalid-feedback">Le champ date_fin est requis.</div>
+            @enderror
+          </div>
+
+          <!-- Taux de réalisation -->
+          <div class="mb-3">
+            <label for="taux_de_realisation" class="form-label">Taux de réalisation :</label>
+            <input type="range" class="form-range @error('taux_de_realisation') is-invalid @enderror"
+              id="taux_de_realisation" wire:model="taux_de_realisation" name="taux_de_realisation" min="0" max="100"
+              step="0.1" required>
+            <output id="taux_value" class="mt-2">{{$taux_de_realisation}}%</output>
+            @error('taux_de_realisation')
+            <div class="invalid-feedback">Le champ taux_de_realisation est requis.</div>
             @enderror
           </div>
 
@@ -105,29 +138,9 @@
   </div>
 </div>
 @livewireScripts()
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  let dateDebut = document.getElementById('date_debut');
-  let dateFin = document.getElementById('date_fin');
-  let dateFinError = document.getElementById('date_fin_error');
 
-  dateDebut.addEventListener('change', function() {
-    dateFin.min = dateDebut.value; // Définit la date minimum pour le champ de date de fin
-    if (dateFin.value !== '' && dateFin.value < dateDebut.value) {
-      dateFin.value = ''; // Réinitialise la date de fin si elle est antérieure à la date de début
-      dateFinError.style.display = 'block'; // Affiche le message d'erreur
-    } else {
-      dateFinError.style.display = 'none'; // Masque le message d'erreur si les dates sont valides
-    }
-  });
+<script src="{{asset('js\js_activite\condition-statut_dates.js')}}"></script>
 
-  dateFin.addEventListener('change', function() {
-    if (dateFin.value !== '' && dateFin.value < dateDebut.value) {
-      dateFin.value = ''; // Réinitialise la date de fin si elle est antérieure à la date de début
-      dateFinError.style.display = 'block'; // Affiche le message d'erreur
-    } else {
-      dateFinError.style.display = 'none'; // Masque le message d'erreur si les dates sont valides
-    }
-  });
-});
-</script>
+<script src="{{asset('js\js_activite\date-condition_activite.js')}}"></script>
+
+<script src="{{asset('js\js_activite\barre-progression.js')}}"></script>

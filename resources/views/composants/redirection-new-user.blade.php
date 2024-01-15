@@ -1,5 +1,4 @@
 @extends('layouts.app')
-<!-- Assurez-vous d'adapter le nom du layout si nécessaire -->
 
 @section('content')
 <div class="container mt-5">

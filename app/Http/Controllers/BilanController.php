@@ -15,6 +15,7 @@ use Illuminate\Support\Carbon;
 class BilanController extends Controller
 {
 
+    public $id_activite;
     public function index(Bilan $bilan)
     {
         return view('Bilans.bilan', compact('bilan'));
@@ -28,7 +29,9 @@ class BilanController extends Controller
     public function generateBilan()
     {
 
-        $dateToday = Carbon::today();
+        $dateToday = Carbon::now();
+
+        //$Tomorrow = $dateToday->addDay();
 
         // Récupérer les projets en cours aujourd'hui
         $projetsEnCoursAujourdhui = Projet::where('date_debut', '<=', $dateToday)
@@ -36,9 +39,7 @@ class BilanController extends Controller
             ->where('statut', '=', 'en cours')
             ->get();
 
-        // Récupérer les projets en attentes aujourd'hui
-        // $projetEnAttenteAjourdhui = Projet::where('statut', '=', 'en attente')
-        //  ->get();
+
 
         $projetEnAttenteAjourdhui = Projet::where('date_debut', '>', $dateToday)
             ->where('date_fin_prevue', '>', $dateToday)
@@ -57,7 +58,7 @@ class BilanController extends Controller
             ->orwhere('updated_at', $dateToday)->get();
 
         // récupérer les besoins qui ont été crés aujourdhui
-        // $besoinsEnCoursAujourdhui = Besoin::where('statut', 'en cours')->get();
+        // $activiteTermineAujourdhui = Activite::where('statut','=', 'arrêté')->get();
 
         $activitesEnCours = Activite::where('date_debut', '<=', $dateToday)
             ->where('date_fin', '>=', $dateToday)
@@ -98,11 +99,40 @@ class BilanController extends Controller
                 'activitesTermineesAjourdhui'
             )
         );
-
         $pdf->setPaper('a4', 'landscape');
-
         return $pdf->stream();
+    }
 
+    public function generateActiviteBilan()
+    {
+        $dateToday = Carbon::now();
+
+        $activites = Activite::findOrFail($this->id_activite)->get();
+        // Récupérer le rapport de l'activité en cours
+        $rapportsSelectedActivity = Rapport::where('id_activite', $activites->id)
+            ->whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
+            ->orwhere('updated_at', $dateToday)->get();
+
+        // récupérer les besoins de l'activité selectionnée
+        $besoins = Besoin::where('id_activite', $activites->id)->whereBetween(
+            'created_at',
+            [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
+        )->orwhere('updated_at', $dateToday)->get();
+
+        // récuperer le projet de l'activité sélectionnée
+        $projet = Projet::where('id', $activites->id_projet)->get();
+
+        $pdf = Pdf::loadView(
+            'Bilans.bilan-activite',
+            compact(
+                'activites',
+                'projet',
+                'besoins',
+                'rapportsSelectedActivity'
+            )
+        );
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->stream();
     }
 
 }

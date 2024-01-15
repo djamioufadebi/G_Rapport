@@ -6,7 +6,6 @@ use App\Models\Client;
 use App\Models\Projet;
 use Livewire\Component;
 
-
 class EditProjet extends Component
 {
     public $libelle;
@@ -40,6 +39,7 @@ class EditProjet extends Component
             'lieu' => 'string|required',
             'date_debut' => 'date|required',
             'date_fin_prevue' => 'date|required',
+            'statut' => 'string',
             'id_client' => 'required',
         ]);
 
@@ -49,6 +49,7 @@ class EditProjet extends Component
             $projet->lieu = $this->lieu;
             $projet->date_debut = $this->date_debut;
             $projet->date_fin_prevue = $this->date_fin_prevue;
+            $projet->statut = $this->statut;
             $projet->id_client = $this->id_client;
             $projet->save();
 

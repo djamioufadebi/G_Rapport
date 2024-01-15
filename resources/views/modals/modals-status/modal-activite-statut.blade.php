@@ -39,6 +39,26 @@
                   @if($activite->statut === 'arrêté') checked @endif>
                 <label for="statutArrêter{{$activite->id}}">Arrêté</label>
               </div>
+              <br>
+              <div class="mb-3">
+                <label for="date_debut" class="form-label">Date Debut :</label>
+                <input type="date" class="form-control @error('date_debut') is-invalid @enderror" id="date_debut"
+                  wire:model="date_debut" name="date_debut" required wire:change="dateDebutChange">
+                <div class="error-message invalid-feedback">Le champ date_debut est requis.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="date_fin" class="form-label">Date Fin :</label>
+                <input type="date" class="form-control @error('date_fin') is-invalid @enderror" id="date_fin"
+                  wire:model="date_fin" name="date_fin" required wire:change="dateFinChange">
+                <div id="date_fin_error" class="error-message invalid-feedback">La date de
+                  fin
+                  ne peut pas être antérieure à la date de début.</div>
+                <!-- Affiche le message d'erreur si le champ est vide -->
+                @error('date_fin')
+                <div class="error-message invalid-feedback">Le champ date fin est requis.</div>
+                @enderror
+              </div>
 
               <a href="{{route('activites')}}">
                 <button type="button" class="btn btn-danger">Annuler</button>

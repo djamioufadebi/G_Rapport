@@ -40,15 +40,17 @@ class LoginController extends Controller
     }
     protected function redirectTo()
     {
-        $user = Auth::user();
 
+        $user = Auth::user();
         if ($user) {
             if ($user->profil()->pluck('nom')->contains('Administrateur')) {
                 return route('profils'); // Rediriger vers le tableau de bord pour les administrateurs
             } elseif ($user->profil()->pluck('nom')->contains('Gestionnaire')) {
                 return route('projets'); // Rediriger vers le tableau de bord du profil 2
             } else {
+
                 return view('composants.redirection-new-user');
+                dd('Erreur');
             }
         } else {
             // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié

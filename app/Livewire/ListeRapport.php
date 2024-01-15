@@ -77,6 +77,17 @@ class ListeRapport extends Component
             $notification->read = false;
 
             $notification->save();
+        } else if ($this->statut == "en attente") {
+            // creer une notification pour la rejet du rapport
+            $notification = new Notifications;
+            $notification->rapport_id = $id;
+            $notification->user_id = Auth::user()->id;
+            $notification->type = "rapport";
+            $notification->titre = "Attente d'un rapport";
+            $notification->message = "Le rapport : " . $rapport->libelle . " est en attente.";
+            $notification->read = false;
+
+            $notification->save();
         }
 
 
@@ -92,7 +103,7 @@ class ListeRapport extends Component
                 return redirect("rapports")->with('rejeter', 'Le rapport a été rejeté');
             }
         } else {
-            $rapport->statut = "en attente";
+            $rapport->statut == "en attente";
 
             // Sauvegardez les modifications avec la fonction save() et retourner sur la page des rapports
             $rapport->save();
@@ -107,7 +118,8 @@ class ListeRapport extends Component
         $word = '%' . $this->search . '%';
         $listeRapport = Rapport::where('libelle', 'like', $word)
             ->orwhere('contenu', 'like', $word)
-            ->orwhere('difficultes_rencontrees', 'like', $word);
+            ->orwhere('difficultes_rencontrees', 'like', $word)
+            ->orwhere('solutions_apportees', 'like', $word);
 
         $user = Auth::user();
 

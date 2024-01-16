@@ -81,9 +81,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
 
         ]);
-        $profil = Profil::select('id')->where('nom', '=', 'Utilisateur simple')->first();
+        $profil = Profil::select('id')->where('nom', '=', 'Utilisateur_simple')->first();
         $user = $user->profil()->associate($profil);
         return $user;
-
     }
 }

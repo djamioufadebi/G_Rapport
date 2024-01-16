@@ -47,10 +47,8 @@ class LoginController extends Controller
                 return route('profils'); // Rediriger vers le tableau de bord pour les administrateurs
             } elseif ($user->profil()->pluck('nom')->contains('Gestionnaire')) {
                 return route('projets'); // Rediriger vers le tableau de bord du profil 2
-            } else {
-
-                return view('composants.redirection-new-user');
-                dd('Erreur');
+            } elseif ($user->profil()->pluck('nom')->contains('Utilisateur_simple')) {
+                return route('besoins');
             }
         } else {
             // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié

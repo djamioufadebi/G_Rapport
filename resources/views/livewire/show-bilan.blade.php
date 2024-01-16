@@ -30,7 +30,7 @@
             <div class="form-group">
               <label for="activite">Activité :</label>
               <div class="input-group">
-                <select id="id_activite" name="id_activite" wire:model="id_activite"
+                <select id="id_activite" name="id_activite" wire:model="selectedActivite"
                   class="form-control form-control-md" required>
                   <option value=""></option>
                   <!-- Boucle pour les options -->

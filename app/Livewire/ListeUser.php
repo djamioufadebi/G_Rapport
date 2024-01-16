@@ -15,7 +15,9 @@ class ListeUser extends Component
 
     public $search;
 
-    public function s () {}
+    public function s()
+    {
+    }
 
     public function confirmDelete($id)
     {
@@ -31,19 +33,19 @@ class ListeUser extends Component
 
         // associer le profil à l'utilisateur si un profil est selectionner
         if ($this->selectedProfilId != null) {
-            $user->id_profil = $this->selectedProfilId;
 
+            $user->id_profil = $this->selectedProfilId;
             $user->save(); // Sauvegardez les modifications
             $message = "Le profil" . $this->selectedProfilId . " est attribué à l'utilisateur" . $user->nom . "!";
             return redirect("users")->with('attribution', $message);
         } else {
-            $user->id_profil = 1;
+            $user->id_profil = $user->$this->id_profil;
             $user->save(); // Sauvegardez les modifications
             return redirect("users")->with('attributionerror', 'Veuillez selectionner un profil avant de sauvegarder l\'utilisateur');
         }
 
         // retourner sur la page des utilisateurs si aucun profil n'est selectionner
-        // return redirect()->back();
+        //return redirect()->back();
 
     }
 

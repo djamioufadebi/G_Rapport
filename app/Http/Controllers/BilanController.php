@@ -15,7 +15,7 @@ use Illuminate\Support\Carbon;
 class BilanController extends Controller
 {
 
-    public $id_activite;
+    public $selectedActivite;
     public function index(Bilan $bilan)
     {
         return view('Bilans.bilan', compact('bilan'));
@@ -30,16 +30,11 @@ class BilanController extends Controller
     {
 
         $dateToday = Carbon::now();
-
-        //$Tomorrow = $dateToday->addDay();
-
         // Récupérer les projets en cours aujourd'hui
         $projetsEnCoursAujourdhui = Projet::where('date_debut', '<=', $dateToday)
             ->where('date_fin_prevue', '>=', $dateToday)
             ->where('statut', '=', 'en cours')
             ->get();
-
-
 
         $projetEnAttenteAjourdhui = Projet::where('date_debut', '>', $dateToday)
             ->where('date_fin_prevue', '>', $dateToday)
@@ -105,9 +100,10 @@ class BilanController extends Controller
 
     public function generateActiviteBilan()
     {
+        dd($this->selectedActivite);
         $dateToday = Carbon::now();
 
-        $activites = Activite::findOrFail($this->id_activite)->get();
+        $activites = Activite::findOrFail($this->selectedActivite)->get();
         // Récupérer le rapport de l'activité en cours
         $rapportsSelectedActivity = Rapport::where('id_activite', $activites->id)
             ->whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])

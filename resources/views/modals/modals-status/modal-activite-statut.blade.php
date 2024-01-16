@@ -14,49 +14,38 @@
           <div class="form-group">
             <br>
             <div class="text-left">
-              <label class="font-weight-bold d-block " for="statut">Sélectionnez un statut :</label>
+              <label class="font-weight-bold d-block" for="statut">Sélectionnez un statut :</label>
             </div>
             <br>
             <div class="form-group">
-              <div>
-                <input type="radio" id="statutEnAttente{{$activite->id}}" wire:model="statut" value="en attente"
-                  name="statut" @if($activite->statut === 'en attente') checked @endif>
-                <label for="statutEnAttente{{$activite->id}}">En attente</label>
-              </div>
-
-              <div>
-                <input type="radio" id="statutEnCours{{$activite->id}}" wire:model="statut" value="en cours"
-                  name="statut" @if($activite->statut === 'en cours') checked @endif>
-                <label for="statutEnCours{{$activite->id}}">En cours</label>
-              </div>
-              <div>
-                <input type="radio" id="statutTerminer{{$activite->id}}" wire:model="statut" value="terminé"
-                  name="statut" @if($activite->statut === 'terminé') checked @endif >
-                <label for="statutTerminer{{$activite->id}}">Terminé</label>
-              </div>
-              <div>
-                <input type="radio" id="statutArrêter{{$activite->id}}" wire:model="statut" value="arrêté" name="statut"
-                  @if($activite->statut === 'arrêté') checked @endif>
-                <label for="statutArrêter{{$activite->id}}">Arrêté</label>
+              <div class="mb-3">
+                <label for="statut" class="form-label">Statut :</label>
+                <select wire:model="statut" class="form-control">
+                  <option value="en attente" @if($activite->statut === 'en attente') selected @endif>En attente</option>
+                  <option value="en cours" @if($activite->statut === 'en cours') selected @endif>En cours</option>
+                  <option value="terminé" @if($activite->statut === 'terminé') selected @endif>Terminé</option>
+                  <option value="arrêté" @if($activite->statut === 'arrêté') selected @endif>Arrêté</option>
+                </select>
+                @error('statut')
+                <div class="invalid-feedback">Le champ statut est requis.</div>
+                @enderror
               </div>
               <br>
               <div class="mb-3">
                 <label for="date_debut" class="form-label">Date Debut :</label>
                 <input type="date" class="form-control @error('date_debut') is-invalid @enderror" id="date_debut"
-                  wire:model="date_debut" name="date_debut" required wire:change="dateDebutChange">
-                <div class="error-message invalid-feedback">Le champ date_debut est requis.</div>
+                  wire:model="date_debut" name="date_debut" required>
+                <div class="error-message invalid-feedback">Le champ de date début est requis.</div>
               </div>
 
               <div class="mb-3">
                 <label for="date_fin" class="form-label">Date Fin :</label>
                 <input type="date" class="form-control @error('date_fin') is-invalid @enderror" id="date_fin"
-                  wire:model="date_fin" name="date_fin" required wire:change="dateFinChange">
-                <div id="date_fin_error" class="error-message invalid-feedback">La date de
-                  fin
-                  ne peut pas être antérieure à la date de début.</div>
-                <!-- Affiche le message d'erreur si le champ est vide -->
+                  wire:model="date_fin" name="date_fin" required>
+                <div id="date_fin_error" class="error-message invalid-feedback" style="display: none;">La date de fin ne
+                  peut pas être antérieure à la date de début.</div>
                 @error('date_fin')
-                <div class="error-message invalid-feedback">Le champ date fin est requis.</div>
+                <div class="error-message invalid-feedback">Le champ de date de fin est requis.</div>
                 @enderror
               </div>
 
@@ -65,14 +54,19 @@
               </a>
               <button type="submit" wire:click="ValidationStatutActivite('{{$activite->id}}')"
                 class="btn btn-primary">Enregistrer</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-</div>
-</div>
-
-@livewireScripts
-
 @endforeach
+@livewireScripts
+<script src="{{asset('js\js_activite\condition_changement_statut_activite.js')}}"></script>
+<script src="{{asset('js\js_activite\condition-statut_dates.js')}}"></script>
+<script src="{{asset('js\js_activite\date-condition_activite.js')}}"></script>
+<script src="{{asset('js\js_activite\statut_change_activite.js')}}">
+< />
+
+public\

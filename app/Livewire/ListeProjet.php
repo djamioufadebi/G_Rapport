@@ -177,37 +177,28 @@ class ListeProjet extends Component
 
             if ($projet->statut == "en cours") {
 
-                // Met à jour la date de début à la date du jour si elle est inférieure
-                $this->date_debut = now()->toDateString();
-
-                // Assurez-vous que la date de fin est supérieure ou égale à la date de début
-                $this->date_fin_prevue = max($this->date_debut, $this->date_fin_prevue);
+                $projet->date_debut = $this->date_debut;
+                $projet->date_fin_prevue = $this->date_fin_prevue;
 
                 // Sauvegardez les modifications avec la fonction save()
                 $projet->save();
                 return redirect("projets")->with('Encours', 'Le Projet est en cours');
 
             } else if ($projet->statut == "terminé") {
-
-                // Met à jour la date de fin à la date du jour si elle est inférieure à la date de début
-                $this->date_fin_prevue = now()->toDateString();
-                $this->date_debut = null;
+                $projet->date_debut = $this->date_debut;
+                $projet->date_fin_prevue = $this->date_fin_prevue;
                 $projet->save();
                 return redirect("projets")->with('terminer', 'Vous venez de notifier la finalisation du projet');
                 // Sauvegardez les modifications avec la fonction save() et retourner sur la page des projets
             } else if ($projet->statut == "arrêté") {
-                // La date de fin doit être égale à la date du jour
-                $this->date_fin_prevue = now()->toDateString(); // Met à jour la date de fin à la date du jour
-                // Réinitialise la date de début
-                $this->date_debut = null;
+                $projet->date_debut = $this->date_debut;
+                $projet->date_fin_prevue = $this->date_fin_prevue;
                 $projet->save();
                 return redirect("projets")->with('arreter', 'Le Projet a été arrêté');
             }
         } else if ($projet->statut == "en attente") {
-            // Empêcher la sélection d'une date de début inférieure à la date du jour
-            $this->date_debut = now()->toDateString(); // Met à jour la date de début à la date du jour si elle est inférieure
-            $this->date_fin_prevue = null; // Réinitialise la date de fin prévue
-            // Sauvegardez les modifications avec la fonction save() et retourner sur la page des projets
+            $projet->date_debut = $this->date_debut;
+            $projet->date_fin_prevue = $this->date_fin_prevue;
             $projet->save();
             return redirect("projets")->with('Enattente', 'Le Projet est toujours en cours');
         }

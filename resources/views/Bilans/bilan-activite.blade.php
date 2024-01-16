@@ -189,7 +189,7 @@
 
     <!-- module Les Rapports du jour -->
     <div class="module">
-      <h3 class="module-title">Rapports du jour</h3>
+      <h3 class="module-title">Rapports du jour de l'activité</h3>
 
       @if (count($rapportsSelectedActivity) > 0)
       @foreach($rapportsSelectedActivity as $rapport)
@@ -293,18 +293,23 @@
                 <tr>
                   <th scope="col">Libellé</th>
                   <th scope="col">contenu</th>
-                  <th scope="col">Date début</th>
+                  <th scope="col">Nom du demandeur</th>
+                  <th scope="col">Activité</th>
+                  <th scope="col">Projet</th>
+                  <th scope="col">Date du besoin</th>
                   <th scope="col">Statut</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($projet as $projet)
+                @foreach($besoins as $besoin)
                 <tr>
-                  <td>{{ $projet->libelle }}</td>
-                  <td>{{ $projet->lieu }}</td>
-                  <td>{{ $projet->date_debut }}</td>
-                  <td>{{ $projet->date_fin_prevue }}</td>
-                  <td>{{ $projet->statut }}</td>
+                  <td>{{ $besoin->libelle }}</td>
+                  <td>{{ $besoin->contenu }}</td>
+                  <td>{{ $besoin->user->nom }} {{ $projet->user->prenom }}</td>
+                  <td>{{ $besoin->activite->nom }}</td>
+                  <td>{{ $besoin->activite->projet->libelle }}</td>
+                  <td>{{ $besoin->created_at }}</td>
+                  <td>{{ $besoin->statut }}</td>
                 </tr>
                 @endforeach
 
@@ -312,14 +317,17 @@
             </table>
           </div>
         </div>
-
       </div>
-      <footer>
-        <h6>
-          Généré par {{ Auth::user()->nom }} {{ Auth::user()->prenom }}, ce
-          {{ $dateToday->format('d-m-Y') }}
-        </h6>
-      </footer>
+    </div>
+    <!-- Fin module Besoins de l'activité -->
+
+  </div>
+  <footer>
+    <h6>
+      Généré par {{ Auth::user()->nom }} {{ Auth::user()->prenom }}, ce
+      {{ $dateToday->format('d-m-Y') }}
+    </h6>
+  </footer>
 </body>
 
 </html>

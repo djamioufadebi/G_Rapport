@@ -72,7 +72,7 @@ route::middleware('auth')->group(function () {
     Route::get('/update', [UserProfilController::class, 'update'])->name('mon_profile.update');
 
     // route pour envoyer la page de confirmation pour un nouvel utlisateur
-    Route::get('/new-user', [NewuserController::class, 'confirm'])->name('confirmations');
+    //Route::get('/new-user', [NewuserController::class, 'confirm'])->name('confirmations');
 
     Route::prefix('users')->group(
         function () {
@@ -167,7 +167,7 @@ route::middleware('auth')->group(function () {
             Route::get('/bilan', [BilanController::class, 'index'])->name('bilans');
             Route::get('/create', [BilanController::class, 'create'])->name('bilans.create');
             Route::get('/bilan-generate', [BilanController::class, 'generateBilan'])->name('bilans.pdf');
-            Route::get('/bilan-activite', [BilanController::class, 'generateActiviteBilan'])->name('bilans.activite');
+            Route::POST('/bilan-activite', [BilanController::class, 'generateActiviteBilan'])->name('bilans.activite');
             Route::get('/bilan-periode', [BilanController::class, 'generatePeriodeBilan'])->name('bilans.periode');
         }
     );

@@ -25,12 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //$user = Auth::user();
-        // if ($user->profil()->pluck('nom')->contains('Manager')) {
         return view('home');
-
-        //} else {
-        //   return view('composants.acces_refuser');
-        //}
     }
 }

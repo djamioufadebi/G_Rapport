@@ -7,6 +7,7 @@ use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class BesoinController extends Controller
 {
@@ -44,16 +45,18 @@ class BesoinController extends Controller
     }
     public function pdfBesoin()
     {
+        $dateToday = Carbon::now();
         $user = Auth::user();
         // seul le profil 1 et 2 peuvent accéder à cette vue de generation de pdf (pdfBesoin)
         if ($user->id_profil == 1 || $user->id_profil == 2) {
             $besoins = Besoin::all();
-            $pdf = Pdf::loadView('PDF.besoins_pdf', ['besoins' => $besoins]);
+
+            $pdf = Pdf::loadView('PDF.besoins_pdf', compact('besoins', 'dateToday'));
             return $pdf->stream();
         } else {
             // recuperer les besoins de l'utilisateur connecté
             $besoins = Besoin::where('user_id', $user->id)->get();
-            $pdf = Pdf::loadView('PDF.besoins_pdf', ['besoins' => $besoins]);
+            $pdf = Pdf::loadView('PDF.besoins_pdf', compact('besoins', 'dateToday'));
             return $pdf->stream();
             // return view('composants.acces_refuser');
         }

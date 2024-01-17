@@ -7,6 +7,7 @@ use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ClientController extends Controller
 {
@@ -49,11 +50,12 @@ class ClientController extends Controller
 
     public function pdfClient()
     {
+        $dateToday = Carbon::now();
         $user = Auth::user();
         if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
             $clients = Client::all();
             // $data = ['title' => 'Liste des utilisateurs'];
-            $pdf = Pdf::loadView('PDF.clients_pdf', ['clients' => $clients]);
+            $pdf = Pdf::loadView('PDF.clients_pdf', compact('clients', 'dateToday'));
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {

@@ -15,7 +15,7 @@ use Illuminate\Support\Carbon;
 class BilanController extends Controller
 {
 
-    public $selectedActivite;
+
     public function index(Bilan $bilan)
     {
         return view('Bilans.bilan', compact('bilan'));
@@ -28,7 +28,6 @@ class BilanController extends Controller
 
     public function generateBilan()
     {
-
         $dateToday = Carbon::now();
         // Récupérer les projets en cours aujourd'hui
         $projetsEnCoursAujourdhui = Projet::where('date_debut', '<=', $dateToday)
@@ -49,11 +48,7 @@ class BilanController extends Controller
         $besoinsEnCoursAujourdhui = Besoin::whereBetween(
             'created_at',
             [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
-        )
-            ->orwhere('updated_at', $dateToday)->get();
-
-        // récupérer les besoins qui ont été crés aujourdhui
-        // $activiteTermineAujourdhui = Activite::where('statut','=', 'arrêté')->get();
+        )->orwhere('updated_at', $dateToday)->get();
 
         $activitesEnCours = Activite::where('date_debut', '<=', $dateToday)
             ->where('date_fin', '>=', $dateToday)
@@ -75,8 +70,7 @@ class BilanController extends Controller
         $rapportsCreesAujourdhui = Rapport::whereBetween(
             'created_at',
             [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
-        )
-            ->orwhere('updated_at', $dateToday)->get();
+        )->orwhere('updated_at', $dateToday)->get();
 
 
         $pdf = Pdf::loadView(
@@ -98,12 +92,13 @@ class BilanController extends Controller
         return $pdf->stream();
     }
 
+    public $selectedActiviteId;
+    public $id;
     public function generateActiviteBilan()
     {
-        dd($this->selectedActivite);
+        dd($this->selectedActiviteId);
         $dateToday = Carbon::now();
-
-        $activites = Activite::findOrFail($this->selectedActivite)->get();
+        $activites = Activite::find($this->selectedActiviteId)->get();
         // Récupérer le rapport de l'activité en cours
         $rapportsSelectedActivity = Rapport::where('id_activite', $activites->id)
             ->whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])

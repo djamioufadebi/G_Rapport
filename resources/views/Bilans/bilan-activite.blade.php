@@ -81,11 +81,11 @@
     margin-right: 50px;
   }
 
-  .company-name {
+  company-name {
     font-size: 24px;
     font-weight: bold;
-    text-color: #000;
-
+    color: #000;
+    /* Correction ici */
     margin-top: 10px;
   }
 
@@ -94,7 +94,8 @@
     font-weight: bold;
     text-align: right;
     text-decoration: underline;
-    text-color: #000;
+    color: #000;
+    /* Correction ici */
   }
 
   footer {
@@ -121,8 +122,8 @@
     </div>
     <!-- Fin de l'en-tête -->
     <div class="module">
-      <h2 class="module-title">Activités "{{ $projet->libelle }}"</h2>
-      <!-- Tableau pour afficher les détails des activités -->
+      <h2 class="module-title">Activités {{ $projet->libelle }}</h2>
+
       <table class="table table-bordered">
         <!-- En-têtes du tableau -->
         <thead class="thead-dark">
@@ -139,7 +140,7 @@
           @foreach($activites as $activite)
           <tr>
             <td>{{ $activite->nom }}</td>
-            <td>{{ $activite->Descrption }}</td>
+            <td>{{ $activite->descrption }}</td>
             <td>{{ $activite->taux_de_realisation }}</td>
             <td>{{ $activite->date_debut }}</td>
             <td>{{ $activite->date_fin }}</td>
@@ -277,7 +278,7 @@
       </table>
       @endforeach
       @else
-      <p>Aucun rapport n'a été fait aujourd'hui pour l'activité .</p>
+      <p>Aucun rapport n'a été fait aujourd'hui pour l'activité {{ $activite->nom }}.</p>
       @endif
     </div>
     <!-- fin module Les Rapports du jour -->

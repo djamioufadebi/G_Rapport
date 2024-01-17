@@ -9,6 +9,7 @@ use App\Models\Rapport;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class RapportController extends Controller
 {
@@ -46,17 +47,19 @@ class RapportController extends Controller
 
     public function pdfRapport()
     {
+
+        $dateToday = Carbon::now();
         // recuperer les rapports de l'utilisateur connecté et les afficher
         $user = Auth::user();
         if ($user->id_profil == 1 || $user->id_profil == 2) {
             $rapports = Rapport::all();
-            $pdf = Pdf::loadView('PDF.rapports_pdf', ['rapports' => $rapports]);
+            $pdf = Pdf::loadView('PDF.rapports_pdf', compact('rapports', 'dateToday'));
             return $pdf->stream();
 
         } else {
             // recuperer les rapports de l'utilisateur connecté
             $rapports = Rapport::where('user_id', $user->id)->get();
-            $pdf = Pdf::loadView('PDF.rapports_pdf', ['rapports' => $rapports]);
+            $pdf = Pdf::loadView('PDF.rapports_pdf', compact('rapports', 'dateToday'));
             return $pdf->stream();
         }
 

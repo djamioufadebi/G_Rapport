@@ -8,6 +8,7 @@ use App\Models\Intervenant;
 use Auth;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class IntervenantController extends Controller
 {
@@ -50,11 +51,12 @@ class IntervenantController extends Controller
 
     public function pdfIntervenant()
     {
+        $dateToday = Carbon::now();
         $user = Auth::user();
         if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
             $intervenants = Intervenant::all();
             // $data = ['title' => 'Liste des utilisateurs'];
-            $pdf = Pdf::loadView('PDF.intervenants_pdf', ['intervenants' => $intervenants]);
+            $pdf = Pdf::loadView('PDF.intervenants_pdf', compact('intervenants', 'dateToday'));
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {

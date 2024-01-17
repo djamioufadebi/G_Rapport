@@ -9,6 +9,44 @@
 
   <!-- Styles -->
   <style type="text/css">
+  .company-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .company-logo {
+    max-height: 70px;
+    margin-right: 50px;
+  }
+
+  .company-name {
+    font-size: 24px;
+    font-weight: bold;
+    text-color: #000;
+
+    margin-top: 10px;
+  }
+
+  .document-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: right;
+    text-decoration: underline;
+    text-color: #000;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    /* couleur de fond, ajustez selon vos préférences */
+    text-align: right;
+    padding: 5px;
+  }
+
   body {
     font-family: arial;
     letter-spacing: 0.5px;
@@ -54,18 +92,15 @@
 
 <body>
   <div class="container">
-    <div class="row mb-4">
-      <div class="col-md-6">
-        <!-- Insérez le logo de la société ici -->
-        <img src="{{ asset('images/innov2b.jpg')}}" alt="Logo de la société" class="img-fluid" width="100" height="auto"
-          srcset="">
-
+    <!-- En-tête de la société et du document -->
+    <div class="company-header">
+      <div>
+        <img src="{{ public_path('images/innov2b.jpg') }}" alt="Logo de la société" class="company-logo">
+        <span class="company-name">INNOVATION BULDING BUSINESS</span>
       </div>
-      <div class="col-md-6 text-center">
-        <!-- Nom de la société -->
-        <h3>INNOVATION BULDING BUSINESS </h3>
-      </div>
+      <hr>
     </div>
+    <!-- Fin de l'en-tête -->
     <table class="table table-striped table-bordered" class=" table table-besoin" id="dataTable" cellspacing="0">
       <caption>
         <h2> Les détails du besoin </h2>
@@ -97,6 +132,14 @@
   <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
   <!-- Pour Bootstrap 5, utilisez le script suivant -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <footer>
+    <h6>
+      Généré par {{ Auth::user()->nom }} {{ Auth::user()->prenom }}, ce
+      {{ $dateToday->format('d-m-Y') }}
+    </h6>
+  </footer>
 </body>
 
 

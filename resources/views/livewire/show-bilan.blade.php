@@ -21,7 +21,7 @@
         </button>
       </a>
       <hr>
-      <form action="{{ route('bilans.activite') }}" method="POST">
+      <form action="{{route('bilans.activite')}}" method="POST">
         @csrf
         @method('POST')
         <div class="row">
@@ -30,10 +30,8 @@
             <div class="form-group">
               <label for="activite">Activité :</label>
               <div class="input-group">
-                <select id="id_activite" name="id_activite" wire:model="selectedActivite"
-                  class="form-control form-control-md" required>
-                  <option value=""></option>
-                  <!-- Boucle pour les options -->
+                <select name="id_activite" wire:model="selectedActiviteId" class="form-control form-control-md"
+                  required>
                   @foreach ($activites as $item)
                   <option value="{{ $item->id }}">{{ $item->nom }}</option>
                   @endforeach
@@ -60,12 +58,9 @@
       </form>
     </div>
     <hr>
-    <hr>
-
-    <form action="{{ route('bilans.pdf') }}" method="POST">
+    <form action="{{route('bilans.pdf') }}" method="POST">
       @csrf
       @method('POST')
-      <hr>
       <div class="container mt-5">
         <div class="row">
           <div class="col-md-3">
@@ -96,8 +91,6 @@
       </div>
     </form>
     <hr>
-    <hr>
-
   </div>
 
   <!-- jQuery, Popper.js, Bootstrap JS -->

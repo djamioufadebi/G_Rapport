@@ -7,6 +7,7 @@ use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ActiviteController extends Controller
 {
@@ -60,8 +61,9 @@ class ActiviteController extends Controller
         $user = Auth::user();
         if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
             $activites = Activite::all();
+            $dateToday = Carbon::now();
             // $data = ['title' => 'Liste des utilisateurs'];
-            $pdf = Pdf::loadView('PDF.activites_pdf', ['activites' => $activites]);
+            $pdf = Pdf::loadView('PDF.activites_pdf', compact('activites', 'dateToday'));
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {

@@ -116,7 +116,7 @@
     background-color: #f8f9fa;
     /* couleur de fond, ajustez selon vos préférences */
     text-align: right;
-    padding: 10px;
+    padding: 5px;
   }
   </style>
 </head>
@@ -394,6 +394,7 @@
                     <td class="taux_nombre ">{{ $activite->taux_de_realisation }}</td>
                   </tr>
                   @endforeach
+
                 </tbody>
               </table>
             </div>

@@ -6,6 +6,7 @@ use App\Models\Projet;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ProjetController extends Controller
@@ -49,11 +50,11 @@ class ProjetController extends Controller
 
     public function pdfProjet()
     {
-
+        $dateToday = Carbon::now();
         //  $user = Auth::user();
         // if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
         $projets = Projet::all();
-        $pdf = Pdf::loadView('PDF.projets_pdf', ['projets' => $projets]);
+        $pdf = Pdf::loadView('PDF.projets_pdf', compact('projets', 'dateToday'));
         return $pdf->stream();
         //} else {
         //    return view('composants.acces_refuser');

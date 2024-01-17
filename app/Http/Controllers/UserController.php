@@ -8,6 +8,7 @@ use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Livewire\WithPagination;
 
 class UserController extends Controller
@@ -40,10 +41,12 @@ class UserController extends Controller
 
     public function generatepdf()
     {
+
+        $dateToday = Carbon::now();
         $user = Auth::user();
         if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
             $users = User::all();
-            $pdf = Pdf::loadView('PDF.user_pdf', ['users' => $users]);
+            $pdf = Pdf::loadView('PDF.user_pdf', compact('users', 'dateToday'));
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {

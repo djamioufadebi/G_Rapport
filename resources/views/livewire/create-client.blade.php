@@ -16,6 +16,17 @@
         </script>
         @endif
 
+         @if(session('error'))
+        <script>
+        Swal.fire({
+          title: 'Erreur!',
+          text: 'Erreur d\'enregistrement du client',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
+        @endif
+
         <div class="mb-3">
           <label for="nom" class="form-label">Nom du client :</label>
           <input type="text" class="form-control  @error('nom')is-invalid

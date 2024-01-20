@@ -109,6 +109,23 @@
             @enderror
           </div>
 
+           <div class="mb-3">
+          <label>Sélectionner un gestionnaire</label>
+          <select class="form-select @error('id_gestionnaire') is-invalid @enderror" id="id_gestionnaire"
+            wire:model="id_gestionnaire" name="id_gestionnaire">
+            <option value=""></option>
+            <!--  La boucle pour afficher la liste des clients -->
+            @foreach ($managers as $item )
+            <option value="{{$item->id}}">{{$item->nom}} {{$item->prenom}}</option>
+            @endforeach
+
+          </select>
+          <!-- afiche le message d'erreur si le champs est vide  -->
+          @error('id_gestionnaire')
+          <div class="invalid-feedback">Le champs gestionnaire est requis est requis.</div>
+          @enderror
+        </div>
+
           <!-- Le client -->
           <div class="mb-3">
             <label>Le nom du client</label>

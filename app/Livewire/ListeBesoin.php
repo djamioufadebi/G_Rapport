@@ -108,16 +108,23 @@ class ListeBesoin extends Component
 
         $word = '%' . $this->search . '%';
 
-        $listeBesoins = Besoin::where('libelle', 'like', $word)->orwhere('created_at', 'like', $word)->orwhere('contenu', 'like', $word);
+        $listeBesoins = Besoin::where('libelle', 'like', $word)
+            ->orwhere('created_at', 'like', $word)
+            ->orwhere('contenu', 'like', $word);
 
         $user = Auth::user();
         // Si l'utilisateur n'est pas admin, afficher uniquement les besoins qu'il a creer
-        if ($user->id_profil != 1) {
+        if ($user->id_profil == 1) {
             // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer
-            $listeBesoins->where('user_id', $user->id);
+            $listeBesoins = Besoin::paginate(10);
+
+        } else {
+            // Si l'utilisateur est admin, afficher les besoins qu'il a creer et les besoins qu'il a validé ou rejeté
+            $listeBesoins = Besoin::where('user_id', $user->id)->paginate(10);
+
         }
 
-        $listeBesoins = $listeBesoins->paginate(10);
+
 
         return view('livewire.liste-besoin', compact('listeBesoins'));
     }

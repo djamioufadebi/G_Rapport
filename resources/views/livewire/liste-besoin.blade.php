@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-11">
+  <div class="col-md-12">
     <!-- le bouton ajouter -->
 
     @if(session('success'))
@@ -12,6 +12,18 @@
     })
     </script>
     @endif
+
+    @if(session('miseajour'))
+    <script>
+    Swal.fire({
+      title: 'Mise à jour!',
+      text: 'Votre besoin a été mise à jour avec succès',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    })
+    </script>
+    @endif
+
     @if(session('delete'))
     <script>
     Swal.fire({
@@ -62,15 +74,13 @@
     </div>
 
     <div class="card">
-      <!-- <div class="card-header">Liste des articles</div> -->
-
       <div class="card-body">
         <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">Libellé </th>
-              <th scope="col">Activité </th>
-              <th scope="col">Date</th>
+              <th scope="col">Nom de l'activité </th>
+              <th scope="col">Date de création</th>
               <th scope="col">Statut</th>
               <th scope="col">Actions</th>
             </tr>
@@ -107,11 +117,16 @@
                     class="fas fa-pen"></i>
                 </a>
 
-                <!-- Un bouton pour supprimer le besoin -->
-                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
-                  data-bs-target="#confirmationModal{{ $besoin->id }}" @endif
-                  class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
+                @if (Auth::user()->id_profil == 1 || Auth::user()->id === $besoin->user_id)
+                <!-- Un bouton pour supprimer le rapport -->
+                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $besoin->id }}"
+                  class="btn btn-sm btn-danger" style="display: block;"><i class="fas fa-trash-alt"></i>
                 </button>
+                @else
+                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $besoin->id }}"
+                  class="btn btn-sm btn-danger" style="display: none;"><i class="fas fa-trash-alt"></i>
+                </button>
+                @endif
 
               </td>
 

@@ -3,7 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Activite;
+use App\Models\Notifications;
 use App\Models\Projet;
+use Auth;
 use Livewire\Component;
 
 class CreateActivite extends Component
@@ -46,6 +48,16 @@ class CreateActivite extends Component
                 $activite->taux_de_realisation = $this->taux_de_realisation;
                 $activite->id_projet = $this->id_projet;
                 $activite->statut = $this->statut;
+
+                // notifications de création d'activité
+                $notification = new Notifications;
+                $notification->activite_id = $activite->id;
+                $notification->user_id = Auth::user()->id;
+                $notification->type = "Activité";
+                $notification->titre = "Création d'une activité";
+                $notification->message = "L'activité : " . $this->nom .
+                    " vient d'être créé par :" . Auth::user()->nom . " " . Auth::user()->prenom;
+                $notification->read = false;
                 $activite->save();
 
                 // Réinitialisation des champs
@@ -80,7 +92,17 @@ class CreateActivite extends Component
 
     public function render()
     {
-        $listeProjet = Projet::all();
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+
+        // Verifier si le gestionnaire de projet est le même que l'utilisateur
+        if ($user->id_profil == 1) {
+            // tout les projets
+            $listeProjet = Projet::all();
+        } else {
+            $listeProjet = Projet::where('id_gestionnaire', '=', $user_id)->get();
+        }
+
 
         return view('livewire.create-activite', compact('listeProjet'));
     }

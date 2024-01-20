@@ -13,14 +13,15 @@ return new class extends Migration {
         Schema::create('besoins', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
-            $table->integer('user_id');
             $table->text('contenu');
             $table->text('commentaires')->nullable();
             $table->string('fichier')->nullable();
             $table->enum('statut', ['en attente', 'Validé', 'rejeté'])->default('en attente');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('id_activite');
             $table->foreign('id_activite')->
-                references('id')->on('projets');
+                references('id')->on('activites')->onDelete('cascade');
 
             $table->timestamps();
         });

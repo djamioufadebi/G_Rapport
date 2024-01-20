@@ -14,7 +14,6 @@ class EditRapport extends Component
     public $libelle;
     public $contenu;
     public $id_activite;
-    public $taux_de_realisation;
     public $materiels_utilises;
     public $difficultes_rencontrees;
     public $solutions_apportees;
@@ -26,7 +25,6 @@ class EditRapport extends Component
         $this->libelle = $this->rapports->libelle;
         $this->contenu = $this->rapports->contenu;
         $this->id_activite = $this->rapports->id_activite;
-        $this->taux_de_realisation = $this->rapports->taux_de_realisation;
         $this->materiels_utilises = $this->rapports->materiels_utilises;
         $this->difficultes_rencontrees = $this->rapports->difficultes_rencontrees;
         $this->solutions_apportees = $this->rapports->solutions_apportees;
@@ -41,7 +39,6 @@ class EditRapport extends Component
         $this->validate([
             'libelle' => 'string|required',
             'contenu' => 'string|required',
-            'taux_de_realisation' => 'required|numeric|min:0|max:100',
             'materiels_utilises' => 'string|required',
             'difficultes_rencontrees' => 'string|required',
             'solutions_apportees' => 'string|required',
@@ -52,7 +49,6 @@ class EditRapport extends Component
             $rapport->libelle = $this->libelle;
             $rapport->contenu = $this->contenu;
             $rapport->id_activite = $this->id_activite;
-            $rapport->taux_de_realisation = $this->taux_de_realisation;
             $rapport->materiels_utilises = $this->materiels_utilises;
             $rapport->difficultes_rencontrees = $this->difficultes_rencontrees;
             $rapport->solutions_apportees = $this->solutions_apportees;

@@ -17,9 +17,14 @@
         @endif
 
         @if(session('error'))
-        <div class="alert alert-danger">
-          {{ session('error') }}
-        </div>
+        <script>
+        Swal.fire({
+          title: 'Erreur!',
+          text: 'Erreur d\'enregistrement du rapport',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
         @endif
 
         <div class="mb-3">
@@ -41,18 +46,6 @@
           <!-- afiche le message d'erreur si le champs est vide  -->
           @error('contenu')
           <div class="invalid-feedback">Le champ contenu est requis.</div>
-          @enderror
-        </div>
-
-        <!-- Taux de réalisation avec barre de progression -->
-        <div class="mb-3">
-          <label for="taux_de_realisation" class="form-label">Taux de réalisation :</label>
-          <input type="range" class="form-range @error('taux_de_realisation') is-invalid @enderror"
-            id="taux_de_realisation" wire:model="taux_de_realisation" name="taux_de_realisation" min="0" max="100"
-            step="0.1" required>
-          <output id="taux_value" class="mt-2">{{$taux_de_realisation}}%</output>
-          @error('taux_de_realisation')
-          <div class="invalid-feedback">Le champ taux_de_realisation est requis.</div>
           @enderror
         </div>
 

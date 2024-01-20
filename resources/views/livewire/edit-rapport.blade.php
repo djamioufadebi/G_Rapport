@@ -41,17 +41,6 @@
           @enderror
         </div>
 
-        <!-- Taux de réalisation avec barre de progression -->
-        <div class="mb-3">
-          <label for="taux_de_realisation" class="form-label">Taux de réalisation :</label>
-          <input type="range" class="form-range @error('taux_de_realisation') is-invalid @enderror"
-            id="taux_de_realisation" wire:model="taux_de_realisation" name="taux_de_realisation" min="0" max="100"
-            step="0.1" required>
-          <output id="taux_value" class="mt-2">{{$taux_de_realisation}}%</output>
-          @error('taux_de_realisation')
-          <div class="invalid-feedback">Le champ taux_de_realisation est requis.</div>
-          @enderror
-        </div>
 
         <div class="mb-3">
           <label for="materiels_utilises" class="form-label">Materiels Utilisés (*) :</label>

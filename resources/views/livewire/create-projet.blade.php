@@ -16,10 +16,15 @@
         </script>
         @endif
 
-        @if(session('success'))
-        <div class="alert alert-success">
-          {{ session('success') }}
-        </div>
+        @if(session('error'))
+        <script>
+        Swal.fire({
+          title: 'Erreur!',
+          text: 'Erreur d\'enregistrement du projet',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
         @endif
 
         <div class="mb-3">
@@ -53,6 +58,23 @@
         </div>
 
         <div class="mb-3">
+          <label>Sélectionner un gestionnaire</label>
+          <select class="form-select @error('id_gestionnaire') is-invalid @enderror" id="id_gestionnaire"
+            wire:model="id_gestionnaire" name="id_gestionnaire">
+            <option value=""></option>
+            <!--  La boucle pour afficher la liste des clients -->
+            @foreach ($managers as $item )
+            <option value="{{$item->id}}">{{$item->nom}} {{$item->prenom}}</option>
+            @endforeach
+
+          </select>
+          <!-- afiche le message d'erreur si le champs est vide  -->
+          @error('id_gestionnaire')
+          <div class="invalid-feedback">Le champs gestionnaire est requis est requis.</div>
+          @enderror
+        </div>
+
+        <div class="mb-3">
           <!-- Checkbox pour afficher ou cache le champ -->
           <label for="toggleCheckbox">Afficher </label>
           <input type="checkbox" id="toggleCheckbox">
@@ -63,7 +85,6 @@
           <div class="form-check form-switch">
             <select id="statut" class="form-select @error('statut') is-invalid @enderror" wire:model="statut"
               name="statut" style="display: none;">
-              <!-- <option value="" selected disabled>Choisir le statut</option> -->
               <option value="en attente">En attente</option>
               <option value="en cours">En cours</option>
               <option value="terminé">Terminé</option>
@@ -87,9 +108,7 @@
           <input type="date" class="form-control @error('date_fin_prevue') is-invalid @enderror" id="date_fin_prevue"
             wire:model="date_fin_prevue" name="date_fin_prevue" required>
           <div id="date_fin_prevue_error" class="error-message invalid-feedback" style="display: none;">La date de fin
-            ne peut
-            pas être
-            antérieure à la date de début.</div>
+            ne peut pas être antérieure à la date de début.</div>
           <!-- Affiche le message d'erreur si le champ est vide -->
           @error('date_fin_prevue')
           <div class="error-message invalid-feedback">Le champ date fin est requis.</div>

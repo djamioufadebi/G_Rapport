@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Projet;
 use App\Models\Rapport;
 use Livewire\Component;
 use App\Models\Notifications;
@@ -14,7 +15,6 @@ class CreateRapport extends Component
 
     public $libelle;
     public $contenu;
-    public $taux_de_realisation;
     public $materiels_utilises;
     public $difficultes_rencontrees;
     public $solutions_apportees;
@@ -28,7 +28,6 @@ class CreateRapport extends Component
         $this->validate([
             'libelle' => 'string|required|unique:rapports,libelle',
             'contenu' => 'string|required',
-            'taux_de_realisation' => 'required|numeric|min:0|max:100',
             'materiels_utilises' => 'string|required',
             'difficultes_rencontrees' => 'string|required',
             'solutions_apportees' => 'string|required',
@@ -48,7 +47,6 @@ class CreateRapport extends Component
                 $rapport = new Rapport();
                 $rapport->libelle = $this->libelle;
                 $rapport->contenu = $this->contenu;
-                $rapport->taux_de_realisation = $this->taux_de_realisation;
                 $rapport->materiels_utilises = $this->materiels_utilises;
                 $rapport->difficultes_rencontrees = $this->difficultes_rencontrees;
                 $rapport->solutions_apportees = $this->solutions_apportees;
@@ -85,7 +83,21 @@ class CreateRapport extends Component
     public function render()
     {
 
-        $listeActivite = Activite::all();
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        // Verifier si le gestionnaire de projet est le même que l'utilisateur
+        if ($user->id_profil == 1) {
+            // toutes les activités
+            $listeActivite = Activite::all();
+        } else {
+            $projetsUser = Projet::where('id_gestionnaire', '=', $user_id)->get();
+
+            $idsProjetsUser = $projetsUser->pluck('id')->toArray();
+            // Récupérer les activités dont le champ 'id_projet' est parmi les IDs extraits
+            $listeActivite = Activite::whereIn('id_projet', $idsProjetsUser)->get();
+        }
+
 
         return view('livewire.create-rapport', compact('listeActivite'));
     }

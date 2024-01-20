@@ -6,9 +6,6 @@
   <title>Rapport Journalier et Bilan</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-  /* Ajouter des styles personnalisés ici si nécessaire */
-  </style>
 </head>
 
 <body>
@@ -21,9 +18,9 @@
         </button>
       </a>
       <hr>
-      <form action="{{route('bilans.activite')}}" method="POST">
+      <form action="{{route('bilans.activite')}}" method="GET">
         @csrf
-        @method('POST')
+        @method('GET')
         <div class="row">
           <!-- Champs de sélection pour le activite -->
           <div class="col-md-3">
@@ -31,7 +28,7 @@
               <label for="activite">Activité :</label>
               <div class="input-group">
                 <select name="id_activite" wire:model="selectedActiviteId" class="form-control form-control-md"
-                  required>
+                  id="id_activite" required>
                   @foreach ($activites as $item)
                   <option value="{{ $item->id }}">{{ $item->nom }}</option>
                   @endforeach
@@ -43,6 +40,7 @@
             </div>
           </div>
 
+
           <!-- Boutons de soumission -->
           <div class="col-md-3 align-self-end">
             <div class="form-group">
@@ -50,9 +48,7 @@
             </div>
           </div>
           <div class="col-md-3 align-self-end">
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-sm"><i class="far fa-file-pdf"></i> PDF</button>
-            </div>
+            <!-- Un autre bouton ici -->
           </div>
         </div>
       </form>

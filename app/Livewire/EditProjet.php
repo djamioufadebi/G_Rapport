@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Client;
 use App\Models\Projet;
+use App\Models\User;
 use Livewire\Component;
 
 class EditProjet extends Component
@@ -15,6 +16,7 @@ class EditProjet extends Component
     public $lieu;
     public $statut;
     public $id_client;
+    public $id_gestionnaire;
 
     public $projets;
     public function mount()
@@ -25,6 +27,7 @@ class EditProjet extends Component
         $this->date_debut = $this->projets->date_debut;
         $this->date_fin_prevue = $this->projets->date_fin_prevue;
         $this->id_client = $this->projets->id_client;
+        $this->id_gestionnaire = $this->projets->id_gestionnaire;
         $this->statut = $this->projets->statut;
     }
 
@@ -41,6 +44,7 @@ class EditProjet extends Component
             'date_fin_prevue' => 'date|required',
             'statut' => 'string',
             'id_client' => 'required',
+            'id_gestionnaire' => 'required'
         ]);
 
         try {
@@ -51,6 +55,7 @@ class EditProjet extends Component
             $projet->date_fin_prevue = $this->date_fin_prevue;
             $projet->statut = $this->statut;
             $projet->id_client = $this->id_client;
+            $projet->id_gestionnaire = $this->id_gestionnaire;
             $projet->save();
 
             return redirect()->Route('projets')->with(
@@ -68,6 +73,8 @@ class EditProjet extends Component
     public function render()
     {
         $listeClient = Client::all();
-        return view('livewire.edit-projet', compact('listeClient'));
+        // sélectionner les utilisateur qui on le profil gestionnaire
+        $managers = User::where('id_profil', '=', '2')->get();
+        return view('livewire.edit-projet', compact('listeClient', 'managers'));
     }
 }

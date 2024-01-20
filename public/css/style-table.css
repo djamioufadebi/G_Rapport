@@ -22,6 +22,63 @@
   padding: 10px;
 }
 
+@media print {
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+    /* Marge après le tableau lors de l'impression */
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    /* Bordures des cellules */
+    padding: 10px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    /* Couleur de fond pour les en-têtes */
+    font-weight: bold;
+    /* Texte en gras pour les en-têtes */
+  }
+
+  td {
+    font-size: 14px;
+    /* Taille de police pour les cellules de données */
+  }
+
+  /* Lignes de tableau zébrées pour une meilleure lisibilité */
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  /* Styles spécifiques pour les premières et dernières colonnes */
+  td:first-child,
+  th:first-child {
+    border-left: 2px solid #ddd;
+    /* Bordure gauche plus épaisse */
+  }
+
+  td:last-child,
+  th:last-child {
+    border-right: 2px solid #ddd;
+    /* Bordure droite plus épaisse */
+  }
+
+  /* Styles pour l'en-tête du tableau (informations sur le projet) */
+  #detailsProjet th {
+    font-size: 18px;
+    background-color: #3498db;
+    color: #fff;
+    padding: 15px;
+  }
+
+  /* Autres styles spécifiques pour l'impression si nécessaire */
+}
+
 /* Style pour les lignes impaires */
 .table tbody tr:nth-child(odd) {
   background-color: #f9f9f9;

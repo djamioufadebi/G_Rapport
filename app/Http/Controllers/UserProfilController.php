@@ -39,7 +39,7 @@ class UserProfilController extends Controller
             $user->nom = $request->input('nom');
             $user->prenom = $request->input('prenom');
             $user->email = $request->input('email');
-            $user->update();
+            $user->save();
 
             return redirect()->route('mon-profile')->with(
                 'success',

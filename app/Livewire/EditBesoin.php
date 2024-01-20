@@ -15,8 +15,8 @@ class EditBesoin extends Component
     public $libelle;
     public $contenu;
     public $id_activite;
+    public $user_id;
 
-    public $statut;
 
     public $besoins;
     public function mount()
@@ -24,7 +24,7 @@ class EditBesoin extends Component
         $this->libelle = $this->besoins->libelle;
         $this->contenu = $this->besoins->contenu;
         $this->id_activite = $this->besoins->id_activite;
-        $this->statut = $this->besoins->statut;
+        $this->user_id = $this->besoins->user_id;
 
     }
 
@@ -34,15 +34,17 @@ class EditBesoin extends Component
         $besoin = Besoin::find($this->besoins->id);
 
         $this->validate([
-            'libelle' => 'string|required|unique:besoins,libelle',
+            'libelle' => 'string|required',
             'contenu' => 'string|required',
             'id_activite' => 'required',
+            'user_id' => '',
         ]);
 
         try {
             $besoin->libelle = $this->libelle;
             $besoin->contenu = $this->contenu;
             $besoin->id_activite = $this->id_activite;
+            $besoin->user_id = Auth::user()->id;
             $besoin->save();
 
             // recuperer le projet choisi
@@ -60,7 +62,7 @@ class EditBesoin extends Component
             $notification->save();
 
             return redirect()->Route('besoins')->with(
-                'success',
+                'miseajour',
                 'Mise à jour du besoin !'
             );
         } catch (\Exception $e) {
@@ -72,7 +74,24 @@ class EditBesoin extends Component
     }
     public function render()
     {
-        $listeActivite = Activite::all();
+
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        // Verifier si le gestionnaire de projet est le même que l'utilisateur
+        if ($user->id_profil == 1) {
+            // toutes les activités
+            $listeActivite = Activite::all();
+        } else {
+            $projetsUser = Projet::where('id_gestionnaire', '=', $user_id)->get();
+
+            $idsProjetsUser = $projetsUser->pluck('id')->toArray();
+
+            // Récupérer les activités dont le champ 'id_projet' est parmi les IDs extraits
+            $listeActivite = Activite::whereIn('id_projet', $idsProjetsUser)->get();
+        }
+
+
         return view('livewire.edit-besoin', compact('listeActivite'));
     }
 }

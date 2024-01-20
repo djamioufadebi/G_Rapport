@@ -5,12 +5,27 @@
         @csrf
         @method('POST')
 
-        @if (Session::get('error'))
-        <div class="p-5">
-          <div class="alert alert-danger" role="alert">
-            {{ Session::get('error')}}
-          </div>
-        </div>
+
+        @if(session('error'))
+        <script>
+        Swal.fire({
+          title: 'Erreur!',
+          text: 'Erreur d\'enregistrement du besoin',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
+        @endif
+
+        @if(session('dejautiliser'))
+        <script>
+        Swal.fire({
+          title: 'Erreur d\'enregistrement!',
+          text: 'Ce besoin existe déjà dans la base !',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
         @endif
 
         @if(session('success'))
@@ -33,8 +48,6 @@
           <label for="contenu" class="form-label">Contenu :</label>
           <textarea class="form-control  @error('contenu') is-invalid
            @enderror" wire:model="contenu" name="contenu" id="contenu" rows="4" required></textarea>
-
-          <!-- afiche le message d'erreur si le champs est vide  -->
           @error('contenu')
           <div class="invalid-feedback">Le champ contenu est requis.</div>
           @enderror
@@ -45,15 +58,11 @@
         <div class="mb-3">
           <label>Activité</label>
           <select class="form-select @error('id_activite') is-invalid @enderror" id="id_activite"
-            wire:model="id_activite" name="id_activite">
-            <option value=""></option>
-            <!--  La boucle pour afficher la liste de'actvité  -->
+            wire:model="id_activite" name="id_activite" required>
             @foreach ($listeActivite as $item )
             <option value="{{$item->id}}">{{$item->nom}}</option>
             @endforeach
-
           </select>
-          <!-- afiche le message d'erreur si le champs est vide  -->
           @error('id_activite')
           <div class="invalid-feedback">L'actvité est requis.</div>
           @enderror

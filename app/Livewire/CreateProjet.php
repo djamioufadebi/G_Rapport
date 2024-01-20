@@ -2,9 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Notifications;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Projet;
+use Auth;
 use Livewire\Component;
 
 class CreateProjet extends Component
@@ -19,6 +21,8 @@ class CreateProjet extends Component
     public $projet;
     public $id_user;
     public $id_client;
+
+    public $id_gestionnaire;
 
     public $statut;
 
@@ -35,18 +39,19 @@ class CreateProjet extends Component
             'description' => 'string|required',
             'lieu' => 'string|required',
             'date_debut' => 'date|required',
-            'date_fin_prevue' => 'date|required',
+            'date_fin_prevue' => 'required|date|after_or_equal:date_debut',
             'statut' => 'string',
             'id_user' => '',
             'id_client' => 'required',
+            'id_gestionnaire' => 'required',
 
         ]);
 
         // pour verifier si le Projet existe déjà
         $query = Projet::where('libelle', $this->libelle)->get();
+
         // pour verifier si Projet existe déjà
         if (count($query) > 0) {
-
             $message = 'Ce Projet existe déjà!';
             return redirect()->route('projets.create')->with('dejautiliser', $message);
         } else {
@@ -62,7 +67,16 @@ class CreateProjet extends Component
                 $projet->id_client = $this->id_client;
                 // pour recuperer le User connecté
                 $projet->id_user = auth()->user()->id;
+                $projet->id_gestionnaire = $this->id_gestionnaire;
 
+                //creer une notification pour la creation du projet
+                $notification = new Notifications;
+                $notification->projet_id = $projet->id;
+                $notification->user_id = Auth::user()->id;
+                $notification->type = "projet";
+                $notification->titre = "Creation d'un projet";
+                $notification->message = "Le propjet : " . $this->libelle . " vient d'être créé par: " . Auth::user()->nom . " " . Auth::user()->prenom;
+                $notification->read = false;
                 $projet->save();
 
                 return redirect()->Route('projets')->with(
@@ -80,6 +94,10 @@ class CreateProjet extends Component
     public function render()
     {
         $currentClient = Client::all();
-        return view('livewire.create-projet', compact('currentClient'));
+
+        // sélectionner les utilisateur qui on le profil gestionnaire
+        $managers = User::where('id_profil', '=', '2')->get();
+
+        return view('livewire.create-projet', compact('currentClient', 'managers'));
     }
 }

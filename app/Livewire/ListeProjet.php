@@ -2,7 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\Activite;
 use App\Models\Client;
+use App\Models\Intervenant;
 use App\Models\Notification;
 use App\Models\Projet;
 use App\Models\User;
@@ -22,11 +24,15 @@ class ListeProjet extends Component
     public $statut;
     public $date_debut;
     public $date_fin_prevue;
+    public $id_gestionnaire;
+
 
     // la fonction pour afficher les projets en fonction de la recherche et de l'utilisateur connecté
     public function s()
     {
     }
+
+
 
     public function confirmDelete($id)
     {
@@ -37,7 +43,6 @@ class ListeProjet extends Component
             if (!$this->canDeleteProjet($projet)) {
                 throw new \Exception('Impossible de supprimer ce projet.');
             }
-
             // Créer une notification pour la suppression du projet
             $notification = new Notification;
             $notification->user_id = Auth::user()->id;
@@ -60,156 +65,163 @@ class ListeProjet extends Component
         // Vérifier s'il existe des relations avec d'autres modèles
         $references = [
             'activite',
-            'besoin',
-            'rapport',
             'intervenant',
         ];
+
         foreach ($references as $relation) {
             if ($projet->$relation()->count() > 0) {
                 return false;
             }
         }
+
+        $projectID = $projet->id;
+
+        // Vérification pour la table 'Activite'
+        if ($this->hasRecordsInActivite($projectID)) {
+            return false;
+        }
+
+        // Vérification pour la table 'Intervenant'
+        if ($this->hasRecordsInIntervenant($projectID)) {
+            return false;
+        }
+
+        // Ajoutez d'autres vérifications spécifiques ici si nécessaire
+
         return true;
     }
 
-
-    // les fonctios pour gerer les conditons des dates en fonction du statut
-    public function handleDateDebutChange()
+    private function hasRecordsInActivite($projectID)
     {
-        // Appliquer des conditions en fonction du statut et de la date de début
-        if ($this->statut == 'en attente') {
-            // Empêcher la sélection d'une date de début inférieure à la date du jour
-            $this->date_debut = max($this->date_debut, now()->toDateString()); // Met à jour la date de début à la date du jour si elle est inférieure
-        } elseif ($this->statut == 'en cours') {
-            // La date de début doit être inférieure ou égale à la date du jour
-            $this->date_debut = max($this->date_debut, now()->toDateString()); // Met à jour la date de début à la date du jour si elle est inférieure
-        } elseif ($this->statut == 'terminé') {
-            // Ne pas permettre de changer la date de début une fois qu'elle est définie pour le statut "terminé"
-            $this->date_debut = now()->toDateString(); // Met à jour la date de début à la date du jour
-        }
+        return Activite::where('id_projet', $projectID)->exists();
     }
 
-    public function handleDateFinPrevueChange()
+    private function hasRecordsInIntervenant($projectID)
     {
-        // Appliquer des conditions en fonction du statut et de la date de fin prévue
-        if ($this->statut == 'en attente') {
-            // Logique pour le statut "en attente"
-            // Par exemple, vous pourriez empêcher l'utilisateur de sélectionner une date de fin inférieure à la date du jour
-            $this->date_fin_prevue = max($this->date_fin_prevue, now()->toDateString()); // Met à jour la date de fin à la date du jour si elle est inférieure
-        } elseif ($this->statut == 'en cours') {
-            // Logique pour le statut "en cours"
-            // Par exemple, assurez-vous que la date de fin est supérieure à la date du jour
-            $this->date_fin_prevue = max($this->date_fin_prevue, now()->toDateString()); // Met à jour la date de fin à la date du jour si elle est inférieure
-        } elseif ($this->statut == 'terminé') {
-            // Logique pour le statut "terminé"
-            // Par exemple, vous pourriez empêcher l'utilisateur de changer la date de fin une fois qu'elle est définie
-        }
+        return Intervenant::where('id_projet', $projectID)->exists();
     }
 
 
+
+    protected $rules = [
+        'date_debut' => 'required|date',
+        'date_fin_prevue' => 'required|date|after_or_equal:date_debut',
+    ];
 
     public function ValidationStatutProjet($id)
     {
         $projet = Projet::find($id);
 
-        if ($this->statut == "en cours") {
-            // creer une notification pour la Finition du Projet
-            $notification = new Notification;
-            // selectionner l'utilisateur qui a valider le Projet
-            $notification->user_id = Auth::user()->id;
-            // donner le titre de la notification (le statut du Projet)
-            $notification->titre = "Démarrage d'un Projet";
-            // donner le type de la notification (le statut du Projet)
-            $notification->type = "Projet";
-            // donner le message de la notification en le concaténant avec le nom du Projet et l'email de l'utilisateur qui a valider le Projet.
-            $notification->message = "Le démarrage du Projet : " . $projet->libelle . " viens d'être notifié démarré par :" . Auth::user()->email;
-            // marquer la notification comme lu ou non lu
-            $notification->read = false;
+        $this->createNotification($projet);
 
-            $notification->save();
-        } else if ($this->statut == "terminé") {
-            // creer une notification pour la Finition du Projet
-            $notification = new Notification;
-            // selectionner l'utilisateur qui a valider le Projet
-            $notification->user_id = Auth::user()->id;
-            // donner le titre de la notification (le statut du Projet)
-            $notification->titre = "Finition d'un Projet";
-            // donner le type de la notification (le statut du Projet)
-            $notification->type = "Projet";
-            // donner le message de la notification en le concaténant avec le nom du Projet et l'email de l'utilisateur qui a valider le Projet.
-            $notification->message = "La finition du Projet : " . $projet->libelle . " viens d'etre valider par :" . Auth::user()->email;
-            // marquer la notification comme lu ou non lu
-            $notification->read = false;
-
-            $notification->save();
-        } else if ($this->statut == "arrêté") {
-            // creer une notification pour la rejet du projet
-            $notification = new Notification;
-            // selectionner l'utilisateur qui a rejeter le projet
-            $notification->user_id = Auth::user()->id;
-            // donner le titre de la notification (le statut du projet)
-            $notification->titre = "Arrestation de Projet";
-            $notification->type = "Projet";
-            // donner le message de la notification en le concaténant avec le nom du Projet et l'email de l'utilisateur qui a rejeter le Projet.
-            $notification->message = "Le Projet : " . $projet->libelle . " viens d'etre arrêter par :" . Auth::user()->email;
-            // marquer la notification comme lu ou non lu
-            $notification->read = false;
-            $notification->save();
-        } else if ($this->statut == "en attente") {
-            $notification = new Notification;
-            // selectionner l'utilisateur qui a rejeter le projet
-            $notification->user_id = Auth::user()->id;
-            // donner le titre de la notification (le statut du projet)
-            $notification->titre = "Mise en attente de Projet";
-            $notification->type = "Projet";
-            // donner le message de la notification en le concaténant avec le nom du Projet et l'email de l'utilisateur qui a rejeter le Projet.
-            $notification->message = "Le Projet : " . $projet->libelle . " est mise en attente par :" . Auth::user()->email;
-            // marquer la notification comme lu ou non lu
-            $notification->read = false;
-            $notification->save();
-        }
-
-        // associer le statut du projet
+        // Associer le statut du projet
         if ($this->statut != null && $this->date_debut != null && $this->date_fin_prevue != null) {
             $projet->statut = $this->statut;
             $projet->date_debut = $this->date_debut;
             $projet->date_fin_prevue = $this->date_fin_prevue;
 
             if ($projet->statut == "en cours") {
-
-                $projet->date_debut = $this->date_debut;
-                $projet->date_fin_prevue = $this->date_fin_prevue;
-
-                // Sauvegardez les modifications avec la fonction save()
+                $this->rules['date_debut'] = 'required|date|before_or_equal:' . now()->toDateString();
                 $projet->save();
                 return redirect("projets")->with('Encours', 'Le Projet est en cours');
-
-            } else if ($projet->statut == "terminé") {
-                $projet->date_debut = $this->date_debut;
-                $projet->date_fin_prevue = $this->date_fin_prevue;
+            } elseif ($projet->statut == "terminé") {
+                $this->rules['date_fin_prevue'] = 'required|date|before_or_equal:' . now()->toDateString();
                 $projet->save();
                 return redirect("projets")->with('terminer', 'Vous venez de notifier la finalisation du projet');
-                // Sauvegardez les modifications avec la fonction save() et retourner sur la page des projets
-            } else if ($projet->statut == "arrêté") {
-                $projet->date_debut = $this->date_debut;
-                $projet->date_fin_prevue = $this->date_fin_prevue;
+            } elseif ($projet->statut == "arrêté") {
+                $this->rules['date_debut'] = 'required|date|before:' . now()->toDateString();
+                $this->rules['date_fin_prevue'] = 'required|date|after:' . now()->toDateString();
                 $projet->save();
                 return redirect("projets")->with('arreter', 'Le Projet a été arrêté');
+            } elseif ($projet->statut == "en attente") {
+                $this->rules['date_debut'] = 'required|date|after:' . now()->toDateString();
+                $projet->save();
+                return redirect("projets")->with('Enattente', 'Le Projet est toujours en cours');
             }
-        } else if ($projet->statut == "en attente") {
-            $projet->date_debut = $this->date_debut;
-            $projet->date_fin_prevue = $this->date_fin_prevue;
-            $projet->save();
-            return redirect("projets")->with('Enattente', 'Le Projet est toujours en cours');
         }
 
-        // retourner sur la page des projets si aucun statut n'est selectionner
-        return redirect('projets');
+        $this->validateOnly('date_debut');
+        $this->validateOnly('date_fin_prevue');
+    }
+
+    protected function createNotification($projet)
+    {
+        $notification = new Notification;
+        $notification->user_id = Auth::user()->id;
+        $notification->read = false;
+
+        switch ($this->statut) {
+            case 'en cours':
+                $notification->titre = "Démarrage d'un Projet";
+                $notification->message = "Le démarrage du Projet : " . $projet->libelle . " vient d'être notifié démarré par :" . Auth::user()->email;
+                break;
+            case 'terminé':
+                $notification->titre = "Finition d'un Projet";
+                $notification->message = "La finition du Projet : " . $projet->libelle . " vient d'être validée par :" . Auth::user()->email;
+                break;
+            case 'arrêté':
+                $notification->titre = "Arrêt d'un Projet";
+                $notification->message = "Le Projet : " . $projet->libelle . " vient d'être arrêté par :" . Auth::user()->email;
+                break;
+            case 'en attente':
+                $notification->titre = "Mise en attente de Projet";
+                $notification->message = "Le Projet : " . $projet->libelle . " est mis en attente par :" . Auth::user()->email;
+                break;
+            // Ajoutez d'autres cas au besoin...
+            default:
+                // Gérer le cas par défaut ou ne rien faire
+                break;
+        }
+
+        $notification->type = "Projet";
+        $notification->save();
+    }
+
+    // Pour récuperer le nom et prenom du gestionnaire de projet
+    public function nomGestionnaire()
+    {
+        // récuperer l'id du gestionnaire de projet
+        $id_projetProjet = Projet::where('id_gestionnaire', $this->id_gestionnaire)->first();
+        // récuperer l'utilisateur dont le champ id est égal au champ id_gestionnaire du projet
+        $selectGestionnaire = User::where('id', $id_projetProjet)->first();
+        dd($selectGestionnaire);
+        // return $selectGestionnaire->nom . " " . $selectGestionnaire->prenom;
+    }
+
+    public function mount()
+    {
+
+        // recuperer l'id du gestionnaire de projet
+        $gestionnaireId = Projet::where('id_gestionnaire', '=', Auth::user()->id)->get();
+        //$gestionnaireId = User::where('id', '=', 'id_gestionnaire')->get();
+        // dd($gestionnaireId);
+
     }
 
     public function render()
     {
-        $projets = Projet::where('libelle', 'like', '%' . $this->search . '%')->paginate(10);
+        $word = '%' . $this->search . '%';
+
+        $projets = Projet::where(
+            'libelle',
+            'like',
+            $word
+        )->orwhere('description', 'like', $word)
+            ->orwhere('lieu', 'like', $word)
+            ->paginate(10);
+
+
+        // $currentProjet = Projet::where('id_gestionnaire', '=', Auth::user()->id)->get();
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+
+        // Verifier si le gestionnaire de projet est le même que l'utilisateur
+        if ($user->id_profil == 1) {
+            // tout les projets
+            $projets = Projet::paginate(10);
+        } else {
+            $projets = Projet::where('id_gestionnaire', '=', $user_id)->paginate(10);
+        }
 
         return view('livewire.liste-projet', compact('projets'));
     }

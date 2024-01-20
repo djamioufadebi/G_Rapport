@@ -16,6 +16,17 @@
         </script>
         @endif
 
+        @if(session('error'))
+        <script>
+        Swal.fire({
+          title: 'Erreur!',
+          text: 'Erreur d\'enregistrement de l\'intervenant',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
+        @endif
+
 
         <div class="mb-3">
           <label for="nom" class="form-label">Nom de l'Intervenant :</label>

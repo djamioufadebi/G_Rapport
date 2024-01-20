@@ -22,6 +22,9 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->
                 references('id')->on('users');
+            $table->unsignedBigInteger('id_gestionnaire');
+            $table->foreign('id_gestionnaire')->
+                references('id')->on('users');
 
             $table->unsignedBigInteger('id_client');
             $table->foreign('id_client')->
@@ -32,6 +35,9 @@ return new class extends Migration {
         });
 
         Schema::enableForeignKeyConstraints();
+
+        // Définir id_user comme valeur par défaut pour id_gestionnaire
+        DB::statement('UPDATE projets SET id_gestionnaire = id_user');
 
     }
 

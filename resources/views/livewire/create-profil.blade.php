@@ -17,10 +17,15 @@
         </script>
         @endif
 
-        @if(session('success'))
-        <div class="alert alert-success">
-          {{ session('success') }}
-        </div>
+        @if(session('error'))
+        <script>
+        Swal.fire({
+          title: 'Erreur!',
+          text: 'Erreur d\'enregistrement du profil',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
         @endif
 
         <div class="mb-3">

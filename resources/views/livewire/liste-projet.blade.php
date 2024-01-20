@@ -86,7 +86,7 @@
               <th scope="col">Libellé </th>
               <th scope="col">Date début</th>
               <th scope="col">Date Fin</th>
-              <th scope="col">Nom du Gestionnaire</th>
+              <th scope="col">Créateur</th>
               <th scope="col">Nom du client</th>
               <th scope="col">Statut</th>
               <th scope="col">Actions</th>
@@ -99,24 +99,29 @@
               <td>{{$projet->date_debut}}</td>
               <td>{{$projet->date_fin_prevue}}</td>
               <td>{{$projet->user->nom}} {{$projet->user->prenom}} </td>
+
               <td>{{$projet->client->nom}}</td>
               <td>
                 <!-- href : le lien vers la page de modification du statut/ à mettre en place -->
                 @if ($projet->statut == 'en attente')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id ===
+                  $projet->id_gestionnaire)
                   data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-success">{{$projet->statut}}</a>
                 @elseif ($projet->statut == 'en cours')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id ===
+                  $projet->id_gestionnaire)
                   data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-success">{{$projet->statut}}</a>
                 @elseif ($projet->statut == 'arrêté')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id ===
+                  $projet->id_gestionnaire)
                   data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-warning">{{$projet->statut}}</a>
 
                 @elseif ($projet->statut == 'terminé')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id_profil == 2)
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id ===
+                  $projet->id_gestionnaire)
                   data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-danger">{{$projet->statut}}</a>
                 @endif
@@ -132,10 +137,16 @@
                     class="fas fa-pen"></i></a>
 
                 <!-- Un bouton pour supprimer le projet -->
-                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1)
-                  data-bs-target="#confirmationModal{{$projet->id}}" @endif
-                  class="btn btn-sm btn-danger"> <i class="fas fa-trash-alt"></i>
+
+                @if (Auth::user()->id_profil == 1)
+                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{$projet->id}}"
+                  class="btn btn-sm btn-danger" style="display: block;"><i class="fas fa-trash-alt"></i>
                 </button>
+                @else
+                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{$projet->id}}"
+                  class="btn btn-sm btn-danger" style="display: none;"><i class=" fas fa-trash-alt"></i>
+                </button>
+                @endif
 
               </td>
           </tbody>

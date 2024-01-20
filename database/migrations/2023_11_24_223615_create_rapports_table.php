@@ -15,15 +15,17 @@ return new class extends Migration {
             $table->string('libelle');
             $table->text('contenu');
             $table->enum('statut', ['en attente', 'Validé', 'rejeté'])->default('en attente');
-            $table->unsignedBigInteger('id_activite');
-            $table->foreign('id_activite')->
-                references('id')->on('activites');
-            $table->decimal('taux_de_realisation', 5, 2)->default(0.00);
             $table->text('materiels_utilises')->nullable();
             $table->text('difficultes_rencontrees')->nullable();
             $table->text('solutions_apportees')->nullable();
+
+            $table->unsignedBigInteger('id_activite');
+            $table->foreign('id_activite')->
+                references('id')->on('activites')->onDelete('cascade');
+
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->text('commentaires')->nullable();
             $table->timestamps();
         });

@@ -13,6 +13,17 @@
     </script>
     @endif
 
+    @if(session('miseajour'))
+    <script>
+    Swal.fire({
+      title: 'Mise à jour!',
+      text: 'Cet utilisateur a été mise à jour avec succès',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    })
+    </script>
+    @endif
+
     @if(session('edition'))
     <script>
     Swal.fire({

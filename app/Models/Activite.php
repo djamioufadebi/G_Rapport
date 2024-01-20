@@ -36,10 +36,4 @@ class Activite extends Model
         return $this->belongsToMany(Besoin::class, 'id_activite');
     }
 
-    // Une activité peut avoir un ou plusieurs bilans
-    public function bilan()
-    {
-        return $this->hasMany(Bilan::class, 'id_activite');
-    }
-
 }

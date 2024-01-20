@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Rapport;
 use App\Models\User;
+use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RapportPolicy
@@ -25,6 +26,7 @@ class RapportPolicy
 
     public function edit(User $user, Rapport $rapport)
     {
+        $user = Auth::user();
         // Seuls l'utilisateur ayant l'id profil 2 ou l'utilisateur propriétaire du rapport peuvent éditer un rapport
         return $user->id_profil === 1 || $user->id === $rapport->user_id;
     }

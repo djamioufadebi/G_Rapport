@@ -33,9 +33,14 @@
         </div>
         @endif
         @if(session('error'))
-        <div class="alert alert-success">
-          {{ session('error') }}
-        </div>
+        <script>
+        Swal.fire({
+          title: 'Erreur!',
+          text: 'Erreur d\'enregistrement de l\'activité ',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        </script>
         @endif
 
         <div class="mb-3">
@@ -69,7 +74,6 @@
           <div class="form-check form-switch">
             <select id="statut" class="form-select @error('statut') is-invalid @enderror" wire:model="statut"
               name="statut" style="display: none;">
-              <!-- <option value="" selected disabled>Choisir le statut</option> -->
               <option value="en attente">En attente</option>
               <option value="en cours">En cours</option>
               <option value="terminé">Terminé</option>
@@ -126,8 +130,7 @@
       <label for="id_projet" class="form-label">Choix du projet :</label>
       <select class="form-select @error('id_projet') is-invalid @enderror" id="id_projet" wire:model="id_projet"
         name="id_projet">
-        <option value="">Choisir le projet</option>
-
+        <option value=""></option>
         @foreach ($listeProjet as $item )
         <option value="{{$item->id}}">{{$item->libelle}}</option>
         @endforeach

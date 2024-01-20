@@ -21,6 +21,8 @@
         <div class="col-md-10">
           <h5>{{ $item->titre }}</h5>
           <p>{{ $item->message }}</p>
+          <p>Date : {{ $item->created_at->format('Y-m-d') }}</p>
+          <p>Heure : {{ $item->created_at->format('H:i:s') }}</p>
         </div>
 
         <div class="col-md-2">

@@ -10,6 +10,18 @@
     })
     </script>
     @endif
+
+    @if(session('miseajour'))
+    <script>
+    Swal.fire({
+      title: 'Mise à jour!',
+      text: 'Cet rapport a été mise à jour avec succès',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    })
+    </script>
+    @endif
+
     @if(session('delete'))
     <script>
     Swal.fire({
@@ -95,7 +107,7 @@
                   class="btn btn-sm badge bg-danger">{{$rapport->statut}}</a>
                 @endif
               </td>
-              <td>{{$rapport->taux_de_realisation}}</td>
+              <td>{{$rapport->activite->taux_de_realisation}}</td>
 
               <td>
                 <!-- Par exemple, un lien pour afficher le rapports détaillé -->
@@ -106,10 +118,16 @@
                     class="fas fa-pen"></i></a>
 
                 <!-- Un bouton pour supprimer le rapport -->
-                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 )
-                  data-bs-target="#confirmationModal{{ $rapport->id }}"@endif
-                  class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
+                @if (Auth::user()->id_profil == 1)
+                <!-- Un bouton pour supprimer le rapport -->
+                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $rapport->id }}"
+                  class="btn btn-sm btn-danger" style="display: block;"><i class="fas fa-trash-alt"></i>
                 </button>
+                @else
+                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $rapport->id }}"
+                  class="btn btn-sm btn-danger" style="display: none;"><i class="fas fa-trash-alt"></i>
+                </button>
+                @endif
 
 
               </td>

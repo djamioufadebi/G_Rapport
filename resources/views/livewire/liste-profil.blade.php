@@ -8,7 +8,7 @@
       <div class="col-md-3">
         <button type="button" class="btn btn-secondary">
           <a href="{{route('profils.pdf')}}" class="text-white fs-6" style="text-decoration:none;">
-            <i class="far fa-file-pdf"></i>PDF</a></button>
+            <i class="far fa-file-pdf"></i>Imprimer la liste</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('profils.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="fas fa-plus"></i>Ajouter

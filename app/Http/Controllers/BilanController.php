@@ -95,7 +95,15 @@ class BilanController extends Controller
                 )
             );
             $pdf->setPaper('a4', 'landscape');
-            return $pdf->stream();
+            // Spécifier le nom du fichier PDF pour les navigateurs intégrés
+            $filename = 'Bilan_journalier_du : ' . now()->format('Y-m-d') . '.pdf';
+
+            // Télécharger le fichier avec le nom spécifié
+            //return $pdf->download($filename);
+            // Ouvrir le PDF dans le navigateur avec le nom spécifié
+
+            return $pdf->stream($filename, ['Attachment' => false]);
+            //return $pdf->stream();
 
         } else {
 
@@ -144,10 +152,7 @@ class BilanController extends Controller
             $rapportsCreesAujourdhui = Rapport::whereIn('id_activite', $idsActiviteEncours)
                 ->whereBetween(
                     'created_at',
-                    [
-                        Carbon::now()->startOfDay(),
-                        Carbon::now()->endOfDay()
-                    ]
+                    [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
                 )->orwhere('updated_at', $dateToday)->get();
 
             $besoinsEnCoursAujourdhui = Besoin::whereIn('id_activite', $idsActiviteEncours)
@@ -172,7 +177,15 @@ class BilanController extends Controller
                 )
             );
             $pdf->setPaper('a4', 'landscape');
-            return $pdf->stream();
+            // Spécifier le nom du fichier PDF pour les navigateurs intégrés
+            $filename = 'Bilan_journalier_' . now()->format('Y-m-d') . '.pdf';
+
+            // Télécharger le fichier avec le nom spécifié
+            //return $pdf->download($filename);
+            // Ouvrir le PDF dans le navigateur avec le nom spécifié
+
+            return $pdf->stream($filename, ['Attachment' => false]);
+            //return $pdf->stream();
 
 
         }

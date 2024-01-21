@@ -59,14 +59,16 @@
       <div class="col-md-3">
         <button type="button" class="btn btn-secondary">
           <a href="{{route('rapports.pdf')}}" class="text-white fs-6" style="text-decoration:none;">
-            <i class="far fa-file-pdf"></i>PDF</a></button>
+            <i class="far fa-file-pdf"></i>Imprimer la liste</a></button>
+        @if (Auth::user()->id_profil == 2)
         <button type="button" class="btn btn-primary">
           <a href="{{route('rapports.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="fas fa-plus"></i>Ajouter</a></button>
+        @endif
       </div>
       <div class="col-md-5">
         <input wire:change="s" wire:model="search" type="text" class="form-control"
-          placeholder="Rechercher un projet par son Libellé...">
+          placeholder="Rechercher un rapport par son Libellé...">
       </div>
     </div>
 
@@ -89,6 +91,7 @@
               <td>{{$rapport->libelle}}</td>
               <td>{{$rapport->activite->nom}}</td>
               <!-- Le profil qui peut accéder à ces pages des bouttons -->
+
               <td>
                 <!-- href : le lien vers la page de modification du statut/ à mettre en place -->
                 @if ($rapport->statut == 'Validé')
@@ -106,7 +109,9 @@
                   data-bs-target="#confirmProfilModal{{ $rapport->id }}" @endif
                   class="btn btn-sm badge bg-danger">{{$rapport->statut}}</a>
                 @endif
+
               </td>
+
               <td>{{$rapport->activite->taux_de_realisation}}</td>
 
               <td>
@@ -114,21 +119,17 @@
                 <a href="{{ route('rapports.show', $rapport->id) }}" class="btn btn-sm btn-info"><i
                     class="fas fa-eye"></i> </a>
                 <!-- Un bouton pour modifier le rapport -->
+                <!-- Seule celui qui a fait le rapport peut le modifier -->
+                @if (Auth::user()->id === $rapport->user_id)
                 <a href="{{ route('rapports.edit', $rapport->id) }}" class="btn btn-sm btn-warning"><i
                     class="fas fa-pen"></i></a>
-
-                <!-- Un bouton pour supprimer le rapport -->
-                @if (Auth::user()->id_profil == 1)
-                <!-- Un bouton pour supprimer le rapport -->
+                @endif
+                <!-- Seul  -->
+                @if (Auth::user()->id_profil == 1 || Auth::user()->id === $rapport->user_id)
                 <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $rapport->id }}"
-                  class="btn btn-sm btn-danger" style="display: block;"><i class="fas fa-trash-alt"></i>
-                </button>
-                @else
-                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $rapport->id }}"
-                  class="btn btn-sm btn-danger" style="display: none;"><i class="fas fa-trash-alt"></i>
+                  class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
                 @endif
-
 
               </td>
           </tbody>
@@ -168,9 +169,46 @@
           @endforeach
           </tbody>
         </table>
-        <div class="mx-1">
-          {{ $listeRapport->links('Pagination.bootstrap-pagination')}}
+        <!-- Lien de pagination -->
+        <div class="container my-4">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end">
+              {{-- Lien vers la page précédente --}}
+              @if($listeRapport->previousPageUrl())
+              <li class="page-item">
+                <a class="page-link" href="{{ $listeRapport->previousPageUrl() }}" aria-label="Précédente">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              @else
+              <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+              </li>
+              @endif
+
+              {{-- Affichage des numéros de page --}}
+              @for($i = 1; $i <= $listeRapport->lastPage(); $i++)
+                <li class="page-item {{ $i == $listeRapport->currentPage() ? 'active' : '' }}">
+                  <a class="page-link" href="{{ $listeRapport->url($i) }}">{{ $i }}</a>
+                </li>
+                @endfor
+
+                {{-- Lien vers la page suivante --}}
+                @if($listeRapport->nextPageUrl())
+                <li class="page-item">
+                  <a class="page-link" href="{{ $listeRapport->nextPageUrl() }}" aria-label="Suivante">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                @else
+                <li class="page-item disabled">
+                  <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+                @endif
+            </ul>
+          </nav>
         </div>
+        <!-- Fin du lien  -->
 
       </div>
     </div>

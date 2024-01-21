@@ -19,7 +19,7 @@ class ProjetPolicy
     public function create(User $user)
     {
         // Seuls les administrateurs peuvent créer un projet
-        return $user->id_profil === 1 || $user->id_profil === 2;
+        return $user->id_profil === 1;
     }
 
     public function edit(User $user, Projet $projet)

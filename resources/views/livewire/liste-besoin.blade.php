@@ -62,10 +62,13 @@
         <button type="button" class="btn btn-secondary">
           <a href="{{route('besoins.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="far fa-file-pdf"></i>
-            PDF</a></button>
+            Imprimer la liste</a></button>
+        @if (Auth::user()->id_profil == 2)
         <button type="button" class="btn btn-primary">
           <a href="{{route('besoins.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="fas fa-plus"></i>Ajouter</a></button>
+        @endif
+
       </div>
       <div class="col-md-5">
         <input wire:change="s" wire:model="search" type="text" class="form-control"
@@ -113,9 +116,12 @@
                 <a href="{{ route('besoins.show', $besoin->id) }}" class="btn btn-sm btn-info"><i
                     class="fas fa-eye"></i> </a>
                 <!-- Un bouton pour modifier le besoin -->
+                <!-- Seul celui a fait le besoin peut le modifier -->
+                @if (Auth::user()->id === $besoin->user_id)
                 <a href="{{ route('besoins.edit', $besoin->id) }}" class="btn btn-sm btn-warning"><i
                     class="fas fa-pen"></i>
                 </a>
+                @endif
 
                 @if (Auth::user()->id_profil == 1 || Auth::user()->id === $besoin->user_id)
                 <!-- Un bouton pour supprimer le rapport -->
@@ -162,15 +168,51 @@
 
               @livewireScripts
 
-
               @endforeach
           </tbody>
         </table>
-        <div class=" my-4">
-          {{$listeBesoins->links('Pagination.bootstrap-pagination') }}
+        <!-- Lien de pagination -->
+        <div class="container my-4">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end">
+              {{-- Lien vers la page précédente --}}
+              @if($listeBesoins->previousPageUrl())
+              <li class="page-item">
+                <a class="page-link" href="{{ $listeBesoins->previousPageUrl() }}" aria-label="Précédente">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              @else
+              <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+              </li>
+              @endif
+
+              {{-- Affichage des numéros de page --}}
+              @for($i = 1; $i <= $listeBesoins->lastPage(); $i++)
+                <li class="page-item {{ $i == $listeBesoins->currentPage() ? 'active' : '' }}">
+                  <a class="page-link" href="{{ $listeBesoins->url($i) }}">{{ $i }}</a>
+                </li>
+                @endfor
+
+                {{-- Lien vers la page suivante --}}
+                @if($listeBesoins->nextPageUrl())
+                <li class="page-item">
+                  <a class="page-link" href="{{ $listeBesoins->nextPageUrl() }}" aria-label="Suivante">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                @else
+                <li class="page-item disabled">
+                  <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+                @endif
+            </ul>
+          </nav>
         </div>
+        <!-- Fin du lien  -->
 
       </div>
     </div>
-    </di v>
   </div>
+</div>

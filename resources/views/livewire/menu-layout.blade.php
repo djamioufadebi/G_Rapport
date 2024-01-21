@@ -39,6 +39,7 @@
     <!-- Left Side Of Navbar -->
     <ul class="navbar-nav me-auto">
 
+      @if (Auth::user()->id_profil == 1)
       <li class="nav-item dropdown" onmouseover="showDropdown(this)">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
@@ -51,6 +52,7 @@
           <li><a class="dropdown-item" href="{{ route('users') }}">Utilisateurs</a></li>
         </ul>
       </li>
+      @endif
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"

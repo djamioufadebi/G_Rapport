@@ -67,10 +67,12 @@
         <button type="button" class="btn btn-secondary">
           <a href="{{route('projets.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="far fa-file-pdf"></i>
-            PDF</a></button>
+            Imprimer la liste</a></button>
+        @if (Auth::user()->id_profil == 1)
         <button type="button" class="btn btn-primary">
           <a href="{{route('projets.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="fas fa-plus"></i>Ajouter</a></button>
+        @endif
       </div>
       <div class="col-md-3">
         <input wire:change="s" wire:model="search" type="text" class="form-control"
@@ -89,6 +91,7 @@
               <th scope="col">Créateur</th>
               <th scope="col">Nom du client</th>
               <th scope="col">Statut</th>
+              <th scope="col">Opération</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -120,12 +123,16 @@
                   class=" btn btn-sm badge bg-warning">{{$projet->statut}}</a>
 
                 @elseif ($projet->statut == 'terminé')
-                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id ===
+                <a href="#" data-bs-toggle="modal" @if (Auth::projet()->id_profil == 1 || Auth::user()->id ===
                   $projet->id_gestionnaire)
                   data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-danger">{{$projet->statut}}</a>
                 @endif
-
+              </td>
+              <td>
+                <button type="submit" data-bs-toggle="modal" data-bs-target="#NommerGestionnaireModal{{ $projet->id }}"
+                  class="btn btn-sm btn-success">Nommmer Gestionnaire
+                </button>
               </td>
 
               <td>
@@ -133,8 +140,10 @@
                 <a href="{{ route('projets.show', $projet->id) }}" class="btn btn-sm btn-info"><i
                     class="fas fa-eye"></i> </a>
                 <!-- Un bouton pour modifier le projet -->
+                @if (Auth::user()->id_profil == 1)
                 <a href="{{ route('projets.edit', $projet->id) }}" class="btn btn-sm btn-warning"><i
                     class="fas fa-pen"></i></a>
+                @endif
 
                 <!-- Un bouton pour supprimer le projet -->
 
@@ -198,9 +207,47 @@
 
           </tbody>
         </table>
-        <div class="my-1">
-          {{$projets->links('Pagination.bootstrap-pagination') }}
+
+        <!-- Lien de pagination -->
+        <div class="container my-4">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end">
+              {{-- Lien vers la page précédente --}}
+              @if($projets->previousPageUrl())
+              <li class="page-item">
+                <a class="page-link" href="{{ $projets->previousPageUrl() }}" aria-label="Précédente">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              @else
+              <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+              </li>
+              @endif
+
+              {{-- Affichage des numéros de page --}}
+              @for($i = 1; $i <= $projets->lastPage(); $i++)
+                <li class="page-item {{ $i == $projets->currentPage() ? 'active' : '' }}">
+                  <a class="page-link" href="{{ $projets->url($i) }}">{{ $i }}</a>
+                </li>
+                @endfor
+
+                {{-- Lien vers la page suivante --}}
+                @if($projets->nextPageUrl())
+                <li class="page-item">
+                  <a class="page-link" href="{{ $projets->nextPageUrl() }}" aria-label="Suivante">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                @else
+                <li class="page-item disabled">
+                  <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+                @endif
+            </ul>
+          </nav>
         </div>
+        <!-- Fin du lien  -->
 
       </div>
     </div>

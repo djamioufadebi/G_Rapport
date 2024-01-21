@@ -44,13 +44,15 @@
 
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
+        @if (Auth::user()->id_profil == 1)
         <button type="button" class="btn btn-secondary">
           <a href="{{route('clients.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="far fa-file-pdf"></i>
-            PDF</a></button>
+            Imprimer la liste</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('clients.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="fas fa-plus"></i>Ajouter</a></button>
+        @endif
       </div>
       <div class="col-md-5">
         <input wire:change="s" wire:model="search" type="text" class="form-control"
@@ -86,14 +88,17 @@
                 <a href="{{ route('clients.show', $client->id) }}" class="btn btn-sm btn-info"><i
                     class="fas fa-eye"></i> </a>
                 <!-- Un bouton pour modifier le client -->
+                @if (Auth::user()->id_profil == 1)
                 <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-warning"><i
                     class="fas fa-pen"></i></a>
-
+                @endif
                 <!-- Un bouton pour supprimer le client -->
-                <button type="submit" data-bs-toggle="modal" @if (in_array(Auth::user()->id_profil, [1, 3]))
+                @if (Auth::user()->id_profil == 1)
+                <button type="submit" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1)
                   data-bs-target="#confirmationModal"
                   @endif class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
+                @endif
               </td>
           </tbody>
 
@@ -142,11 +147,46 @@
 
         </table>
 
-        <div class="mx-2 ">
-          {{ $clients->links('Pagination.bootstrap-pagination')}}
+        <!-- Lien de pagination -->
+        <div class="container my-4">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end">
+              {{-- Lien vers la page précédente --}}
+              @if($clients->previousPageUrl())
+              <li class="page-item">
+                <a class="page-link" href="{{ $clients->previousPageUrl() }}" aria-label="Précédente">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              @else
+              <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+              </li>
+              @endif
+
+              {{-- Affichage des numéros de page --}}
+              @for($i = 1; $i <= $clients->lastPage(); $i++)
+                <li class="page-item {{ $i == $clients->currentPage() ? 'active' : '' }}">
+                  <a class="page-link" href="{{ $clients->url($i) }}">{{ $i }}</a>
+                </li>
+                @endfor
+
+                {{-- Lien vers la page suivante --}}
+                @if($clients->nextPageUrl())
+                <li class="page-item">
+                  <a class="page-link" href="{{ $clients->nextPageUrl() }}" aria-label="Suivante">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                @else
+                <li class="page-item disabled">
+                  <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+                @endif
+            </ul>
+          </nav>
         </div>
-
-
+        <!-- Fin du lien  -->
       </div>
     </div>
   </div>

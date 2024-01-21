@@ -48,8 +48,10 @@ document.addEventListener('DOMContentLoaded', function () {
         case 'en cours':
             disablePastDates();
             dateDebutInput.setAttribute('max', new Date().toISOString().split('T')[0]);
-            dateDebutInput.setAttribute('min', new Date().toISOString().split('T')[0]);
-            dateFinInput.setAttribute('min', new Date().toISOString().split('T')[0]); // Date de début ou égale à la date du jour
+            dateDebutInput.removeAttribute('min');  // Permettre une date de début antérieure à la date du jour
+            dateFinInput.removeAttribute('min');
+             dateFinInput.setAttribute('min', addOneDayToCurrentDate());
+
             tauxRealisation.setAttribute('min', 0.1);
             tauxRealisation.setAttribute('max', 95);
             break;

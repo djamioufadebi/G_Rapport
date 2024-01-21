@@ -223,6 +223,7 @@ class ListeProjet extends Component
             $projets = Projet::where('id_gestionnaire', '=', $user_id)->paginate(10);
         }
 
-        return view('livewire.liste-projet', compact('projets'));
+        $managers = User::where('id_profil', '=', '2')->get();
+        return view('livewire.liste-projet', compact('projets', 'managers'));
     }
 }

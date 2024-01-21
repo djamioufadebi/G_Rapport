@@ -150,6 +150,7 @@
                 <tr>
                   <th scope="col">Libellé</th>
                   <th scope="col">Lieu</th>
+                  <th scope="col">Description</th>
                   <th scope="col">Date début</th>
                   <th scope="col">Date fin</th>
                   <th scope="col">Statut</th>
@@ -160,6 +161,7 @@
                 <tr>
                   <td>{{ $projet->libelle }}</td>
                   <td>{{ $projet->lieu }}</td>
+                  <td>{{ $projet->description }}</td>
                   <td>{{ $projet->date_debut }}</td>
                   <td>{{ $projet->date_fin_prevue }}</td>
                   <td>{{ $projet->statut }}</td>
@@ -231,6 +233,7 @@
                   <th scope="col">Libellé besoin</th>
                   <th scope="col">Activité</th>
                   <th scope="col">Nom Projet</th>
+                  <th scope="col">Nom du demandeur</th>
                   <th scope="col">Contenu</th>
                   <th scope="col">Date création</th>
                   <th scope="col">Statut</th>
@@ -242,6 +245,7 @@
                   <td>{{ $besoin->libelle }}</td>
                   <td>{{ $besoin->activite->nom }}</td>
                   <td>{{ $besoin->activite->projet->libelle }}</td>
+                  <td>{{ $besoin->user->nom }} {{ $besoin->user->nom }}</td>
                   <td>{{ $besoin->contenu }}</td>
                   <td>{{ $besoin->created_at }}</td>
                   <td>{{ $besoin->statut }}</td>
@@ -365,64 +369,59 @@
     <!-- fin module -->
     <hr>
 
-    <div class="container-fluid">
+    <h2 text-align="center">Prévision </h2>
+    <!-- module Projets en cours -->
 
-      <h2 text-align="center">Prévision </h2>
-      <!-- module Projets en cours -->
+    <!-- Autre module -->
+    <div class="module">
+      <h4 class="module-title">Activités</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <h3 class="module-title">Activité en attentes</h3>
+          <!-- Tableau pour afficher les détails des projets en cours -->
+          @if (count($activitesEnAttentes) > 0)
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <!-- En-têtes du tableau -->
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Nom de l'activité</th>
+                  <th scope="col">Nom du projet </th>
+                  <th scope="col">Date de début</th>
+                  <th scope="col">Date de fin</th>
+                  <th scope="col">Statut</th>
+                  <th scope="col">Taux de réalisation</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($activitesEnAttentes as $activite)
+                <tr>
+                  <td>{{ $activite->nom }}</td>
+                  <td>{{ $activite->projet->libelle }}</td>
+                  <td>{{ $activite->date_debut }}</td>
+                  <td>{{ $activite->date_fin }}</td>
+                  <td>{{ $activite->statut }}</td>
+                  <td class="taux_nombre ">{{ $activite->taux_de_realisation }}</td>
+                </tr>
+                @endforeach
 
-      <!-- Autre module -->
-      <div class="module">
-        <h4 class="module-title">Activités</h4>
-        <div class="row">
-          <div class="col-md-6">
-            <h3 class="module-title">Activité en attentes</h3>
-            <!-- Tableau pour afficher les détails des projets en cours -->
-            @if (count($activitesEnAttentes) > 0)
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <!-- En-têtes du tableau -->
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Nom de l'activité</th>
-                    <th scope="col">Nom du projet </th>
-                    <th scope="col">Date de début</th>
-                    <th scope="col">Date de fin</th>
-                    <th scope="col">Statut</th>
-                    <th scope="col">Taux de réalisation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach($activitesEnAttentes as $activite)
-                  <tr>
-                    <td>{{ $activite->nom }}</td>
-                    <td>{{ $activite->projet->libelle }}</td>
-                    <td>{{ $activite->date_debut }}</td>
-                    <td>{{ $activite->date_fin }}</td>
-                    <td>{{ $activite->statut }}</td>
-                    <td class="taux_nombre ">{{ $activite->taux_de_realisation }}</td>
-                  </tr>
-                  @endforeach
-
-                </tbody>
-              </table>
-            </div>
-            @else
-            <p>Aucune actvité en attente pour le moment.</p>
-            @endif
+              </tbody>
+            </table>
           </div>
+          @else
+          <p>Aucune actvité en attente pour le moment.</p>
+          @endif
         </div>
       </div>
-
     </div>
 
+    <footer>
+      <h6>
+        Généré par {{ Auth::user()->nom }} {{ Auth::user()->prenom }}, ce
+        {{ $dateToday->format('d-m-Y') }}
+      </h6>
+    </footer>
   </div>
-
-  <footer>
-    <h6>
-      Généré par {{ Auth::user()->nom }} {{ Auth::user()->prenom }}, ce
-      {{ $dateToday->format('d-m-Y') }}
-    </h6>
-  </footer>
 </body>
 
 </html>

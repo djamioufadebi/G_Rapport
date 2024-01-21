@@ -12,7 +12,7 @@
     </script>
     @endif
 
-     @if(session('miseajour'))
+    @if(session('miseajour'))
     <script>
     Swal.fire({
       title: 'Mise à jour!',
@@ -40,7 +40,7 @@
         <button type="button" class="btn btn-secondary">
           <a href="{{route('intervenants.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="far fa-file-pdf"></i>
-            PDF</a></button>
+            Imprimer la liste</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('intervenants.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="fas fa-plus"></i>Ajouter</a></button>
@@ -98,9 +98,48 @@
 
         </table>
 
-        <div class=" p-4">
-          {{ $intervenants->links('Pagination.bootstrap-pagination') }}
+
+
+        <!-- Lien de pagination -->
+        <div class="container my-4">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end">
+              {{-- Lien vers la page précédente --}}
+              @if($intervenants->previousPageUrl())
+              <li class="page-item">
+                <a class="page-link" href="{{ $intervenants->previousPageUrl() }}" aria-label="Précédente">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              @else
+              <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+              </li>
+              @endif
+
+              {{-- Affichage des numéros de page --}}
+              @for($i = 1; $i <= $intervenants->lastPage(); $i++)
+                <li class="page-item {{ $i == $intervenants->currentPage() ? 'active' : '' }}">
+                  <a class="page-link" href="{{ $intervenants->url($i) }}">{{ $i }}</a>
+                </li>
+                @endfor
+
+                {{-- Lien vers la page suivante --}}
+                @if($intervenants->nextPageUrl())
+                <li class="page-item">
+                  <a class="page-link" href="{{ $intervenants->nextPageUrl() }}" aria-label="Suivante">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                @else
+                <li class="page-item disabled">
+                  <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+                @endif
+            </ul>
+          </nav>
         </div>
+        <!-- Fin du lien  -->
 
       </div>
     </div>

@@ -55,7 +55,7 @@
       <div class="col-md-6">
         <button type="button" class="btn btn-secondary">
           <a href="{{route('activites.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
-              class="far fa-file-pdf"></i>PDF</a></button>
+              class="far fa-file-pdf"></i>Imprimer la liste</a></button>
         <button type="button" class="btn btn-primary">
           <a href="{{route('activites.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="fas fa-plus"></i>Ajouter
@@ -169,11 +169,46 @@
           </tbody>
         </table>
 
-        <div class=" my-4">
-          {{ $listeActivites->links('Pagination.bootstrap-pagination')}}
-        </div>
-        <!-- 'Pagination.bootstrap-pagination' -->
+        <!-- Lien de pagination -->
+        <div class="container my-4">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end">
+              {{-- Lien vers la page précédente --}}
+              @if($listeActivites->previousPageUrl())
+              <li class="page-item">
+                <a class="page-link" href="{{ $listeActivites->previousPageUrl() }}" aria-label="Précédente">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              @else
+              <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+              </li>
+              @endif
 
+              {{-- Affichage des numéros de page --}}
+              @for($i = 1; $i <= $listeActivites->lastPage(); $i++)
+                <li class="page-item {{ $i == $listeActivites->currentPage() ? 'active' : '' }}">
+                  <a class="page-link" href="{{ $listeActivites->url($i) }}">{{ $i }}</a>
+                </li>
+                @endfor
+
+                {{-- Lien vers la page suivante --}}
+                @if($listeActivites->nextPageUrl())
+                <li class="page-item">
+                  <a class="page-link" href="{{ $listeActivites->nextPageUrl() }}" aria-label="Suivante">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                @else
+                <li class="page-item disabled">
+                  <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+                @endif
+            </ul>
+          </nav>
+        </div>
+        <!-- Fin du lien  -->
 
       </div>
     </div>

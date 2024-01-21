@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Activite;
 use App\Models\Projet;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -28,7 +29,7 @@ class BesoinFactory extends Factory
             'fichier' => $this->faker->word,
             'statut' => $this->faker->randomElement(['en attente', 'Validé', 'rejeté']),
             'id_activite' => function () {
-                return Projet::inRandomOrder()->first()->id;
+                return Activite::inRandomOrder()->first()->id;
             },
         ];
     }

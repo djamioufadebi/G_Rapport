@@ -35,6 +35,7 @@ class Projet extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
+
     //public function user()
     //{
     //  return $this->belongsTo(User::class)->where('id_user', $this->id_user)->where('id_gestionnaire', $this->id_gestionnaire);

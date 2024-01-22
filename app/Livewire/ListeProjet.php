@@ -26,6 +26,29 @@ class ListeProjet extends Component
     public $date_fin_prevue;
     public $id_gestionnaire;
 
+    public $selectedGestionnaireId;
+
+    public function NommerGestionnaire($id)
+    {
+        // récuperer le gestionnaire qui etait là dans le texte de la vue
+        $this->selectedGestionnaireId = $id;
+
+        $projet = Projet::find($id); // Récupérez l'utilisateur avec l'ID 1
+
+        // associer le profil à l'utilisateur si un profil est selectionner
+        if ($this->selectedGestionnaireId != null) {
+
+            $projet->id_gestionnaire = $this->selectedGestionnaireId;
+            $projet->save(); // Sauvegardez les modifications
+            $message = "Le gestionnaire" . $this->selectedGestionnaireId . " a été nommer sur le projet : " . $projet->libelle . "!";
+            return redirect("projets")->with('attributionmanager', $message);
+        } else {
+            $projet->id_gestionnaire = $projet->$this->id_gestionnaire;
+            $projet->save(); // Sauvegardez les modifications
+            return redirect("projets")->with('attributionerror', 'Veuillez selectionner un gestionnaire avant de sauvegarder');
+        }
+    }
+
 
     // la fonction pour afficher les projets en fonction de la recherche et de l'utilisateur connecté
     public function s()
@@ -45,7 +68,7 @@ class ListeProjet extends Component
             }
             // Créer une notification pour la suppression du projet
             $notification = new Notification;
-            $notification->user_id = Auth::user()->id;
+            $notification->projet_id = Auth::user()->id;
             $notification->type = "Projet";
             $notification->titre = "Suppression d'une Projet";
             $notification->message = "Le Projet : " . $projet->libelle . " vient d'être supprimé par : " . Auth::user()->email;
@@ -147,7 +170,7 @@ class ListeProjet extends Component
     protected function createNotification($projet)
     {
         $notification = new Notification;
-        $notification->user_id = Auth::user()->id;
+        $notification->projet_id = Auth::user()->id;
         $notification->read = false;
 
         switch ($this->statut) {
@@ -177,26 +200,7 @@ class ListeProjet extends Component
         $notification->save();
     }
 
-    // Pour récuperer le nom et prenom du gestionnaire de projet
-    public function nomGestionnaire()
-    {
-        // récuperer l'id du gestionnaire de projet
-        $id_projetProjet = Projet::where('id_gestionnaire', $this->id_gestionnaire)->first();
-        // récuperer l'utilisateur dont le champ id est égal au champ id_gestionnaire du projet
-        $selectGestionnaire = User::where('id', $id_projetProjet)->first();
-        dd($selectGestionnaire);
-        // return $selectGestionnaire->nom . " " . $selectGestionnaire->prenom;
-    }
 
-    public function mount()
-    {
-
-        // recuperer l'id du gestionnaire de projet
-        $gestionnaireId = Projet::where('id_gestionnaire', '=', Auth::user()->id)->get();
-        //$gestionnaireId = User::where('id', '=', 'id_gestionnaire')->get();
-        // dd($gestionnaireId);
-
-    }
 
     public function render()
     {
@@ -224,6 +228,13 @@ class ListeProjet extends Component
         }
 
         $managers = User::where('id_profil', '=', '2')->get();
+
+
+        // Récupérer l'id du gestionnaire de projet (supposons que Projet a une colonne 'id_gestionnaire')
+        //$id_gestionnaireProjet = Projet::pluck('id_gestionnaire')->first();
+        // Récupérer l'utilisateur dont son id est égal à l'id_gestionnaire du projet
+        // $gestionnaire = User::find($id_gestionnaireProjet);
+
         return view('livewire.liste-projet', compact('projets', 'managers'));
     }
 }

@@ -20,7 +20,7 @@ class ActiviteFactory extends Factory
         $dateDebut = $this->faker->date;
         $dateFin = $this->faker->dateTimeBetween($dateDebut, '+1 months')->format('Y-m-d');
         return [
-            'nom' => $this->faker->word,
+            'nom' => $this->faker->title,
             'description' => $this->faker->paragraph,
             'date_debut' => $dateDebut,
             'date_fin' => $dateFin,

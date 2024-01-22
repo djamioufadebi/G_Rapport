@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Faker\Factory as FakerFactory;
+use Faker\Generator as FakerGenerator;
 use App\Models\Activite;
 use App\Models\Projet;
 use App\Models\User;
@@ -17,8 +19,12 @@ class BesoinFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+
     public function definition(): array
     {
+        $faker = FakerFactory::create('fr_FR');
+        $faker->addProvider(new FakerGenerator());
         return [
             'libelle' => $this->faker->sentence,
             'user_id' => function () {

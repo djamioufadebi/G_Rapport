@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('password')->default(bcrypt('12345678'));
             $table->rememberToken();
 
-            // valeur par defaut pour les champs id_profil (5)
+            // valeur par defaut pour les champs id_profil (3) (Utilisateur simple)
             $table->unsignedBigInteger('id_profil')->default(3);
             $table->foreign('id_profil')->
                 references('id')->on('profils')->onDelete('cascade');

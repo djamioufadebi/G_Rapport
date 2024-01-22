@@ -6,7 +6,6 @@ use App\Http\Controllers\BilanController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IntervenantController;
-use App\Http\Controllers\NewuserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PdfGenerateController;
 use App\Http\Controllers\ProfilController;
@@ -68,11 +67,9 @@ route::middleware('auth')->group(function () {
 
     Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 
+    Route::post('/password-change', [UserProfilController::class, 'passwordchange'])->name('password.change');
     Route::get('/mon-profil', [UserProfilController::class, 'profil'])->name('mon_profile');
     Route::get('/update', [UserProfilController::class, 'update'])->name('mon_profile.update');
-
-    // route pour envoyer la page de confirmation pour un nouvel utlisateur
-    //Route::get('/new-user', [NewuserController::class, 'confirm'])->name('confirmations');
 
     Route::prefix('users')->group(
         function () {

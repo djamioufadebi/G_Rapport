@@ -13,14 +13,14 @@
             {{ session('status') }}
           </div>
           @endif
-
-          @include('composants.sweetalert-message')
-
-          @if (session('error'))
+           @if (session('error'))
           <div class="alert alert-danger" role="alert">
             {{ session('error') }}
           </div>
           @endif
+
+          @include('composants.sweetalert-message')
+
           <div class="text-center mb-4">
             <img src="{{ asset('images/profil.jpg')}}" alt="" width="100px" height="100px"
               class="rounded-circle border border-primary">
@@ -28,7 +28,7 @@
           <form action="{{ route('mon_profile.update') }}" method="POST">
             @csrf
             <div class="mb-3">
-              <label for="photo" class="form-label">Changer la photo de profil</label>
+              <label for="photo" class="form-label">Changer une photo de profil</label>
               <input type="file" class="form-control" name="photo">
             </div>
             <div class="row mb-3">
@@ -44,18 +44,6 @@
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input type="email" class="form-control" name="email" value="{{ Auth::user()->email }}" required>
-            </div>
-            <div class="mb-3">
-              <label for="old_password" class="form-label">Ancien mot de passe</label>
-              <input type="password" class="form-control" name="old_password" required>
-            </div>
-            <div class="mb-3">
-              <label for="new_password" class="form-label">Nouveau mot de passe</label>
-              <input type="password" class="form-control" name="new_password" required>
-            </div>
-            <div class="mb-3">
-              <label for="confirmation_new_password" class="form-label">Confirmer le mot de passe</label>
-              <input type="password" class="form-control" name="confirmation_new_password" required>
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-success">Mettre à jour</button>

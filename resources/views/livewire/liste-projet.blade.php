@@ -51,6 +51,19 @@
     </script>
     @endif
 
+
+    @if(session('attributionmanager'))
+    <script>
+    Swal.fire({
+      title: 'Gestionnaire nommé !',
+      text: 'Un gestionnaire est nommé pour ce Projet',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    })
+    </script>
+    @endif
+
+
     @if(session('rejeter'))
     <script>
     Swal.fire({
@@ -91,7 +104,9 @@
               <th scope="col">Créateur</th>
               <th scope="col">Nom du client</th>
               <th scope="col">Statut</th>
+              @if (Auth::user()->id_profil == 1)
               <th scope="col">Opération</th>
+              @endif
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -104,6 +119,7 @@
               <td>{{$projet->user->nom}} {{$projet->user->prenom}} </td>
 
               <td>{{$projet->client->nom}}</td>
+
               <td>
                 <!-- href : le lien vers la page de modification du statut/ à mettre en place -->
                 @if ($projet->statut == 'en attente')
@@ -130,9 +146,12 @@
                 @endif
               </td>
               <td>
+                @if (Auth::user()->id_profil == 1)
                 <button type="submit" data-bs-toggle="modal" data-bs-target="#NommerGestionnaireModal{{ $projet->id }}"
-                  class="btn btn-sm btn-success">Nommmer Gestionnaire
+                  class="btn btn-md badge-primary ">
+                  <span class="badge bg-light text-dark text-bold">Nommmer Gestionnaire</span>
                 </button>
+                @endif
               </td>
 
               <td>
@@ -161,6 +180,8 @@
           </tbody>
 
           @include('modals.modals-status.modal-projet-statut')
+
+          @include('modals.modals-status.modal-nommer-gest')
 
           <!-- Modal pour la confirmation de la suppression -->
           <!-- La Modal -->

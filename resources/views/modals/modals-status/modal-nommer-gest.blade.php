@@ -3,7 +3,7 @@
     <!-- Contenu du modal -->
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Nommez un gestionnaire pour le projet {{ $projet->libelle }}
+        <h5 class="modal-title">Nommez un gestionnaire pour le projet : {{ $projet->libelle }}
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -16,11 +16,9 @@
             <label class="font-weight-bold d-block">Sélectionnez un gestionnaire :</label>
           </div>
           <br>
-          <br>
-          <br>
           <select class="form-control" name="id_gestionnaire" wire:model="selectedGestionnaireId">
             @foreach ($managers as $item)
-            <option value="{{$item->id}}">{{$item->nom}}</option>
+            <option value="{{$item->id}}">{{$item->nom}} {{$item->prenom}}</option>
             @endforeach
           </select>
           <br>

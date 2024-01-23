@@ -13,20 +13,22 @@
             {{ session('status') }}
           </div>
           @endif
-           @if (session('error'))
-          <div class="alert alert-danger" role="alert">
-            {{ session('error') }}
-          </div>
-          @endif
 
           @include('composants.sweetalert-message')
 
           <div class="text-center mb-4">
-            <img src="{{ asset('images/profil.jpg')}}" alt="" width="100px" height="100px"
+            @if(Auth::user()->photo)
+            <img src="{{ asset('storage/profil_photos/' . Auth::user()->photo) }}" alt="Photo de profil" width="100px"
+              height="100px" class="rounded-circle border border-primary">
+            @else
+            <img src="{{ asset('images/innov2b.jpg') }}" alt="Photo de profil par défaut" width="100px" height="100px"
               class="rounded-circle border border-primary">
+            @endif
           </div>
-          <form action="{{ route('mon_profile.update') }}" method="POST">
+
+          <form method="POST" action="{{ route('mon_profile.update') }}">
             @csrf
+            @method('POST')
             <div class="mb-3">
               <label for="photo" class="form-label">Changer une photo de profil</label>
               <input type="file" class="form-control" name="photo">

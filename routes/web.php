@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActiviteController;
 use App\Http\Controllers\BesoinController;
 use App\Http\Controllers\BilanController;
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IntervenantController;
@@ -67,9 +68,11 @@ route::middleware('auth')->group(function () {
 
     Route::get('/notification', [NotificationController::class, 'index'])->name('notifications');
 
-    Route::post('/password-change', [UserProfilController::class, 'passwordchange'])->name('password.change');
     Route::get('/mon-profil', [UserProfilController::class, 'profil'])->name('mon_profile');
-    Route::get('/update', [UserProfilController::class, 'update'])->name('mon_profile.update');
+    Route::post('/mon-profile-update', [UserProfilController::class, 'updateProfile'])->name('mon_profile.update');
+
+    Route::get('/password-change', [ChangePasswordController::class, 'index'])->name('password.change');
+    Route::post('/password-changement', [ChangePasswordController::class, 'changePassword'])->name('password.changement');
 
     Route::prefix('users')->group(
         function () {

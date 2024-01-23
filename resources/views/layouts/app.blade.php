@@ -89,10 +89,10 @@
 
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <!--Lien pour changer mot de passe  -->
-                <a class="dropdown-item" href="{{ route('mon_profile.update') }}">Editer mon prifil</a>
+                <a class="dropdown-item" href="{{route('mon_profile') }}">Editer mon prifil</a>
 
-                <a class="dropdown-item" href="{{ route('password.change') }}">Changer mot de passe</a>
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                <a class="dropdown-item" href="{{route('password.change') }}">Changer mot de passe</a>
+                <a class="dropdown-item" href="{{route('logout') }}" onclick="event.preventDefault();
                                                       document.getElementById('logout-form').submit();">
                   {{ __('Logout') }}
                 </a>

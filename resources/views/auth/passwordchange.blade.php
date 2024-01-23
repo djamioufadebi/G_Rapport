@@ -26,7 +26,7 @@
           </div>
           @endif
 
-          <form method="POST" action="{{ route('password.change') }}">
+          <form method="POST" action="{{route('password.changement')}}">
             @csrf
             @method('POST')
             <div class="form-group row">
@@ -38,9 +38,7 @@
                   autocomplete="current-password">
 
                 @error('current_password')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
+                <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
               </div>
             </div>
@@ -53,10 +51,9 @@
                   class="form-control @error('new_password') is-invalid @enderror" name="new_password" required
                   autocomplete="new-password" minlength="8">
 
+
                 @error('new_password')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
+                <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
               </div>
             </div>
@@ -65,13 +62,12 @@
               <label for="new_password_confirmation"
                 class="col-md-4 col-form-label text-md-right">{{ __('Confirmation du nouveau mot de passe') }}</label>
               <div class="col-md-6">
-                <input id="new_password_confirmation" type="password" class="form-control"
+                <input id="new_password_confirmation" type="password"
+                  class="form-control  @error('new_password_confirmation') is-invalid @enderror"
                   name="new_password_confirmation" required autocomplete="new-password">
 
                 @error('new_password_confirmation')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
+                <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
               </div>
             </div>

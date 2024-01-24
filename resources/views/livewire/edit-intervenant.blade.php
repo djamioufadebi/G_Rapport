@@ -70,6 +70,22 @@
           @enderror
         </div>
 
+        <div class="mb-3">
+          <label>Activité (*)</label>
+          <select class="form-select @error('id_activite') is-invalid @enderror" id="id_activite"
+            wire:model="id_activite" name="id_activite">
+            <option value=""></option>
+            <!--  La boucle pour afficher la liste des projets -->
+            @foreach ($listeActivite as $item )
+            <option value="{{$item->id}}">{{$item->nom}}</option>
+            @endforeach
+          </select>
+          <!-- afiche le message d'erreur si le champs est vide  -->
+          @error('id_activite')
+          <div class="text text-red-500 mt-1 animate-pulse">Le nom du projet est requis.</div>
+          @enderror
+        </div>
+
         <div class=" row d-flex justify-content-between mb-3">
             <div class="col-md-3">
                 <button type="button" class="btn btn-danger">

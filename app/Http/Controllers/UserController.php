@@ -44,13 +44,10 @@ class UserController extends Controller
 
         $dateToday = Carbon::now();
         $user = Auth::user();
-        if ($user->id_profil == 1 || $user->id_profil == 2 || $user->id_profil == 3) {
+        if ($user->id_profil == 1) {
             $users = User::all();
             $pdf = Pdf::loadView('PDF.user_pdf', compact('users', 'dateToday'));
-            // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
-        } else {
-            return view('composants.acces_refuser');
         }
     }
 

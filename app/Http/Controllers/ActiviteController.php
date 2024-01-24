@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activite;
+use App\Models\Projet;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
@@ -67,7 +68,14 @@ class ActiviteController extends Controller
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {
-            return view('composants.acces_refuser');
+            $projets = Projet::where('id_gestionnaire', '=', $user->id)->get();
+            // Extraire uniquement les IDs des projets
+            $idsProjetsUser = $projets->pluck('id')->toArray();
+            // Récupérer les activités dont le champ 'id_projet' est parmi les IDs extraits
+            $listeActivites = Activite::whereIn('id_projet', $idsProjetsUser)->get();
+            $pdf = Pdf::loadView('PDF.activites_pdf', compact('activites', 'dateToday'));
+            // return $pdf->download('liste_des_utilisateurs.pdf');
+            return $pdf->stream();
         }
 
     }

@@ -58,7 +58,7 @@ class BesoinController extends Controller
             $besoins = Besoin::where('user_id', $user->id)->get();
             $pdf = Pdf::loadView('PDF.besoins_pdf', compact('besoins', 'dateToday'));
             return $pdf->stream();
-            // return view('composants.acces_refuser');
+
         }
     }
 

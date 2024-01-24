@@ -43,9 +43,9 @@ class UserProfilController extends Controller
             $photoPath = $photo->store('profil_photos', 'public'); // spécifie le répertoire 'storage/app/public/profil_photos' créé
             $user->photo = $photoPath;
         }
+        $user->photo = $request->input('photo');
         // Enregistrer les modifications
         $user->save();
-
         return redirect()->route('mon-profile')->with('status', 'Profil mis à jour avec succès');
     }
 

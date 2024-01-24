@@ -85,6 +85,14 @@
     font-size: 15px;
 
   }
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    text-color: #000;
+  }
   </style>
 </head>
 
@@ -112,16 +120,21 @@
           <th scope="col">Prénom</th>
           <th scope="col">Contact</th>
           <th scope="col">Email</th>
+          <th scope="col">Projet</th>
+          <th scope="col">Activite</th>
         </tr>
       </thead>
       <tbody id="tablbody">
         @if(count($intervenants))
         @foreach ($intervenants as $intervenant)
         <tr class="tr-off">
-          <th scope="row">{{ $intervenant->id }}</th>
+          <th>{{ $intervenant->id }}</th>
           <td>{{ $intervenant->nom }}</td>
+          <td>{{ $intervenant->prenom }}</td>
           <td>{{ $intervenant->contact }}</td>
           <td>{{ $intervenant->email }}</td>
+          <td>{{ $intervenant->activite->projet->libelle }}</td>
+          <td>{{ $intervenant->activite->nom }}</td>
         </tr>
         @endforeach
         @else

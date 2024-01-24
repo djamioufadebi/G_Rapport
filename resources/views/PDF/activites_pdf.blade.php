@@ -75,7 +75,6 @@
     border: 1px solid #77B5FE;
   }
 
-
   .div-tot {
     padding: 20px;
     text-align: center;
@@ -84,9 +83,17 @@
   .table-activite tr td {
     padding: 3px;
     font-size: 15px;
+  }
 
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    text-color: #000;
   }
   </style>
+
 </head>
 
 <body>
@@ -112,19 +119,21 @@
           <th scope="col">Description</th>
           <th scope="col">Date Début</th>
           <th scope="col">Date Fin</th>
-          <th scope="col">Date Statut</th>
+          <th scope="col"> Statut</th>
+          <th scope="col">Du Projet</th>
         </tr>
       </thead>
       <tbody id="tablbody">
         @if(count($activites))
         @foreach ($activites as $activite)
         <tr class="tr-off">
-          <th scope="row">{{ $activite->id }}</th>
+          <th>{{ $activite->id }}</th>
           <td>{{ $activite->nom }}</td>
           <td>{{ $activite->description }}</td>
           <td>{{ $activite->date_debut }}</td>
           <td>{{ $activite->date_fin }}</td>
           <td>{{ $activite->statut }}</td>
+          <td>{{ $activite->projet->libelle }}</td>
         </tr>
         @endforeach
         @else

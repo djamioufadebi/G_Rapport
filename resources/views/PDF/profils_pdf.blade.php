@@ -86,6 +86,14 @@
     font-size: 15px;
 
   }
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    text-color: #000;
+  }
   </style>
 
 </head>
@@ -116,7 +124,7 @@
         @if(count($profils))
         @foreach ($profils as $profil)
         <tr class="tr-off">
-          <th scope="row">{{ $profil->id }}</th>
+          <th>{{ $profil->id }}</th>
           <td>{{ $profil->nom }}</td>
         </tr>
         @endforeach

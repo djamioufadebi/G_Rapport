@@ -32,7 +32,7 @@
           <tr>
             <th scope="row">Nom </th>
             <td>
-              {{ $intervenants->nom }} {{ $intervenants->prenom }}
+              {{ $intervenants->nom }}
               <!-- nom du demandeur -->
             </td>
           </tr>
@@ -65,15 +65,15 @@
             </td>
           </tr>
           <tr>
-            <th scope="row">Nom du projet</th>
+            <th scope="row">Activité</th>
             <td>
-              <!-- nom du projet auquel il a participé -->
+              {{ $intervenants->activite->nom }}
             </td>
           </tr>
           <tr>
             <th scope="row">Date de participation au projet</th>
             <td>
-              <!-- date de début du projet -->
+              <p class="card-text">Date : {{ $intervenants->created_at->format('Y-m-d') }}</p>
             </td>
           </tr>
 

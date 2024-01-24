@@ -84,7 +84,14 @@
   .table-client tr td {
     padding: 3px;
     font-size: 15px;
+  }
 
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    text-color: #000;
   }
   </style>
 </head>
@@ -105,7 +112,7 @@
 
     <table class="table table-striped table-bordered" class=" table table-client" id="dataTable" cellspacing="0">
       <caption>
-        <h2 class=" text-center "> Liste des clients</h2>
+        <h2 class=" text-center ">Liste des clients</h2>
       </caption>
       <br>
       <thead class=" thead-dark">
@@ -121,7 +128,7 @@
         @if(count($clients))
         @foreach ($clients as $client)
         <tr class="tr-off">
-          <th scope="row">{{ $client->id }}</th>
+          <th>{{ $client->id }}</th>
           <td>{{ $client->nom }}</td>
           <td>{{ $client->adresse }}</td>
           <td>{{ $client->contact }}</td>

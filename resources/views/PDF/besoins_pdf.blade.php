@@ -85,6 +85,14 @@
     padding: 3px;
     font-size: 15px;
   }
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    text-color: #000;
+  }
   </style>
 
 </head>
@@ -109,6 +117,7 @@
         <tr>
           <th scope="col" text-align="left">ID</th>
           <th scope="col" text-align="left">Libelle</th>
+          <th scope="col" text-align="left">Activité</th>
           <th scope="col" text-align="left">Date du besoin</th>
           <th scope="col" text-align="left">Contenu</th>
           <th scope="col" text-align="right">Statut</th>
@@ -118,8 +127,9 @@
         @if(count($besoins))
         @foreach ($besoins as $besoin)
         <tr class="tr-off">
-          <th scope="row">{{ $besoin->id }}</th>
+          <th>{{ $besoin->id }}</th>
           <td>{{ $besoin->libelle }}</td>
+          <td>{{ $besoin->activite->nom }}</td>
           <td>{{ $besoin->created_at }}</td>
           <td>{{ $besoin->contenu }}</td>
           <td>{{ $besoin->statut }}</td>

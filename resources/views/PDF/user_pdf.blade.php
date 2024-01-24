@@ -86,6 +86,14 @@
     font-size: 15px;
 
   }
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    text-color: #000;
+  }
   </style>
 
 </head>

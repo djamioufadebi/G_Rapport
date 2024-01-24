@@ -44,11 +44,12 @@
 
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">
-        @if (Auth::user()->id_profil == 1)
+
         <button type="button" class="btn btn-secondary">
           <a href="{{route('clients.pdf')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="far fa-file-pdf"></i>
             Imprimer la liste</a></button>
+        @if (Auth::user()->id_profil == 1)
         <button type="button" class="btn btn-primary">
           <a href="{{route('clients.create')}}" class="text-white fs-6" style="text-decoration:none;"><i
               class="fas fa-plus"></i>Ajouter</a></button>

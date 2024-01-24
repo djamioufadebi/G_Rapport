@@ -86,6 +86,14 @@
     font-size: 15px;
 
   }
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    text-color: #000;
+  }
   </style>
 
 </head>
@@ -110,6 +118,8 @@
         <tr>
           <th scope="col" text-align="left">ID</th>
           <th scope="col" text-align="left">Libelle</th>
+          <th scope="col" text-align="left">Projet</th>
+          <th scope="col" text-align="left">Activité</th>
           <th scope="col" text-align="left">Date du rapport</th>
           <th scope="col" text-align="left">Contenu </th>
 
@@ -120,8 +130,10 @@
 
         @foreach ($rapports as $rapport)
         <tr class="tr-off">
-          <th scope="row">{{ $rapport->id }}</th>
+          <th>{{ $rapport->id }}</th>
           <td>{{ $rapport->libelle }}</td>
+          <td>{{ $rapport->activite->projet->libelle }}</td>
+          <td>{{ $rapport->activite->nom }}</td>
           <td>{{ $rapport->created_at }}</td>
           <td>{{ $rapport->contenu }}</td>
           <td>{{ $rapport->statut }}</td>

@@ -85,6 +85,13 @@
     padding: 3px;
     font-size: 15px;
   }
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    text-color: #000;
+  }
   </style>
 
 </head>
@@ -110,9 +117,10 @@
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Libelle</th>
+          <th scope="col">Description</th>
           <th scope="col">Statut</th>
           <th scope="col">Date de debut</th>
-          <th scope="col">Date de fin </th>
+          <th scope="col">Date de fin</th>
           <th scope="col">Client</th>
         </tr>
       </thead>
@@ -120,8 +128,9 @@
         @if(count($projets))
         @foreach ($projets as $projet)
         <tr class="tr-off">
-          <th scope="row">{{ $projet->id }}</th>
+          <th>{{ $projet->id }}</th>
           <td>{{ $projet->libelle }}</td>
+          <td>{{ $projet->description }}</td>
           <td>{{ $projet->statut }}</td>
           <td>{{ $projet->date_debut }}</td>
           <td>{{ $projet->date_fin_prevue }}</td>

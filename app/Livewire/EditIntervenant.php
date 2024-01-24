@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Activite;
 use App\Models\Intervenant;
 use Exception;
 use Livewire\Component;
@@ -14,6 +15,7 @@ class EditIntervenant extends Component
     public $nom;
     public $prenom;
     public $email;
+    public $id_activite;
     public $contact;
     public $adresse;
 
@@ -24,13 +26,12 @@ class EditIntervenant extends Component
         $this->email = $this->intervenants->email;
         $this->contact = $this->intervenants->contact;
         $this->adresse = $this->intervenants->adresse;
+        $this->id_activite = $this->intervenants->id_activite;
+
     }
 
     public function update(Intervenant $intervenant)
     {
-
-        // la fonction find() permet de faire la recherche en fonction de l'id
-        // dans le modèle Intervenant
         $intervenant = Intervenant::find($this->intervenants->id);
 
         $this->validate([
@@ -39,10 +40,8 @@ class EditIntervenant extends Component
             'contact' => 'integer|required|min:8',
             'email' => 'string|required',
             'adresse' => 'string|required',
+            'id_activite' => 'required',
         ]);
-
-        // On vérifie si le nom d'intervenant existe déjà
-        // $query = Intervenant::where('email', $this->email)->get();
 
         try {
             $intervenant->nom = $this->nom;
@@ -50,6 +49,7 @@ class EditIntervenant extends Component
             $intervenant->email = $this->email;
             $intervenant->contact = $this->contact;
             $intervenant->adresse = $this->adresse;
+            $intervenant->id_activite = $this->id_activite;
             $intervenant->save();
 
             return redirect()->Route('intervenants')->with(
@@ -63,23 +63,13 @@ class EditIntervenant extends Component
             );
         }
 
-
-
-        // if (count($query) > 0) {
-        //  return redirect()->back()->with(
-        //   'error',
-        //   'Nom d\'intervenant déjà existant!'
-        //  );
-        // } else {
-
-        // }
-
     }
 
 
 
     public function render()
     {
-        return view('livewire.edit-intervenant');
+        $listeActivite = Activite::all();
+        return view('livewire.edit-intervenant', compact('listeActivite'));
     }
 }

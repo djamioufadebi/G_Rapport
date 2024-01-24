@@ -18,9 +18,9 @@
         </button>
       </a>
       <hr>
-      <form action="{{route('bilans.activite')}}" method="GET">
+      <form action="{{route('bilans.activite')}}" method="POST">
         @csrf
-        @method('GET')
+        @method('POST')
         <div class="row">
           <!-- Champs de sélection pour le activite -->
           <div class="col-md-3">

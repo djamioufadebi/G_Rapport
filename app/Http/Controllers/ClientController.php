@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Projet;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Gate;
@@ -59,7 +60,13 @@ class ClientController extends Controller
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         } else {
-            return view('composants.acces_refuser');
+            $projets = Projet::where('id_gestionnaire', '=', $user->id)->get();
+            $idclientProjetsUser = $projets->pluck('id_client')->toArray();
+            // les clients dont les champs "id" est parmi les ID extraits
+            $clients = Client::whereIn('id', $idclientProjetsUser)->get();
+            $pdf = Pdf::loadView('PDF.clients_pdf', compact('clients', 'dateToday'));
+            // return $pdf->download('liste_des_utilisateurs.pdf');
+            return $pdf->stream();
         }
 
 

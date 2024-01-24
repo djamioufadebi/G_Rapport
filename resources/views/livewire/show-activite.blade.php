@@ -77,6 +77,11 @@
 
             <td>{{ $activites->taux_de_realisation}}</td>
           </tr>
+          <tr>
+            <th scope="row" class="col-md-3">NOM DU PROJET</th>
+
+            <td>{{ $activites->projet->libelle}}</td>
+          </tr>
         </tbody>
       </table>
     </div>

@@ -120,10 +120,8 @@
                     class="fas fa-eye"></i> </a>
                 <!-- Un bouton pour modifier le rapport -->
                 <!-- Seule celui qui a fait le rapport peut le modifier -->
-                @if (Auth::user()->id === $rapport->user_id)
                 <a href="{{ route('rapports.edit', $rapport->id) }}" class="btn btn-sm btn-warning"><i
                     class="fas fa-pen"></i></a>
-                @endif
                 <!-- Seul  -->
                 @if (Auth::user()->id_profil == 1 || Auth::user()->id === $rapport->user_id)
                 <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $rapport->id }}"

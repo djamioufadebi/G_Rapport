@@ -22,11 +22,6 @@ class BilanController extends Controller
         return view('Bilans.bilan', compact('bilan'));
     }
 
-    public function create()
-    {
-        //return view('Bilans.bilan-journalier');
-    }
-
     public function generateBilan()
     {
         $user = Auth::user();
@@ -187,55 +182,8 @@ class BilanController extends Controller
             return $pdf->stream($filename, ['Attachment' => false]);
             //return $pdf->stream();
 
-
         }
 
-    }
-
-    public $selectedActiviteId;
-
-    public function updatedSelectedActiviteId()
-    {
-        // Vous pouvez accéder à l'ID choisi ici
-
-        // Vous pouvez maintenant utiliser $idActiviteChoisie dans votre logique du contrôleur
-    }
-    public $id;
-    public function generateActiviteBilan()
-    {
-        $idActiviteChoisie = $this->selectedActiviteId;
-        dd($idActiviteChoisie);
-
-
-
-        $activites = Activite::find($this->selectedActiviteId)->first();
-
-        $dateToday = Carbon::now();
-        // Récupérer le rapport de l'activité en cours
-        $rapportsSelectedActivity = Rapport::where('id_activite', $activites->id)
-            ->whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
-            ->orwhere('updated_at', $dateToday)->get();
-
-        // récupérer les besoins de l'activité selectionnée
-        $besoins = Besoin::where('id_activite', $activites->id)->whereBetween(
-            'created_at',
-            [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
-        )->orwhere('updated_at', $dateToday)->get();
-
-        // récuperer le projet de l'activité sélectionnée
-        $projet = Projet::where('id', $activites->id_projet)->get();
-
-        $pdf = Pdf::loadView(
-            'Bilans.bilan-activite',
-            compact(
-                'activites',
-                'projet',
-                'besoins',
-                'rapportsSelectedActivity'
-            )
-        );
-        $pdf->setPaper('a4', 'landscape');
-        return $pdf->stream();
     }
 
 }

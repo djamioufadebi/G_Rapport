@@ -33,24 +33,31 @@ class ListeNotification extends Component
     public function render()
     {
         $user = Auth::user();
-        if ($user->id_profil == 1) {
-            // recupérer les notifications non lues et les filtrer de la plus récente au plus ancienne
-            $NotReadNotifications = Notifications::where('read', false)
-                ->where('user_id', '!=', $user->id)
-                ->orderBy('created_at', 'desc')->paginate(10);
-        } else {
-            $NotReadNotifications = Notifications::where('read', false)
-                // jointure avec les rapports et les besoins de l'utilisateur connecter
-                ->leftJoin('rapports', 'notifications.rapport_id', '=', 'rapports.id') //Notifications concernant les rapports de l'utilisateur connecter
-                ->leftJoin('besoins', 'notifications.besoin_id', '=', 'besoins.id') //Notifications concernant les besoins de l'utilisateur connecter
-                ->where(function ($query) use ($user) {
-                    $query->where('rapports.user_id', $user->id) //Rapports de l'utilisateur connecter
-                        ->orWhere('besoins.user_id', $user->id); //Besoins de l'utilisateur connecter
-                })
-                ->select('notifications.*')
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
-        }
+
+        $NotReadNotifications = Notifications::where('read', false)
+            ->when($user->id_profil == 1, function ($query) use ($user) {
+                return $query->where('user_id', '!=', $user->id);
+            })
+            ->when($user->id_profil != 1, function ($query) use ($user) {
+                return $query->leftJoin('rapports', 'notifications.rapport_id', '=', 'rapports.id')
+                    ->leftJoin('besoins', 'notifications.besoin_id', '=', 'besoins.id')
+                    ->leftJoin('projets', 'notifications.projet_id', '=', 'projets.id')
+                    ->where(function ($subquery) use ($user) {
+                        $subquery->where('rapports.user_id', $user->id)
+                            ->orWhere('besoins.user_id', $user->id)
+                            ->orWhere('projets.id_gestionnaire', $user->id);
+                    })
+                    ->where(function ($subquery) {
+                        $subquery->where('titre', 'Validation d\'un rapport')
+                            ->orWhere('titre', 'Rejet d\'un rapport')
+                            ->orWhere('titre', 'Validation d\'un besoin')
+                            ->orWhere('titre', 'Rejet d\'un besoin')
+                            ->orWhere('titre', 'Nomination');
+                    })
+                    ->select('notifications.*');
+            })
+            ->orderByDesc('created_at')
+            ->paginate(10);
 
 
         return view('livewire.liste-notification', compact('NotReadNotifications'));

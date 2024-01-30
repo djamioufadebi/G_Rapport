@@ -14,7 +14,19 @@ class CreateRapport extends Component
 {
 
     public $libelle;
-    public $contenu;
+    public $travaux_prevus_journee;
+
+    public $travaux_realises;
+
+    public $travaux_restants;
+
+    public $travaux_prevus_demain;
+
+    public $besoins_materiaux;
+
+    public $heure_demarrage;
+
+    public $heure_fin;
     public $materiels_utilises;
     public $difficultes_rencontrees;
     public $solutions_apportees;
@@ -27,10 +39,16 @@ class CreateRapport extends Component
 
         $this->validate([
             'libelle' => 'string|required|unique:rapports,libelle',
-            'contenu' => 'string|required',
             'materiels_utilises' => 'string|required',
             'difficultes_rencontrees' => 'string|required',
             'solutions_apportees' => 'string|required',
+            'heure_demarrage' => 'string|required',
+            'heure_fin' => 'string|required',
+            'travaux_prevus_journee' => 'string|required',
+            'travaux_realises' => 'string|required',
+            'travaux_restants' => 'string|required',
+            'travaux_prevus_demain' => 'string|required',
+            'besoins_materiaux' => 'string|required',
             'id_activite' => 'required',
             'user_id' => '',
         ]);
@@ -45,12 +63,18 @@ class CreateRapport extends Component
 
             try {
                 $rapport = new Rapport();
+                $rapport->id_activite = $this->id_activite;
                 $rapport->libelle = $this->libelle;
-                $rapport->contenu = $this->contenu;
                 $rapport->materiels_utilises = $this->materiels_utilises;
                 $rapport->difficultes_rencontrees = $this->difficultes_rencontrees;
                 $rapport->solutions_apportees = $this->solutions_apportees;
-                $rapport->id_activite = $this->id_activite;
+                $rapport->travaux_prevus_journee = $this->travaux_prevus_journee;
+                $rapport->travaux_realises = $this->travaux_realises;
+                $rapport->travaux_restants = $this->travaux_restants;
+                $rapport->travaux_prevus_demain = $this->travaux_prevus_demain;
+                $rapport->besoins_materiaux = $this->besoins_materiaux;
+                $rapport->heure_demarrage = $this->heure_demarrage;
+                $rapport->heure_fin = $this->heure_fin;
                 $rapport->user_id = Auth::user()->id;
                 //  on enregistre le Rapport
                 $rapport->save();

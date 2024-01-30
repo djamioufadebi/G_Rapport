@@ -12,41 +12,47 @@ use Illuminate\Support\Carbon;
 
 class GenerationPdfActiviteController extends Controller
 {
-
-    public $selectedActiviteId;
-    public function generateActivitepdfBilan()
+    public function generateActivitepdfBilan(Request $request)
     {
-        $idActiviteChoisie = $this->selectedActiviteId;
-        dd($idActiviteChoisie);
+        $request->id_activite;
 
-        $activites = Activite::find($this->selectedActiviteId)->first();
+        $idActiviteChoisie = $request->id_activite;
+
+
+        $activites = Activite::find($idActiviteChoisie);
+
 
         $dateToday = Carbon::now();
         // Récupérer le rapport de l'activité en cours
-        $rapportsSelectedActivity = Rapport::where('id_activite', $activites->id)
+        $rapportsSelectedActivity = Rapport::where('id_activite', '=', $idActiviteChoisie)
             ->whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
             ->orwhere('updated_at', $dateToday)->get();
 
         // récupérer les besoins de l'activité selectionnée
-        $besoins = Besoin::where('id_activite', $activites->id)->whereBetween(
+        $besoins = Besoin::where('id_activite', $idActiviteChoisie)->whereBetween(
             'created_at',
             [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
         )->orwhere('updated_at', $dateToday)->get();
 
-        // récuperer le projet de l'activité sélectionnée
-        $projet = Projet::where('id', $activites->id_projet)->get();
-
         $pdf = Pdf::loadView(
             'Bilans.bilan-activite',
             compact(
+                'dateToday',
                 'activites',
-                'projet',
                 'besoins',
                 'rapportsSelectedActivity'
             )
         );
         $pdf->setPaper('a4', 'landscape');
-        return $pdf->stream();
+        // Spécifier le nom du fichier PDF pour les navigateurs intégrés
+        $filename = 'Bilan_activite_' . now()->format('Y-m-d') . '.pdf';
+
+        // Télécharger le fichier avec le nom spécifié
+        //return $pdf->download($filename);
+        // Ouvrir le PDF dans le navigateur avec le nom spécifié
+
+        return $pdf->stream($filename, ['Attachment' => false]);
+        //return $pdf->stream();
     }
 
 }

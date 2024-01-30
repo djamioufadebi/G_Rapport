@@ -27,6 +27,24 @@
         </script>
         @endif
 
+        <!-- Le client -->
+        <div class="mb-3">
+          <label>Le nom du client</label>
+          <select class="form-select @error('id_client') is-invalid @enderror" id="id_client" wire:model="id_client"
+            name="id_client">
+            <option value=""></option>
+            <!--  La boucle pour afficher la liste des clients -->
+            @foreach ($currentClient as $item )
+            <option value="{{$item->id}}">{{$item->nom}}</option>
+            @endforeach
+
+          </select>
+          <!-- afiche le message d'erreur si le champs est vide  -->
+          @error('id_client')
+          <div class="invalid-feedback">Le client est requis.</div>
+          @enderror
+        </div>
+
         <div class="mb-3">
           <label for="libelle" class="form-label">libelle :</label>
           <input type="text" class="form-control  @error('libelle')is-invalid
@@ -41,7 +59,6 @@
           <label for="lieu" class="form-label">localisation :</label>
           <input type="text" class="form-control  @error('lieu')is-invalid
            @enderror" name="lieu" wire:model="lieu" required>
-          <!-- afiche le message d'erreur si le champs est vide  -->
           @error('lieu')
           <div class="invalid-feedback">Le champ lieu est requis.</div>
           @enderror
@@ -74,13 +91,13 @@
           @enderror
         </div>
 
-        <div class="mb-3">
-          <!-- Checkbox pour afficher ou cache le champ -->
+        <!-- <div class="mb-3">
+          Checkbox pour afficher ou cache le champ
           <label for="toggleCheckbox">Afficher </label>
           <input type="checkbox" id="toggleCheckbox">
         </div>
         <br>
-        <!-- mise de checkbox pour afficher ou cacher le champs de statut de l'activité -->
+        mise de checkbox pour afficher ou cacher le champs de statut de l'activité
         <div class="mb-3">
           <div class="form-check form-switch">
             <select id="statut" class="form-select @error('statut') is-invalid @enderror" wire:model="statut"
@@ -94,7 +111,7 @@
           @error('statut')
           <div class="invalid-feedback">Le champ statut est requis.</div>
           @enderror
-        </div>
+        </div> -->
 
         <div class="mb-3">
           <label for="date_debut" class="form-label">Date Debut :</label>
@@ -116,23 +133,7 @@
         </div>
 
 
-        <!-- Le client -->
-        <div class="mb-3">
-          <label>Le nom du client</label>
-          <select class="form-select @error('id_client') is-invalid @enderror" id="id_client" wire:model="id_client"
-            name="id_client">
-            <option value=""></option>
-            <!--  La boucle pour afficher la liste des clients -->
-            @foreach ($currentClient as $item )
-            <option value="{{$item->id}}">{{$item->nom}}</option>
-            @endforeach
 
-          </select>
-          <!-- afiche le message d'erreur si le champs est vide  -->
-          @error('id_client')
-          <div class="invalid-feedback">Le client est requis.</div>
-          @enderror
-        </div>
 
         <div class=" row d-flex justify-content-between mb-3">
           <div class="col-md-3">

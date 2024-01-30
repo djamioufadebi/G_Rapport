@@ -12,12 +12,13 @@ class CreateActivite extends Component
 {
     public $nom;
     public $description;
+
+    public $lieu;
     public $date_debut;
     public $date_fin;
     public $id_projet;
     public $taux_de_realisation;
 
-    public $statut;
 
     public function store()
     {
@@ -25,11 +26,12 @@ class CreateActivite extends Component
         $this->validate([
             'nom' => 'string|required|unique:activites,nom',
             'description' => 'string|required',
+            'lieu' => 'string|required',
             'date_debut' => 'date|required',
             'date_fin' => 'required|date|after_or_equal:date_debut',
             'taux_de_realisation' => 'required|numeric|min:0|max:100',
             'id_projet' => 'required',
-            'statut' => 'string',
+            //'statut' => 'string',
         ]);
 
         // pour verifier si l'activité existe déjà
@@ -43,11 +45,12 @@ class CreateActivite extends Component
                 $activite = new Activite;
                 $activite->nom = $this->nom;
                 $activite->description = $this->description;
+                $activite->lieu = $this->lieu;
                 $activite->date_debut = $this->date_debut;
                 $activite->date_fin = $this->date_fin;
                 $activite->taux_de_realisation = $this->taux_de_realisation;
                 $activite->id_projet = $this->id_projet;
-                $activite->statut = $this->statut;
+                //$activite->statut = $this->statut;
 
                 // notifications de création d'activité
                 $notification = new Notifications;
@@ -83,6 +86,7 @@ class CreateActivite extends Component
     {
         $this->nom = '';
         $this->description = '';
+        $this->lieu = '';
         $this->date_debut = '';
         $this->date_fin = '';
         $this->id_projet = '';

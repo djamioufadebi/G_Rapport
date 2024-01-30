@@ -16,7 +16,6 @@ use Illuminate\Support\Carbon;
 class BilanController extends Controller
 {
 
-
     public function index(Bilan $bilan)
     {
         return view('Bilans.bilan', compact('bilan'));
@@ -89,7 +88,8 @@ class BilanController extends Controller
                     'activitesTermineesAjourdhui'
                 )
             );
-            $pdf->setPaper('a4', 'landscape');
+            //$pdf->setPaper('a4', 'landscape');
+            $pdf->setPaper([0, 0, 800, 1200]);
             // Spécifier le nom du fichier PDF pour les navigateurs intégrés
             $filename = 'Bilan_journalier_du : ' . now()->format('Y-m-d') . '.pdf';
 
@@ -102,8 +102,6 @@ class BilanController extends Controller
 
         } else {
 
-            // 1  :  Pour les projet en cours
-            // Récupérer les projets de l'utilisateur qui son en cours
             $projetsEnCoursAujourdhui = Projet::where('id_gestionnaire', '=', $user_id)
                 ->where('date_debut', '<=', $dateToday)
                 ->where('date_fin_prevue', '>=', $dateToday)
@@ -144,7 +142,7 @@ class BilanController extends Controller
             //  Extraire uniquement les IDs des activités en cours
             $idsActiviteEncours = $activitesEnCours->pluck('id')->toArray();
 
-            $rapportsCreesAujourdhui = Rapport::whereIn('id_activite', $idsActiviteEncours)
+            $rapportsCreesAujourdhui = Rapport::where('user_id', $user_id)
                 ->whereBetween(
                     'created_at',
                     [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
@@ -172,6 +170,7 @@ class BilanController extends Controller
                 )
             );
             $pdf->setPaper('a4', 'landscape');
+            //$pdf->setPaper([0, 0, 800, 1200]);
             // Spécifier le nom du fichier PDF pour les navigateurs intégrés
             $filename = 'Bilan_journalier_' . now()->format('Y-m-d') . '.pdf';
 
@@ -180,7 +179,312 @@ class BilanController extends Controller
             // Ouvrir le PDF dans le navigateur avec le nom spécifié
 
             return $pdf->stream($filename, ['Attachment' => false]);
+            // return $pdf->stream();
+
+        }
+
+    }
+
+    public function generateActivitepdfBilan(Request $request)
+    {
+        $request->id_activite;
+
+        $idActiviteChoisie = $request->id_activite;
+
+
+        $activites = Activite::where('id', '=', $idActiviteChoisie)->get();
+
+
+        $dateToday = Carbon::now();
+
+        $rapportsSelectedActivity = Rapport::where('id_activite', $idActiviteChoisie)
+            ->whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
+            ->orWhere('updated_at', '>=', $dateToday)
+            ->get();
+
+        // récupérer les besoins de l'activité selectionnée
+        $besoins = Besoin::where('id_activite', $idActiviteChoisie)->whereBetween(
+            'created_at',
+            [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
+        )->orwhere('updated_at', $dateToday)->get();
+
+
+
+        $pdf = Pdf::loadView(
+            'Bilans.bilan-activite',
+            compact(
+                'dateToday',
+                'rapportsSelectedActivity',
+                'activites',
+                'besoins'
+            )
+        );
+        $pdf->setPaper('a4', 'landscape');
+        // Spécifier le nom du fichier PDF pour les navigateurs intégrés
+        $filename = 'Bilan_activite' . now()->format('Y-m-d') . '.pdf';
+
+        // Télécharger le fichier avec le nom spécifié
+        //return $pdf->download($filename);
+        // Ouvrir le PDF dans le navigateur avec le nom spécifié
+
+        //return $pdf->download();
+        return $pdf->stream($filename, ['Attachment' => false]);
+        // return $pdf->stream();
+    }
+
+    public $selectedProjetId;
+    public function generateProjetBilan(Request $request)
+    {
+
+
+        $ProjetId = $request->id_projet;
+
+        $user = Auth::user();
+        $user_id = $user->id;
+        $dateToday = Carbon::now();
+
+        if ($user->id_profil == 1) {
+            $projets = Projet::where('id', '=', $ProjetId);
+
+            // Récupérer tous les activités de ce projet
+            $activites = Activite::where('id_projet', '=', $ProjetId);
+
+
+            // Récupérer les id des activités de ce projet
+            $idsActivitesselectedProjet = $activites->pluck('id')->toArray();
+
+            // recupérer les rapports des activités de ce projet créés aujourd'hui
+            $rapportsCreesAujourdhui = Rapport::whereIn('id_activite', $idsActivitesselectedProjet)
+                ->whereBetween(
+                    'created_at',
+                    [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
+                )->orwhere('updated_at', $dateToday)->get();
+
+            // recupérer les besoins des activités de ce projet créés aujourd'hui
+            $besoinsEnCoursAujourdhui = Besoin::whereIn('id_activite', $idsActivitesselectedProjet)
+                ->whereBetween(
+                    'created_at',
+                    [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
+                )->orwhere('updated_at', $dateToday)->get();
+
+
+            // Récupérer les activités de ce projet en cours
+            $activitesEnCours = Activite::whereIn('id', $idsActivitesselectedProjet)
+                ->where('date_debut', '<=', $dateToday)
+                ->where('date_fin', '>=', $dateToday)
+                ->where('statut', '=', 'en cours')->get();
+
+            // Récupérer les activités de ce projet en attentes
+            $activitesEnAttentes = Activite::whereIn('id', $idsActivitesselectedProjet)
+                ->where('date_debut', '>', $dateToday)
+                ->where('date_fin', '>', $dateToday)
+                ->where('statut', '=', 'en attente')->get();
+
+
+            $pdf = Pdf::loadView(
+                'Bilans.bilan_projet',
+                compact(
+                    'dateToday',
+                    'activites',
+                    'projets',
+                    'activitesEnCours',
+                    'activitesEnAttentes',
+                    'rapportsCreesAujourdhui',
+                    'besoinsEnCoursAujourdhui'
+                )
+            );
+            $pdf->setPaper('a4', 'landscape');
+            // Spécifier le nom du fichier PDF pour les navigateurs intégrés
+            $filename = 'Bilan_projet_' . now()->format('Y-m-d') . '.pdf';
+
+            // Télécharger le fichier avec le nom spécifié
+            //return $pdf->download($filename);
+            // Ouvrir le PDF dans le navigateur avec le nom spécifié
+
+            return $pdf->stream($filename, ['Attachment' => false]);
             //return $pdf->stream();
+
+        } else {
+
+            $projets = Projet::where('id', '=', $ProjetId)->where('id_gestionnaire', '=', $user_id)
+                ->get();
+
+            $activites = Activite::where('id_projet', '=', $ProjetId)->get();
+            // Récupérer les id des activités de ce projet
+            $idsActivitesselectedProjet = $activites->pluck('id')->toArray();
+
+            // recupérer les rapports des activités de ce projet créés aujourd'hui
+            $rapportsCreesAujourdhui = Rapport::whereIn('id_activite', $idsActivitesselectedProjet)
+                ->whereBetween(
+                    'created_at',
+                    [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
+                )->orwhere('updated_at', $dateToday)->get();
+
+            // recupérer les besoins des activités de ce projet créés aujourd'hui
+            $besoinsEnCoursAujourdhui = Besoin::whereIn('id_activite', $idsActivitesselectedProjet)
+                ->whereBetween(
+                    'created_at',
+                    [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]
+                )->orwhere('updated_at', $dateToday)->get();
+
+            // Récupérer les activités de ce projet en cours
+            $activitesEnCours = Activite::whereIn('id', $idsActivitesselectedProjet)
+                ->where('date_debut', '<=', $dateToday)
+                ->where('date_fin', '>=', $dateToday)
+                ->where('statut', '=', 'en cours')->get();
+            // Récupérer les activités de ce projet en attentes
+            $activitesEnAttentes = Activite::whereIn('id', $idsActivitesselectedProjet)
+                ->where('date_debut', '>', $dateToday)
+                ->where('date_fin', '>', $dateToday)
+                ->where('statut', '=', 'en attente')->get();
+
+            $pdf = Pdf::loadView(
+                'Bilans.bilan_projet',
+                compact(
+                    'dateToday',
+                    'activites',
+                    'projets',
+                    'activitesEnCours',
+                    'activitesEnAttentes',
+                    'rapportsCreesAujourdhui',
+                    'besoinsEnCoursAujourdhui'
+                )
+            );
+
+            $pdf->setPaper('a4', 'landscape');
+            // Spécifier le nom du fichier PDF pour les navigateurs intégrés
+            $filename = 'Bilan_projet_' . now()->format('Y-m-d') . '.pdf';
+
+            // Télécharger le fichier avec le nom spécifié
+            //return $pdf->download($filename);
+            // Ouvrir le PDF dans le navigateur avec le nom spécifié
+
+            return $pdf->stream($filename, ['Attachment' => false]);
+            //return $pdf->stream();
+
+        }
+
+    }
+
+    public $selectedDatedebut;
+    public $selectedDatefin;
+
+    public function generatePeriodeBilan(Request $request)
+    {
+        $projetID = $request->id_projet;
+        $dateDebut = $request->date_debut;
+        $dateFin = $request->date_fin;
+
+        $user = Auth::user();
+        $user_id = $user->id;
+        $dateToday = Carbon::now();
+
+        if ($user->id_profil == 1) {
+
+            $projets = Projet::where('id', '=', $projetID);
+            // Récupérer tous les activités de ce projet
+            $activites = Activite::where('id_projet', '=', $projetID)->get();
+            // Récupérer les id des activités de ce projet
+            $idsActivitesselectedProjet = $activites->pluck('id')->toArray();
+            // récupérer les rapports des activités de ce projet créés entres les deux dates (dateDebut et dateFin)
+            $rapportsCreesAujourdhui = Rapport::whereIn('id_activite', $idsActivitesselectedProjet)
+                ->whereBetween(
+                    'created_at',
+                    [$dateDebut, $dateFin]
+                )->orwhere('updated_at', $dateToday)->get();
+
+            // récupérer les besoins des activités de ce projet créés entres les deux dates (dateDebut et dateFin)
+            $besoinsEnCoursAujourdhui = Besoin::whereIn('id_activite', $idsActivitesselectedProjet)
+                ->whereBetween(
+                    'created_at',
+                    [$dateDebut, $dateFin]
+                )->orwhere('updated_at', $dateToday)->get();
+            // Récupérer les activités de ce projet en cours
+            $activitesEnCours = Activite::whereIn('id', $idsActivitesselectedProjet)
+                ->where('date_debut', '<=', $dateFin)
+                ->where('date_fin', '>=', $dateFin)
+                ->where('statut', '=', 'en cours')->get();
+            // Récupérer les activités de ce projet en attentes
+            $activitesEnAttentes = Activite::whereIn('id', $idsActivitesselectedProjet)
+                ->where('date_debut', '>', $dateFin)
+                ->where('date_fin', '>', $dateFin)
+                ->where('statut', '=', 'en attente')->get();
+
+            $pdf = Pdf::loadView(
+                'Bilans.bilan_periode',
+                compact(
+                    'dateToday',
+                    'dateDebut',
+                    'dateFin',
+                    'projets',
+                    'activitesEnCours',
+                    'activitesEnAttentes',
+                    'rapportsCreesAujourdhui',
+                    'besoinsEnCoursAujourdhui'
+                )
+            );
+
+            $pdf->setPaper('a4', 'landscape');
+            // Nom : Bilan de la période + dateDebut + dateFin
+            //$filename = 'Bilan de la période'. $dateDebut.'- '. $dateFin.'- '. $projetID. '.pdf';
+            $filename = 'Bilan_periode_' . $dateDebut . '_' . $dateFin . '.pdf';
+
+            return $pdf->stream($filename, ['Attachment' => false]);
+
+
+        } else {
+            $projets = Projet::where('id', '=', $projetID)->where('id_gestionnaire', '=', $user->id)->get();
+            // Récupérer tous les activités de ce projet
+            $activites = Activite::where('id_projet', '=', $projetID)->get();
+            // Récupérer les id des activités de ce projet
+            $idsActivitesselectedProjet = $activites->pluck('id')->toArray();
+            // récupérer les rapports des activités de ce projet créés entres les deux dates (dateDebut et dateFin)
+            $rapportsCreesAujourdhui = Rapport::whereIn('id_activite', $idsActivitesselectedProjet)
+                ->whereBetween(
+                    'created_at',
+                    [$dateDebut, $dateFin]
+                )->orwhere('updated_at', $dateToday)->get();
+            // récupérer les besoins des activités de ce projet créés entres les deux dates (dateDebut et dateFin)
+            $besoinsEnCoursAujourdhui = Besoin::whereIn('id_activite', $idsActivitesselectedProjet)
+                ->whereBetween(
+                    'created_at',
+                    [$dateDebut, $dateFin]
+                )->orwhere('updated_at', $dateToday)->get();
+
+            // Récupérer les activités de ce projet en cours
+            $activitesEnCours = Activite::whereIn('id', $idsActivitesselectedProjet)
+                ->where('date_debut', '<=', $dateFin)
+                ->where('date_fin', '>=', $dateFin)
+                ->where('statut', '=', 'en cours')->get();
+
+            // Récupérer les activités de ce projet en attentes
+            $activitesEnAttentes = Activite::whereIn('id', $idsActivitesselectedProjet)
+                ->where('date_debut', '>', $dateFin)
+                ->where('date_fin', '>', $dateFin)
+                ->where('statut', '=', 'en attente')->get();
+
+
+
+            $pdf = Pdf::loadView(
+                'Bilans.bilan_periode',
+                compact(
+                    'dateToday',
+                    'projets',
+                    'dateDebut',
+                    'dateFin',
+                    'activitesEnCours',
+                    'activitesEnAttentes',
+                    'rapportsCreesAujourdhui',
+                    'besoinsEnCoursAujourdhui'
+                )
+            );
+
+            $pdf->setPaper('a4', 'landscape');
+            // Nom : Bilan de la période + dateDebut + dateFin
+            //$filename = 'Bilan de la période'. $dateDebut.'- '. $dateFin.'- '. $projetID. '.pdf';
+            $filename = 'Bilan_periode_' . $dateDebut . '_' . $dateFin . '.pdf';
+
+            return $pdf->stream($filename, ['Attachment' => false]);
 
         }
 

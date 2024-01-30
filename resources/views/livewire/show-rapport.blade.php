@@ -92,16 +92,43 @@
               </td>
             </tr>
             <tr>
-              <th scope="row">CONTENU</th>
-              <td>{{ $rapport->contenu }}</td>
+              <th scope="row">TRAVAUX PREVUS DE LA JOURNEE</th>
+              <td>{{ $rapport->travaux_prevus_journee }}</td>
             </tr>
             <tr>
-              <th scope="row">DIFFICULTES RENCONTREES</th>
+              <th scope="row">TRAVAUX REALISES DE LA JOURNEE</th>
+              <td>{{ $rapport->travaux_realises }}</td>
+            </tr>
+            <tr>
+              <th scope="row">HEURES</th>
+              <td>
+                <p>Heure démarrage : {{ $rapport->heure_demarrage }}</p>
+                <p>Heure de fin : {{ $rapport->heure_fin }}</p>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">TRAVAUX RESTANTS A FAIRE</th>
+              <td>{{ $rapport->travaux_restants }}</td>
+            </tr>
+            <tr>
+              <th scope="row">TRAVAUX PREVUS POUR DEMAIN</th>
+              <td>{{ $rapport->travaux_prevus_demain }}</td>
+            </tr>
+             <tr>
+              <th scope="row">MATERIELS UTILISES</th>
+              <td>{{ $rapport->materiels_utilises }}</td>
+            </tr>
+            <tr>
+              <th scope="row">PROBLEMES/RETARDS</th>
               <td>{{ $rapport->difficultes_rencontrees }}</td>
             </tr>
             <tr>
-              <th scope="row">SOLUTIONS APPORTEES</th>
+              <th scope="row">MESURES CORRECTIVES OU A METTRE EN OEUVRE</th>
               <td>{{ $rapport->solutions_apportees }}</td>
+            </tr>
+            <tr>
+              <th scope="row">BESOINS EN MATERIAUX</th>
+              <td>{{ $rapport->besoins_materiaux }}</td>
             </tr>
 
             <tr>
@@ -149,7 +176,7 @@ function imprimerDetailsRapport() {
     fenetreImprimer
       .focus(); // Focus sur la fenêtre d'impression (pour éviter que l'on ne voie pas la page d'accueil)
     fenet
-reImprimer.print(); // Lancer l'impression
+    reImprimer.print(); // Lancer l'impression
   };
 }
 imprimerDetailsRapport();

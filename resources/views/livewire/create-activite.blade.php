@@ -43,6 +43,23 @@
         </script>
         @endif
 
+        <!-- Champs choix de projet -->
+        <div class="mb-3">
+          <label for="id_projet" class="form-label">Choix du projet :</label>
+          <select class="form-select @error('id_projet') is-invalid @enderror" id="id_projet" wire:model="id_projet"
+            name="id_projet">
+            <option value=""></option>
+            @foreach ($listeProjet as $item )
+            <option value="{{$item->id}}">{{$item->libelle}}</option>
+            @endforeach
+          </select>
+
+          <!-- afiche le message d'erreur si le champs est vide  -->
+          @error('id_projet')
+          <div class="text text-red-500 mt-1 animate-pulse">Le niveau est requis.</div>
+          @enderror
+        </div>
+
         <div class="mb-3">
           <label for="nom" class="form-label">Nom de l'Activité :</label>
           <input type="text" class="form-control  @error('nom')is-invalid
@@ -64,24 +81,12 @@
         </div>
 
         <div class="mb-3">
-          <!-- Checkbox pour afficher ou cache le champ -->
-          <label for="toggleCheckbox">Afficher </label>
-          <input type="checkbox" id="toggleCheckbox">
-        </div>
-        <br>
-        <!-- mise de checkbox pour afficher ou cacher le champs de statut de l'activité -->
-        <div class="mb-3">
-          <div class="form-check form-switch">
-            <select id="statut" class="form-select @error('statut') is-invalid @enderror" wire:model="statut"
-              name="statut" style="display: none;">
-              <option value="en attente">En attente</option>
-              <option value="en cours">En cours</option>
-              <option value="terminé">Terminé</option>
-              <option value="arrêté">Arrêté</option>
-            </select>
-          </div>
-          @error('statut')
-          <div class="invalid-feedback">Le champ statut est requis.</div>
+          <label for="lieu" class="form-label">localisation :</label>
+          <input type="text" class="form-control  @error('lieu')is-invalid
+           @enderror" name="lieu" wire:model="lieu" required>
+          <!-- afiche le message d'erreur si le champs est vide  -->
+          @error('lieu')
+          <div class="invalid-feedback">Le champ lieu est requis.</div>
           @enderror
         </div>
 
@@ -99,7 +104,6 @@
           <div id="date_fin_error" class="error-message invalid-feedback" style="display: none;">La date de fin ne peut
             pas être
             antérieure à la date de début.</div>
-          <!-- Affiche le message d'erreur si le champ est vide -->
           @error('date_fin')
           <div class="error-message invalid-feedback">Le champ date_fin est requis.</div>
           @enderror
@@ -125,22 +129,7 @@
 
     </div>
 
-    <!-- Champs choix de projet -->
-    <div class="mb-3">
-      <label for="id_projet" class="form-label">Choix du projet :</label>
-      <select class="form-select @error('id_projet') is-invalid @enderror" id="id_projet" wire:model="id_projet"
-        name="id_projet">
-        <option value=""></option>
-        @foreach ($listeProjet as $item )
-        <option value="{{$item->id}}">{{$item->libelle}}</option>
-        @endforeach
-      </select>
 
-      <!-- afiche le message d'erreur si le champs est vide  -->
-      @error('id_projet')
-      <div class="text text-red-500 mt-1 animate-pulse">Le niveau est requis.</div>
-      @enderror
-    </div>
 
     <div class=" row d-flex justify-content-between mb-3">
       <div class="col-md-3">

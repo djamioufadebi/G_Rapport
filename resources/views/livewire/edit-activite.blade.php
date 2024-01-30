@@ -40,6 +40,16 @@
             @enderror
           </div>
 
+          <div class="mb-3">
+            <label for="lieu" class="form-label">localisation :</label>
+            <input type="text" class="form-control  @error('lieu')is-invalid
+           @enderror" name="lieu" wire:model="lieu" required>
+            <!-- afiche le message d'erreur si le champs est vide  -->
+            @error('lieu')
+            <div class="invalid-feedback">Le champ lieu est requis.</div>
+            @enderror
+          </div>
+
           <!-- Checkbox pour afficher ou cache le champ -->
 
           <!-- mise de checkbox pour afficher ou cacher le champs de statut de l'activité -->

@@ -12,7 +12,19 @@ use Illuminate\Support\Facades\Auth;
 class EditRapport extends Component
 {
     public $libelle;
-    public $contenu;
+    public $travaux_prevus_journee;
+
+    public $travaux_realises;
+
+    public $travaux_restants;
+
+    public $travaux_prevus_demain;
+
+    public $besoins_materiaux;
+
+    public $heure_demarrage;
+
+    public $heure_fin;
     public $id_activite;
     public $materiels_utilises;
     public $difficultes_rencontrees;
@@ -23,7 +35,13 @@ class EditRapport extends Component
     public function mount()
     {
         $this->libelle = $this->rapports->libelle;
-        $this->contenu = $this->rapports->contenu;
+        $this->travaux_prevus_journee = $this->rapports->travaux_prevus_journee;
+        $this->travaux_realises = $this->rapports->travaux_realises;
+        $this->travaux_restants = $this->rapports->travaux_restants;
+        $this->travaux_prevus_demain = $this->rapports->travaux_prevus_demain;
+        $this->besoins_materiaux = $this->rapports->besoins_materiaux;
+        $this->heure_demarrage = $this->rapports->heure_demarrage;
+        $this->heure_fin = $this->rapports->heure_fin;
         $this->id_activite = $this->rapports->id_activite;
         $this->materiels_utilises = $this->rapports->materiels_utilises;
         $this->difficultes_rencontrees = $this->rapports->difficultes_rencontrees;
@@ -38,20 +56,32 @@ class EditRapport extends Component
 
         $this->validate([
             'libelle' => 'string|required',
-            'contenu' => 'string|required',
             'materiels_utilises' => 'string|required',
             'difficultes_rencontrees' => 'string|required',
             'solutions_apportees' => 'string|required',
+            'heure_demarrage' => 'string|required',
+            'heure_fin' => 'string|required',
+            'besoins_materiaux' => 'string|required',
+            'travaux_prevus_journee' => 'string|required',
+            'travaux_realises' => 'string|required',
+            'travaux_restants' => 'string|required',
+            'travaux_prevus_demain' => 'string|required',
             'id_activite' => 'required',
         ]);
 
         try {
             $rapport->libelle = $this->libelle;
-            $rapport->contenu = $this->contenu;
             $rapport->id_activite = $this->id_activite;
             $rapport->materiels_utilises = $this->materiels_utilises;
             $rapport->difficultes_rencontrees = $this->difficultes_rencontrees;
             $rapport->solutions_apportees = $this->solutions_apportees;
+            $rapport->heure_demarrage = $this->heure_demarrage;
+            $rapport->heure_fin = $this->heure_fin;
+            $rapport->besoins_materiaux = $this->besoins_materiaux;
+            $rapport->travaux_prevus_journee = $this->travaux_prevus_journee;
+            $rapport->travaux_realises = $this->travaux_realises;
+            $rapport->travaux_restants = $this->travaux_restants;
+            $rapport->travaux_prevus_demain = $this->travaux_prevus_demain;
             $rapport->save();
 
             // recuperer le projet choisi

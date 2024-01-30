@@ -123,15 +123,11 @@
                     class="fas fa-pen"></i></a>
 
                 <!-- Un bouton pour supprimer le activite -->
-                @if (Auth::user()->id_profil !== 1)
+
                 <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $activite->id }}"
-                  class="btn btn-sm btn-danger" style="display: block;"><i class="fas fa-trash-alt"></i>
+                  class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
                 </button>
-                @else
-                <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ $activite->id }}"
-                  class="btn btn-sm btn-danger" style="display: none;"><i class=" fas fa-trash-alt"></i>
-                </button>
-                @endif
+
 
               </td>
 

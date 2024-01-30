@@ -37,19 +37,26 @@
               <label for="date_debut" class="form-label">Date Debut :</label>
               <input type="date" class="form-control @error('date_debut') is-invalid @enderror" id="date_debut"
                 wire:model="date_debut" name="date_debut" required>
-              <div class="error-message invalid-feedback" style="display: none;">Le champ date de début est requis.
-              </div>
+              <div class="error-message invalid-feedback" style="display: none;">Le champ date_debut est requis.</div>
+              <!-- Affiche le message d'erreur si le champ est vide -->
+              @error('date_debut')
+              <div class="error-message invalid-feedback">Le champ date debut est requis.</div>
+              @enderror
             </div>
+
             <div class="mb-3">
               <label for="date_fin_prevue" class="form-label">Date Fin :</label>
               <input type="date" class="form-control @error('date_fin_prevue') is-invalid @enderror"
                 id="date_fin_prevue" wire:model="date_fin_prevue" name="date_fin_prevue" required>
               <div id="date_fin_prevue_error" class="error-message invalid-feedback" style="display: none;">La date de
-                fin ne peut pas être antérieure à la date de début.</div>
+                fin
+                ne peut pas être antérieure à la date de début.</div>
+              <!-- Affiche le message d'erreur si le champ est vide -->
               @error('date_fin_prevue')
               <div class="error-message invalid-feedback">Le champ date fin est requis.</div>
               @enderror
             </div>
+
             <div>
               <a href="{{route('projets')}}">
                 <button type="button" class="btn btn-danger">Annuler</button>
@@ -92,7 +99,6 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-// Condition statut et dates
 document.addEventListener('DOMContentLoaded', function() {
   var statutSelect = document.getElementById('statut');
   var dateDebutInput = document.getElementById('date_debut');
@@ -118,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Réinitialiser les contraintes des champs de date et de taux de réalisation
     dateDebutInput.removeAttribute('max');
+    dateDebutInput.removeAttribute('min');
     dateFinInput.removeAttribute('min');
     dateFinInput.removeAttribute('max');
 
@@ -136,10 +143,10 @@ document.addEventListener('DOMContentLoaded', function() {
       case 'en cours':
         disablePastDates();
         dateDebutInput.setAttribute('max', new Date().toISOString().split('T')[0]);
-        dateDebutInput.setAttribute('min', new Date().toISOString().split('T')[0]);
-        dateFinInput.setAttribute('min', new Date().toISOString().split('T')[
-          0]); // Date de début ou égale à la date du jour
+        dateDebutInput.removeAttribute('min'); // Permettre une date de début antérieure à la date du jour
 
+        dateFinInput.removeAttribute('min');
+        dateFinInput.setAttribute('min', addOneDayToCurrentDate());
         break;
       case 'terminé':
         dateDebutInput.setAttribute('max', new Date().toISOString().split('T')[0]);
@@ -168,9 +175,29 @@ document.addEventListener('DOMContentLoaded', function() {
   handleStatutChange();
 });
 </script>
-<script src="{{asset('js\js_projet\condition-statut_dates.js')}}"></script>
+<script>
+// Fonction pour vérifier si le statut est valide
+function ValidationStatutProjet(id) {
+  var statut = document.getElementById('statut').value;
+  var dateDebut = document.getElementById('date_debut').value;
+  var dateFin = document.getElementById('date_fin_prevue').value;
+  var dateFinError = document.getElementById('date_fin_prevue_error');
+  var dateDebutError = document.getElementById('date_debut_error');
 
-<script src="{{asset('js\js_projet\date-condition_projet.js')}}"></script>
-
-
-<script src="{{asset('js\js_projet\checkbox-statut.js')}}"></script>
+  // Vérifier si les champs de date sont remplis
+  if (dateDebut === '' || dateFin === '') {
+    dateDebutError.style.display = 'block';
+    dateFinError.style.display = 'block';
+    return false;
+  } else {
+    dateDebutError.style.display = 'none';
+    dateFinError.style.display = 'none';
+  }
+  // Vérifier si la date de fin est antérieure à la date de début
+  if (dateFin < dateDebut) {
+    dateFinError.style.display = 'block';
+    return false;
+  } else {
+    dateFinError.style.display = 'none';
+  }
+</script>

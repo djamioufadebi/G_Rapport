@@ -139,7 +139,7 @@
                   class=" btn btn-sm badge bg-warning">{{$projet->statut}}</a>
 
                 @elseif ($projet->statut == 'terminé')
-                <a href="#" data-bs-toggle="modal" @if (Auth::projet()->id_profil == 1 || Auth::user()->id ===
+                <a href="#" data-bs-toggle="modal" @if (Auth::user()->id_profil == 1 || Auth::user()->id ===
                   $projet->id_gestionnaire)
                   data-bs-target="#confirmProfilModal{{ $projet->id }}" @endif
                   class=" btn btn-sm badge bg-danger">{{$projet->statut}}</a>
@@ -272,5 +272,6 @@
 
       </div>
     </div>
-  </div>
+  </di
+v>
 </div>

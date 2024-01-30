@@ -13,11 +13,18 @@ return new class extends Migration {
         Schema::create('rapports', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
-            $table->text('contenu');
             $table->enum('statut', ['en attente', 'Validé', 'rejeté'])->default('en attente');
             $table->text('materiels_utilises')->nullable();
             $table->text('difficultes_rencontrees')->nullable();
             $table->text('solutions_apportees')->nullable();
+            $table->time('heure_demarrage');
+            $table->time('heure_fin');
+            $table->text('travaux_prevus_journee');
+            $table->text('travaux_realises');
+            $table->text('travaux_restants')->nullable();
+            $table->text('travaux_prevus_demain');
+            $table->text('besoins_materiaux')->nullable();
+
 
             $table->unsignedBigInteger('id_activite');
             $table->foreign('id_activite')->

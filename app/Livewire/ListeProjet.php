@@ -6,9 +6,11 @@ use App\Models\Activite;
 use App\Models\Client;
 use App\Models\Intervenant;
 use App\Models\Notification;
+use App\Models\Notifications;
 use App\Models\Projet;
 use App\Models\User;
 use Auth;
+use Illuminate\Http\Request;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -30,8 +32,9 @@ class ListeProjet extends Component
 
     public function NommerGestionnaire($id)
     {
+
+        //dd($this->selectedGestionnaireId);
         // récuperer le gestionnaire qui etait là dans le texte de la vue
-        $this->selectedGestionnaireId = $id;
 
         $projet = Projet::find($id); // Récupérez l'utilisateur avec l'ID 1
 
@@ -39,12 +42,21 @@ class ListeProjet extends Component
         if ($this->selectedGestionnaireId != null) {
 
             $projet->id_gestionnaire = $this->selectedGestionnaireId;
+
+            $notification = new Notifications;
+            $notification->projet_id = $id;
+            $notification->user_id = $projet->id_gestionnaire;
+            $notification->type = "projet";
+            $notification->titre = "Nomination";
+            $notification->message = "Vous avez été nommé en tant que Gestionnaire du projet : " . $projet->libelle;
+            $notification->read = false;
+
             $projet->save(); // Sauvegardez les modifications
             $message = "Le gestionnaire" . $this->selectedGestionnaireId . " a été nommer sur le projet : " . $projet->libelle . "!";
             return redirect("projets")->with('attributionmanager', $message);
         } else {
-            $projet->id_gestionnaire = $projet->$this->id_gestionnaire;
-            $projet->save(); // Sauvegardez les modifications
+            //$projet->id_gestionnaire = $projet->$this->id_gestionnaire;
+            //$projet->save(); // Sauvegardez les modifications
             return redirect("projets")->with('attributionerror', 'Veuillez selectionner un gestionnaire avant de sauvegarder');
         }
     }
@@ -131,11 +143,22 @@ class ListeProjet extends Component
         'date_fin_prevue' => 'required|date|after_or_equal:date_debut',
     ];
 
-    public function ValidationStatutProjet($id)
+    public function ValidationStatutProjet($id, Request $request)
     {
         $projet = Projet::find($id);
 
-        $this->createNotification($projet);
+        //$this->createNotification($projet);
+
+        // Associer le statut du projet
+        // if ($request->filled(['statut', 'date_debut', 'date_fin_prevue'])) {
+        //    $this->validate($request, [
+        //        'date_debut' => 'required|date',
+        //      'date_fin_prevue' => 'required|after_or_equal:date_debut',
+        //  ]);
+
+        // $projet->statut = $request->input('statut');
+        //    $projet->date_debut = $request->input('date_debut');
+        //   $projet->date_fin_prevue = $request->input('date_fin_prevue');
 
         // Associer le statut du projet
         if ($this->statut != null && $this->date_debut != null && $this->date_fin_prevue != null) {
@@ -144,33 +167,30 @@ class ListeProjet extends Component
             $projet->date_fin_prevue = $this->date_fin_prevue;
 
             if ($projet->statut == "en cours") {
-                $this->rules['date_debut'] = 'required|date|before_or_equal:' . now()->toDateString();
+
                 $projet->save();
                 return redirect("projets")->with('Encours', 'Le Projet est en cours');
             } elseif ($projet->statut == "terminé") {
-                $this->rules['date_fin_prevue'] = 'required|date|before_or_equal:' . now()->toDateString();
                 $projet->save();
                 return redirect("projets")->with('terminer', 'Vous venez de notifier la finalisation du projet');
             } elseif ($projet->statut == "arrêté") {
-                $this->rules['date_debut'] = 'required|date|before:' . now()->toDateString();
-                $this->rules['date_fin_prevue'] = 'required|date|after:' . now()->toDateString();
                 $projet->save();
                 return redirect("projets")->with('arreter', 'Le Projet a été arrêté');
             } elseif ($projet->statut == "en attente") {
-                $this->rules['date_debut'] = 'required|date|after:' . now()->toDateString();
                 $projet->save();
                 return redirect("projets")->with('Enattente', 'Le Projet est toujours en cours');
             }
+        } else {
+            return redirect("projets")->with('error', 'Veuillez remplir tous les champs nécessaires.');
         }
-
-        $this->validateOnly('date_debut');
-        $this->validateOnly('date_fin_prevue');
     }
+
 
     protected function createNotification($projet)
     {
         $notification = new Notification;
-        $notification->projet_id = Auth::user()->id;
+        // $notification->projet_id = $projet->id;
+        $notification->user_id = Auth::user()->id;
         $notification->read = false;
 
         switch ($this->statut) {

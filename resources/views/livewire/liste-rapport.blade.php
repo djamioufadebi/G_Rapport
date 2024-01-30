@@ -79,6 +79,7 @@
             <tr>
               <th scope="col">Libellé </th>
               <th scope="col">Activité</th>
+              <th scope="col">Projet</th>
               <th scope="col">Statut</th>
               <th scope="col">Taux de réalisation </th>
               <th scope="col">Actions</th>
@@ -90,6 +91,7 @@
             <tr>
               <td>{{$rapport->libelle}}</td>
               <td>{{$rapport->activite->nom}}</td>
+              <td>{{$rapport->activite->projet->libelle}}</td>
               <!-- Le profil qui peut accéder à ces pages des bouttons -->
 
               <td>

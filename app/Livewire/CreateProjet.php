@@ -24,7 +24,6 @@ class CreateProjet extends Component
 
     public $id_gestionnaire;
 
-    public $statut;
 
     protected $paginationTheme = "bootstrap";
 
@@ -40,7 +39,7 @@ class CreateProjet extends Component
             'lieu' => 'string|required',
             'date_debut' => 'date|required',
             'date_fin_prevue' => 'required|date|after_or_equal:date_debut',
-            'statut' => 'string',
+
             'id_user' => '',
             'id_client' => 'required',
             'id_gestionnaire' => 'required',
@@ -63,7 +62,7 @@ class CreateProjet extends Component
                 $projet->lieu = $this->lieu;
                 $projet->date_debut = $this->date_debut;
                 $projet->date_fin_prevue = $this->date_fin_prevue;
-                $projet->statut = $this->statut;
+                //$projet->statut = $this->statut;
                 $projet->id_client = $this->id_client;
                 // pour recuperer le User connecté
                 $projet->id_user = auth()->user()->id;

@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->date('date_debut');
             $table->date('date_fin');
             $table->string('fichier')->nullable();
+            $table->string('lieu');
             $table->enum('statut', ['en attente', 'en cours', 'terminé', 'arrêté'])->default('en attente');
             // Ajout de taux de réalisation : pour un nombre décimal avec 5 chiffres au total et 2 décimales
             $table->decimal('taux_de_realisation', 5, 2)->default(0.00);

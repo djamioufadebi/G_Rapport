@@ -10,6 +10,8 @@ class EditActivite extends Component
 {
     public $nom;
     public $description;
+
+    public $lieu;
     public $date_debut;
     public $date_fin;
     public $id_projet;
@@ -22,6 +24,7 @@ class EditActivite extends Component
     {
         $this->nom = $this->activites->nom;
         $this->description = $this->activites->description;
+        $this->lieu = $this->activites->lieu;
         $this->date_debut = $this->activites->date_debut;
         $this->date_fin = $this->activites->date_fin;
         $this->id_projet = $this->activites->id_projet;
@@ -38,6 +41,7 @@ class EditActivite extends Component
         $this->validate([
             'nom' => 'string|required',
             'description' => 'string|required',
+            'lieu' => 'string|required',
             'date_debut' => 'date|required',
             'date_fin' => 'required|date|after_or_equal:date_debut',
             'id_projet' => 'required',
@@ -48,6 +52,7 @@ class EditActivite extends Component
         try {
             $activite->nom = $this->nom;
             $activite->description = $this->description;
+            $activite->lieu = $this->lieu;
             $activite->date_debut = $this->date_debut;
             $activite->date_fin = $this->date_fin;
             $activite->id_projet = $this->id_projet;

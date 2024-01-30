@@ -26,9 +26,20 @@
           </div>
           @endif
 
+          @if ($errors->any())
+          <div class="alert alert-danger">
+            <ul>
+              @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+          @endif
+
           <form method="POST" action="{{route('password.changement')}}">
             @csrf
             @method('POST')
+
             <div class="form-group row">
               <label for="current_password"
                 class="col-md-4 col-form-label text-md-right">{{ __('Ancien mot de passe') }}</label>
@@ -37,9 +48,9 @@
                   class="form-control @error('current_password') is-invalid @enderror" name="current_password" required
                   autocomplete="current-password">
 
-                @error('current_password')
+                <!-- @error('current_password')
                 <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @enderror -->
               </div>
             </div>
 
@@ -49,26 +60,25 @@
               <div class="col-md-6">
                 <input id="new_password" type="password"
                   class="form-control @error('new_password') is-invalid @enderror" name="new_password" required
-                  autocomplete="new-password" minlength="8">
+                  autocomplete="new-password">
 
-
-                @error('new_password')
+                <!-- @error('new_password')
                 <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @enderror  minlength="8" -->
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="new_password_confirmation"
+              <label for="password_confirmation"
                 class="col-md-4 col-form-label text-md-right">{{ __('Confirmation du nouveau mot de passe') }}</label>
               <div class="col-md-6">
-                <input id="new_password_confirmation" type="password"
-                  class="form-control  @error('new_password_confirmation') is-invalid @enderror"
-                  name="new_password_confirmation" required autocomplete="new-password">
+                <input id="password_confirmation" type="password"
+                  class="form-control  @error('password_confirmation') is-invalid @enderror"
+                  name="password_confirmation" required autocomplete="new-password">
 
-                @error('new_password_confirmation')
+                <!-- @error('password_confirmation')
                 <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                @enderror -->
               </div>
             </div>
 

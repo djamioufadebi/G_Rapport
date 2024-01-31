@@ -52,8 +52,7 @@
     <script>
     Swal.fire({
       title: 'Profil assigné !',
-      text: '{{ session('
-      attribution ') }}',
+      text: 'Vous avez assigné le profil à l\'utilisateur',
       icon: 'success',
       confirmButtonText: 'OK'
     })
@@ -170,14 +169,13 @@
                         </div>
                         <br>
                         <br>
-                        <br>
                         <select class="form-control" name="id_profil" wire:model="selectedProfilId">
                           @foreach ($listeProfil as $item)
                           <option value="{{$item->id}}">{{$item->nom}}</option>
                           @endforeach
                         </select>
                         <br>
-                        <br>
+
                       </div>
                     </div>
                     <div class="modal-footer">

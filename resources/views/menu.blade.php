@@ -36,10 +36,10 @@
   <!-- Contenu de la page d'accueil -->
   <div class="container mt-4">
     <div class="jumbotron">
-      <h2 class="display-4">Bienvenue sur GRB_Inov'2b</h2>
+      <h2 class="display-4">Bienvenue </h2>
       <p class="lead">Votre plateforme de gestion de projets, rapports et besoins.</p>
       <hr class="my-4">
-      <p>Explorez nos fonctionnalités et gérez vos activités plus efficacement.</p>
+      <p>Explorez les fonctionnalités et gérez vos activités plus efficacement.</p>
     </div>
 
     <div class="row">

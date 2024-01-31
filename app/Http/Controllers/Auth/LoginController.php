@@ -44,11 +44,11 @@ class LoginController extends Controller
         $user = Auth::user();
         if ($user) {
             if ($user->profil()->pluck('nom')->contains('Administrateur')) {
-                return route('profils'); // Rediriger vers le tableau de bord pour les administrateurs
+                return route('home'); // Rediriger vers le tableau de bord pour les administrateurs
             } elseif ($user->profil()->pluck('nom')->contains('Gestionnaire')) {
-                return route('projets'); // Rediriger vers le tableau de bord du profil 2
+                return route('home'); // Rediriger vers le tableau de bord du profil 2
             } elseif ($user->profil()->pluck('nom')->contains('Utilisateur_simple')) {
-                return route('besoins');
+                return route('home');
             }
         } else {
             // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié

@@ -16,6 +16,7 @@ class EditIntervenant extends Component
     public $prenom;
     public $email;
     public $id_activite;
+    public $date_participation;
     public $contact;
     public $adresse;
 
@@ -27,6 +28,7 @@ class EditIntervenant extends Component
         $this->contact = $this->intervenants->contact;
         $this->adresse = $this->intervenants->adresse;
         $this->id_activite = $this->intervenants->id_activite;
+        $this->date_participation = $this->intervenants->date_participation;
 
     }
 
@@ -41,6 +43,8 @@ class EditIntervenant extends Component
             'email' => 'string|required',
             'adresse' => 'string|required',
             'id_activite' => 'required',
+            'date_participation' => 'date|required'
+
         ]);
 
         try {

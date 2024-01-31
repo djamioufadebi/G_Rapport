@@ -83,11 +83,11 @@
   </div>
 
   <div class=" row d-flex justify-content-between mb-3">
-    <div class="col-md-2">
+    <!-- <div class="col-md-2">
       <button type="submit" class="btn btn-secondary text text-bold">
         <a href="{{route('intervenant.pdf')}}" class="text-white fs-6" style="text-decoration:none;">
           PDF</a></button>
-    </div>
+    </div> -->
     <div class="col-md-3">
       <button type="button" class="btn btn-primary" onclick="imprimerDetailsIntervenant()">Imprimer</button>
     </div>

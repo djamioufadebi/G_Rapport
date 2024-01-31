@@ -62,6 +62,7 @@
               <th scope="col">Contact</th>
               <th scope="col">Email</th>
               <th scope="col">Activité participée</th>
+              <th scope="col">Date de participation</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -75,6 +76,7 @@
               <td>{{$intervenant->email}}</td>
               <td>{{$intervenant->contact}}</td>
               <td>{{$intervenant->activite->nom}}</td>
+              <td>{{$intervenant->date_participation}}</td>
               <td>
                 <!-- Par exemple, un lien pour afficher le intervenants détaillé -->
                 <a href="{{ route('intervenants.show', $intervenant->id) }}" class="btn btn-sm btn-info"><i

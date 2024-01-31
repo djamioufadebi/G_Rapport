@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('contact');
             $table->string('email');
             $table->string('adresse');
+            $table->date('date_participation');
             $table->unsignedBigInteger('id_activite');
             $table->foreign('id_activite')->
                 references('id')->on('activites');

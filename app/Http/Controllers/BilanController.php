@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activite;
 use App\Models\Besoin;
 use App\Models\Bilan;
+use App\Models\Intervenant;
 use App\Models\Projet;
 use App\Models\Rapport;
 use App\Models\User;
@@ -53,6 +54,14 @@ class BilanController extends Controller
             $activitesEnCours = Activite::where('date_debut', '<=', $dateToday)
                 ->where('date_fin', '>=', $dateToday)
                 ->where('statut', '=', 'en cours')->get();
+            //  Extraire uniquement les IDs des activités en cours
+            $idsActiviteEncours = $activitesEnCours->pluck('id')->toArray();
+
+            // récupérer les intervenants sur chaque activité en cours
+            // $intervenants = Intervenant::whereIn('id_activite', $idsActiviteEncours)->get();
+
+            // compter le nombre de ces intervenants
+            //  $nbIntervenants = $intervenants->count();
 
             $activitesEnAttentes = Activite::where('date_debut', '>', $dateToday)
                 ->where('date_fin', '>', $dateToday)
@@ -91,7 +100,7 @@ class BilanController extends Controller
             //$pdf->setPaper('a4', 'landscape');
             $pdf->setPaper([0, 0, 800, 1200]);
             // Spécifier le nom du fichier PDF pour les navigateurs intégrés
-            $filename = 'Bilan_journalier_du : ' . now()->format('Y-m-d') . '.pdf';
+            $filename = 'Bilan_global_du_jour : ' . now()->format('Y-m-d') . '.pdf';
 
             // Télécharger le fichier avec le nom spécifié
             //return $pdf->download($filename);
@@ -142,6 +151,12 @@ class BilanController extends Controller
             //  Extraire uniquement les IDs des activités en cours
             $idsActiviteEncours = $activitesEnCours->pluck('id')->toArray();
 
+            // récupérer les intervenants sur chaque activité en cours
+            //$intervenants = Intervenant::whereIn('id_activite', $idsActiviteEncours)->get();
+
+            // compter le nombre de ces intervenants
+            //$nbIntervenants = $intervenants->count();
+
             $rapportsCreesAujourdhui = Rapport::where('user_id', $user_id)
                 ->whereBetween(
                     'created_at',
@@ -163,7 +178,6 @@ class BilanController extends Controller
                     'projetEnAttenteAjourdhui',
                     'projetsEnCoursAujourdhui',
                     'rapportsCreesAujourdhui',
-
                     'activitesTermineesAjourdhui',
                     'projetsTerminesAujourdhui',
                     'besoinsEnCoursAujourdhui'
@@ -172,7 +186,7 @@ class BilanController extends Controller
             $pdf->setPaper('a4', 'landscape');
             //$pdf->setPaper([0, 0, 800, 1200]);
             // Spécifier le nom du fichier PDF pour les navigateurs intégrés
-            $filename = 'Bilan_journalier_' . now()->format('Y-m-d') . '.pdf';
+            $filename = 'Bilan_global_du_jour : ' . now()->format('Y-m-d') . '.pdf';
 
             // Télécharger le fichier avec le nom spécifié
             //return $pdf->download($filename);
@@ -194,6 +208,11 @@ class BilanController extends Controller
 
         $activites = Activite::where('id', '=', $idActiviteChoisie)->get();
 
+        // récuperer les intervenants qui ont intervenant sur cette activité et les compter
+        $intervenants = Intervenant::where('id_activite', '=', $idActiviteChoisie)->get();
+
+        // compter le nombre de ces intervenants
+        $nbIntervenants = $intervenants->count();
 
         $dateToday = Carbon::now();
 
@@ -215,6 +234,8 @@ class BilanController extends Controller
             compact(
                 'dateToday',
                 'rapportsSelectedActivity',
+                'intervenants',
+                'nbIntervenants',
                 'activites',
                 'besoins'
             )
@@ -244,7 +265,7 @@ class BilanController extends Controller
         $dateToday = Carbon::now();
 
         if ($user->id_profil == 1) {
-            $projets = Projet::where('id', '=', $ProjetId);
+            $projets = Projet::where('id', '=', $ProjetId)->get();
 
             // Récupérer tous les activités de ce projet
             $activites = Activite::where('id_projet', '=', $ProjetId);
@@ -381,7 +402,7 @@ class BilanController extends Controller
 
         if ($user->id_profil == 1) {
 
-            $projets = Projet::where('id', '=', $projetID);
+            $projets = Projet::where('id', '=', $projetID)->get();
             // Récupérer tous les activités de ce projet
             $activites = Activite::where('id_projet', '=', $projetID)->get();
             // Récupérer les id des activités de ce projet

@@ -42,7 +42,6 @@
     bottom: 0;
     width: 100%;
     background-color: #f8f9fa;
-    /* couleur de fond, ajustez selon vos préférences */
     text-align: right;
     padding: 5px;
   }
@@ -75,6 +74,14 @@
     border: 1px solid #77B5FE;
   }
 
+  hr {
+    width: 100%;
+    height: 1px;
+    background-color: #000000;
+    margin-bottom: 10px;
+    border: 1px solid #000000;
+  }
+
 
   .div-tot {
     padding: 20px;
@@ -100,7 +107,7 @@
 
 
 <body>
-  <div class="container">
+  <div class="container_fluid">
     <!-- En-tête de la société et du document -->
     <div class="company-header">
       <div>
@@ -152,6 +159,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <footer>
+    <hr>
     <h6>
       Généré par {{ Auth::user()->nom }} {{ Auth::user()->prenom }}, ce
       {{ $dateToday->format('d-m-Y') }}

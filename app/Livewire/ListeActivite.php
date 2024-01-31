@@ -188,7 +188,7 @@ class ListeActivite extends Component
             // Extraire uniquement les IDs des projets
             $idsProjetsUser = $projetsUser->pluck('id')->toArray();
             // Récupérer les activités dont le champ 'id_projet' est parmi les IDs extraits
-            $listeActivites = Activite::whereIn('id_projet', $idsProjetsUser)->paginate(5);
+            $listeActivites = Activite::whereIn('id_projet', $idsProjetsUser)->paginate(10);
         }
 
         return view('livewire.liste-activite', compact('listeActivites'));

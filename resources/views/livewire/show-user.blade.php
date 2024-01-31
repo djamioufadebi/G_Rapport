@@ -109,19 +109,14 @@
                         <button type="button" class="btn btn-danger">Annuler</button>
                       </a>
 
-                      <!-- le wire:click est à mettre -->
                       <button wire:click="confirmSaveIdProfil({{$users->id}})"
                         class="btn btn-primary">Enregistrer</button>
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- Fin du modal -->
-
             </td>
           </tr>
-
-
 
         </tbody>
       </table>

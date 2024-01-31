@@ -16,6 +16,8 @@ class CreateIntervenant extends Component
     public $email;
     public $id_activite;
 
+    public $date_participation;
+
     public $adresse;
 
     public $intervenant;
@@ -29,13 +31,13 @@ class CreateIntervenant extends Component
             'email' => 'string|required|unique:intervenants,email',
             'adresse' => 'string|required',
             'id_activite' => 'required',
+            'date_participation' => 'date|required',
         ]);
 
         // On recupère les intervenants existants avec le nom et le prenom
         $query = Intervenant::where('nom', $this->nom)->orwhere('prenom', $this->prenom)->orwhere('email', $this->email)->get();
         // On verifie si l'intervenant existe déjà dans la base de données avec le nom et le prenom
         if (count($query) > 0) {
-
             $this->error = 'Cet intervenant existe déjà!';
             return redirect()->route('intervenants.create')->with('dejatiliser', $this->error);
         } else {
@@ -47,11 +49,12 @@ class CreateIntervenant extends Component
                 $intervenant->contact = $this->contact;
                 $intervenant->adresse = $this->adresse;
                 $intervenant->id_activite = $this->id_activite;
+                $intervenant->date_participation = $this->date_participation;
                 $intervenant->save();
 
                 return redirect()->Route('intervenants')->with(
                     'success',
-                    'Nouveau intervenant ajoutée ! '
+                    'Nouveau intervenant ajoutée !'
                 );
             } catch (Exception $e) {
                 return redirect()->back()->with(

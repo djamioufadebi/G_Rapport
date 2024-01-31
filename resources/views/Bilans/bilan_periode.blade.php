@@ -111,6 +111,18 @@
     /* Couleur bleue pour le hr, ajustez selon vos préférences */
   }
 
+  thead {
+    display: table-header-group;
+    page-break-inside: avoid;
+  }
+
+  @media print {
+    thead {
+      display: table-header-group;
+    }
+  }
+
+
 
   footer {
     position: fixed;
@@ -136,18 +148,59 @@
         <span class="module-title text-center">INNOVATION BULDING BUSINESS SAS</span>
       </div>
       <hr>
-      <h1 class="document-title text-center">Bilan du {{ $dateDebut }} au {{ $dateFin }}</h1>
+      <h1 class="document-title text-center">Bilans du {{ $dateDebut }} au {{ $dateFin }}</h1>
     </div>
 
     <div class="module">
-      <h2 class="module-title">Rapports du projet trouvés</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <h2 class="module-title">Les détails du projet</h2>
+          <br>
+          <!-- Tableau pour afficher les détails des projets en cours -->
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <!-- En-têtes du tableau -->
+              <thead>
+                <tr>
+                  <th scope="col">Libellé</th>
+                  <th scope="col">Lieu</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Date début</th>
+                  <th scope="col">Date fin</th>
+                  <th scope="col">Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($projets as $projet)
+                <tr>
+                  <td>{{ $projet->libelle }}</td>
+                  <td>{{ $projet->lieu }}</td>
+                  <td>{{ $projet->description }}</td>
+                  <td>{{ $projet->date_debut }}</td>
+                  <td>{{ $projet->date_fin_prevue }}</td>
+                  <td>{{ $projet->statut }}</td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin module Projets en cours -->
+
+
+    <div class="module">
+      <h2 class="module-title">Les rapports du projet de la période du {{ $dateDebut }} au
+        {{ $dateFin }} </h2>
+
       @if (count($rapportsCreesAujourdhui) > 0)
       @foreach($rapportsCreesAujourdhui as $rapport)
       <table class="table table-bordered">
         <thead>
           <tr class="text-center">
-            <th> <strong> RAPPORT N° : </strong> <b>{{ $rapport->id}}</b></th>
-            <th> <strong> Libellé : </strong> <i>{{ $rapport->libelle }} </i></th>
+            <th> <strong> RAPPORT N° : </strong>{{ $rapport->id}}</th>
+            <th> <strong> Libellé : </strong> {{ $rapport->libelle}}</th>
           </tr>
         </thead>
         <tbody>
@@ -158,13 +211,14 @@
             </td>
             <td class="report-detail">
               <strong>DATE & HEURES :</strong><br>
-              <p>{{ $rapport->created_at->format('d-m-Y')}}</p>
+              <p>{{ $rapport->created_at->format('d-m-Y')}} à {{ $rapport->created_at->format('H:m:s')}}</p>
             </td>
           </tr>
           <tr>
             <td class="report-detail">
-              <strong>PROJET N° : {{ $rapport->activite->projet->id}}</strong> <br>
-              <strong>NOM DU PROJET :</strong>
+              <strong>PROJET N°: {{ $rapport->activite->projet->id}}</strong><br>
+              <br>
+              <strong>NOM DU PROJET :</strong><br>
               <p>{{ $rapport->activite->projet->libelle }}</p>
             </td>
             <td class="report-detail">
@@ -179,33 +233,33 @@
             </td>
             <td class="report-detail">
               <strong>STATUT :</strong> <br>
-              <p>{{ $rapport->statut }}</p>
+              <p>{{ $rapport->statut }}</p><br>
+
+              <strong>TAUX DE REALISATION :</strong><br>
+              <p>{{ $rapport->activite->taux_de_realisation }} %</p>
             </td>
           </tr>
           <tr>
             <td class="report-detail" colspan="2">
-              <strong class="text-center">TRAVAUX PREVUS DE LA JOURNEE :</strong><br>
+              <strong class=" text-bold text-center">TRAVAUX PREVUS DE LA JOURNEE :</strong>
+              <br>
               <p>{{ $rapport->travaux_prevus_journee }}</p>
             </td>
           </tr>
           <tr>
             <td class="report-detail">
-              <strong>TRAVAUX REALISES DE LA JOURNEE :</strong><br>
+              <strong class="text-center">TRAVAUX EFFECTUES DE LA JOURNEE :</strong><br>
+              <br>
               <p>{{ $rapport->travaux_realises }}</p>
             </td>
             <td class="report-detail">
               <strong>HEURES DE TRAVAIL:</strong><br>
-              <p><strong>Heure de démarrage :</strong> {{ $rapport->heure_demarrage }}<br>
-                <strong>Heure de fin :</strong> {{ $rapport->heure_fin }}
+              <br>
+              <p><strong>Heure de démarrage :</strong>
+              <p>{{ $rapport->heure_demarrage }}</p><br>
+              <strong>Heure de fin :</strong>
+              <p>{{ $rapport->heure_fin }}</p>
               </p>
-            </td>
-          </tr>
-          <tr>
-            <td class="report-detail">
-              <strong>TAUX DE REALISATION :</strong>
-            </td>
-            <td>
-              <p>{{ $rapport->activite->taux_de_realisation }} %</p>
             </td>
           </tr>
           <tr>
@@ -218,22 +272,22 @@
           </tr>
           <tr>
             <td class="report-detail">
-              <strong>PROBLEMES/RETARDS :</strong><br>
+              <strong class="text-center">PROBLEMES/RETARDS :</strong><br>
               <p>{{ $rapport->difficultes_rencontrees }}</p>
             </td>
             <td class="report-detail">
-              <strong>MESURES CORRECTIVES OU A METTRE EN OEUVRE :</strong><br>
+              <strong class="text-center">MESURES CORRECTIVES OU A METTRE EN OEUVRE :</strong><br>
               <p>{{ $rapport->solutions_apportees }}</p>
             </td>
           </tr>
 
           <tr>
             <td class="report-detail">
-              <strong>TRAVAUX RESTANTS A FAIRE :</strong><br>
+              <strong class="text-center">TRAVAUX RESTANTS A FAIRE :</strong><br>
               <p>{{ $rapport->travaux_restants }}</p>
             </td>
             <td class="report-detail">
-              <strong>BESOINS EN MATERIAUX :</strong><br>
+              <strong class="text-center">BESOINS EN MATERIAUX :</strong><br>
               <p>{{ $rapport->besoins_materiaux }}</p>
             </td>
           </tr>
@@ -245,9 +299,12 @@
           </tr>
         </tbody>
       </table>
+      <br>
+      <br>
       @endforeach
+      <br>
       @else
-      <p>Aucun rapport de ce projet n'est trouvé pour cette période.</p>
+      <p>Aucun rapport n'a été fait en cette période.</p>
       @endif
     </div>
 
@@ -261,5 +318,6 @@
     </footer>
   </div>
 </body>
+
 
 </html>

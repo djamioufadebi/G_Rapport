@@ -10,15 +10,12 @@ use Livewire\WithPagination;
 class ListeUser extends Component
 {
     use WithPagination;
-
     public $selectedProfilId;
-
     public $search;
-
     public function s()
     {
-    }
 
+    }
     public function confirmDelete($id)
     {
         // selectionner l' utilisateur à supprimer avec la fonction find() et le supprimer avec la fonction delete()
@@ -39,14 +36,8 @@ class ListeUser extends Component
             $message = "Le profil" . $this->selectedProfilId . " est attribué à l'utilisateur" . $user->nom . "!";
             return redirect("users")->with('attribution', $message);
         } else {
-            $user->id_profil = $user->$this->id_profil;
-            $user->save(); // Sauvegardez les modifications
             return redirect("users")->with('attributionerror', 'Veuillez selectionner un profil avant de sauvegarder l\'utilisateur');
         }
-
-        // retourner sur la page des utilisateurs si aucun profil n'est selectionner
-        //return redirect()->back();
-
     }
 
     public function render()

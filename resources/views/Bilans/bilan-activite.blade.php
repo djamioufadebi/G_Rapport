@@ -33,6 +33,10 @@
     border: 1px solid #77B5FE;
   }
 
+  thead {
+    display: table-header-group;
+  }
+
 
   .container-fluid {
     max-width: 960px;
@@ -126,7 +130,6 @@
     </div>
 
     <div class="module">
-      <h1 class="module-title">Activités</h1>
       <div class="row">
         <div class="col-md-6">
           <h2 class="module-title">Les détails de l'activité</h2>
@@ -162,7 +165,6 @@
       </div>
     </div>
 
-
     <div class="module">
       <h2 class="module-title">Rapports du jour de l'activité</h2>
       @if (count($rapportsSelectedActivity) > 0)
@@ -170,9 +172,10 @@
       <table class="table table-bordered">
         <thead>
           <tr class="text-center">
-            <th> <strong> RAPPORT N° : </strong> <b>{{ $rapport->id}}</b></th>
+            <th> <strong> RAPPORT N° : </strong>{{ $rapport->id}}<b></th>
             <th> <strong> Libellé : </strong> <i>{{ $rapport->libelle }} </i></th>
           </tr>
+
         </thead>
         <tbody>
           <tr>
@@ -182,7 +185,7 @@
             </td>
             <td class="report-detail">
               <strong>DATE & HEURES :</strong><br>
-              <p>{{ $rapport->created_at->format('d-m-Y')}}</p>
+              <p>{{ $rapport->created_at->format('d-m-Y')}} à {{ $rapport->created_at->format('H:m:s')}}</p>
             </td>
           </tr>
           <tr>
@@ -203,33 +206,47 @@
             </td>
             <td class="report-detail">
               <strong>STATUT :</strong> <br>
-              <p>{{ $rapport->statut }}</p>
+              <p>{{ $rapport->statut }}</p><br>
+
+              <strong>TAUX DE REALISATION :</strong><br>
+              <p>{{ $rapport->activite->taux_de_realisation }} %</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="report-detail">
+              <strong>Nombre de Personnels :</strong> <br>
+              <p>{{ $nbIntervenants }}</p>
+            </td>
+            <td class="report-detail">
+              <strong>NOMS DES INTERVENANTS :</strong><br>
+              <p>
+                @foreach ($intervenants as $intervenant)
+                <li>{{ $intervenant->nom }} {{ $intervenant->prenom }}</li>
+                @endforeach
+              </p><br>
             </td>
           </tr>
           <tr>
             <td class="report-detail" colspan="2">
-              <strong class="text-center">TRAVAUX PREVUS DE LA JOURNEE :</strong><br>
+              <strong class=" text-bold text-center">TRAVAUX PREVUS DE LA JOURNEE :</strong>
+              <br>
               <p>{{ $rapport->travaux_prevus_journee }}</p>
             </td>
           </tr>
           <tr>
             <td class="report-detail">
-              <strong>TRAVAUX REALISES DE LA JOURNEE :</strong><br>
+              <strong>TRAVAUX EFFECTUES DE LA JOURNEE :</strong><br>
+              <br>
               <p>{{ $rapport->travaux_realises }}</p>
             </td>
             <td class="report-detail">
               <strong>HEURES DE TRAVAIL:</strong><br>
-              <p><strong>Heure de démarrage :</strong> {{ $rapport->heure_demarrage }}<br>
-                <strong>Heure de fin :</strong> {{ $rapport->heure_fin }}
+              <br>
+              <p><strong>Heure de démarrage :</strong>
+              <p>{{ $rapport->heure_demarrage }}</p><br>
+              <strong>Heure de fin :</strong>
+              <p>{{ $rapport->heure_fin }}</p>
               </p>
-            </td>
-          </tr>
-          <tr>
-            <td class="report-detail">
-              <strong>TAUX DE REALISATION :</strong>
-            </td>
-            <td>
-              <p>{{ $rapport->activite->taux_de_realisation }} %</p>
             </td>
           </tr>
           <tr>
@@ -269,11 +286,16 @@
           </tr>
         </tbody>
       </table>
+      <br>
+      <br>
       @endforeach
+      <br>
       @else
-      <p>Aucun rapport n'a été fait aujourd'hui.</p>
+      <p>Aucun rapport n'a été fait aujourd'hui pour cette activité.</p>
       @endif
     </div>
+
+
 
 
 

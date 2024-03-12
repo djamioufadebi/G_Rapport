@@ -32,8 +32,8 @@ class CreateUser extends Component
         // On vérifie si l'email est déjà utilisé
         if (count($query) > 0) {
 
-            $this->error = 'Cet email est déjà utilisé!';
-            return redirect()->route('users.create')->with('dejatiliser', $this->error);
+            $error = 'Cet email est déjà utilisé!';
+            return redirect()->route('users.create')->with('dejatiliser', $error);
         } else {
 
             try {

@@ -5,7 +5,8 @@ namespace App\Livewire;
 use App\Models\Activite;
 use App\Models\Notifications;
 use App\Models\Projet;
-use Auth;
+
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CreateActivite extends Component
@@ -31,16 +32,8 @@ class CreateActivite extends Component
             'date_fin' => 'required|date|after_or_equal:date_debut',
             'taux_de_realisation' => 'required|numeric|min:0|max:100',
             'id_projet' => 'required',
-            //'statut' => 'string',
         ]);
 
-        // pour verifier si l'activité existe déjà
-        $query = Activite::where('nom', $this->nom)->get();
-        // pour verifier si l'activité existe déjà
-        if (count($query) > 0) {
-            $this->error = 'Cette activité existe déjà!';
-            return redirect()->route('activites.create')->with('dejatiliser', $this->error);
-        } else {
             try {
                 $activite = new Activite;
                 $activite->nom = $this->nom;
@@ -77,8 +70,6 @@ class CreateActivite extends Component
                     'Erreur d\'enregistrement de l\'activité '
                 );
             }
-
-        }
     }
 
     // Méthode pour réinitialiser les champs

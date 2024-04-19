@@ -30,7 +30,12 @@ class ListeIntervenant extends Component
 
     public function render()
     {
-        $intervenants = Intervenant::where('nom', 'like', '%' . $this->search . '%')->paginate(10);
+        $word = '%' . $this->search . '%';
+        $intervenants = Intervenant::where('nom', 'like', $word)
+        ->orWhere('prenom', 'like', $word )
+        ->orWhere('email', 'like', $word )
+        ->orWhere('contact', 'like', $word )->latest()->paginate(10);
+
         return view('livewire.liste-intervenant', compact('intervenants'));
     }
 }

@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
-use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Gate;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\WithPagination;
 
 class UserController extends Controller

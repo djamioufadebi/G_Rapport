@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Projet;
-use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Gate;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth ;
+use Illuminate\Support\Facades\Gate;
 
 class ClientController extends Controller
 {
@@ -68,8 +68,6 @@ class ClientController extends Controller
             // return $pdf->download('liste_des_utilisateurs.pdf');
             return $pdf->stream();
         }
-
-
     }
 
 

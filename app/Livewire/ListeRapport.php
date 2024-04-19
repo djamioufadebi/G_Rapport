@@ -53,7 +53,6 @@ class ListeRapport extends Component
 
     public function confirmSaveRapport($id)
     {
-
         $rapport = Rapport::find($id);
 
         // recupéurer l'id de l'utilisateur connecté
@@ -114,15 +113,7 @@ class ListeRapport extends Component
             $rapport->save();
             return redirect("rapports")->with('en attente', 'Le rapport est toujours en attente');
         }
-        // retourner sur la page des rapports si aucun statut n'est selectionner
         return redirect()->back();
-
-        // } else {
-        // Si l'utilisateur n'est pas admin, il ne peut pas modifier les rapports
-        //     return view('composants.acces_refuser');
-
-
-        // }
 
 
     }
@@ -131,19 +122,17 @@ class ListeRapport extends Component
     {
         $word = '%' . $this->search . '%';
         $listeRapport = Rapport::where('libelle', 'like', $word)
-            ->orwhere('contenu', 'like', $word)
             ->orwhere('difficultes_rencontrees', 'like', $word)
-            ->orwhere('solutions_apportees', 'like', $word);
+            ->orwhere('solutions_apportees', 'like', $word)->latest()->paginate(10);;
 
         $user = Auth::user();
         // Si l'utilisateur n'est pas admin, afficher uniquement les rapports qu'il a creer
         if ($user->id_profil == 1) {
-            $listeRapport = Rapport::paginate(10);
+            $listeRapport = Rapport::latest()->paginate(10);
             // Si l'utilisateur est admin, afficher tous les rapports qui ont été créé
         } else {
-            $listeRapport = Rapport::where('user_id', $user->id)->paginate(10);
+            $listeRapport = Rapport::where('user_id', $user->id)->latest()->paginate(10);
         }
-
 
         return view('livewire.liste-rapport', compact('listeRapport'));
     }

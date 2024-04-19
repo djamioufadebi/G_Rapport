@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Profil;
 use App\Models\Role;
 use Livewire\Component;
 
@@ -19,8 +20,8 @@ class CreateRole extends Component
         $query = Profil::where('nom', $this->nom)->get();
         if (count($query) > 0) {
 
-            $this->error = 'Ce nom est déjà utilisé!';
-            return redirect()->route('roles.create')->with('dejatiliser', $this->error);
+            $error = 'Ce nom est déjà utilisé!';
+            return redirect()->route('roles.create')->with('dejatiliser', $error);
         } else {
 
             try {

@@ -1,39 +1,49 @@
-
-
 /* styles.css */
 
 /* Couleur de fond pour les menus principaux */
 .navbar {
-  background-color: #2196F3; /* Couleur foncée pour le menu principal */
+  background-color: #2196F3;
+  /* Couleur foncée pour le menu principal */
 
 }
 
 /* Couleur de fond pour les sous-menus */
 .dropdown-menu {
-  background-color: #fff; /* Couleur claire pour les sous-menus */
+  background-color: #fff;
+  /* Couleur claire pour les sous-menus */
 }
 
- .dropdown-item {
-  background-color: #FFECB3; /* Couleur au survol */
+.dropdown-item {
+  background-color: #FFECB3;
+  /* Couleur au survol */
 }
 
 /* Couleur de survol pour les éléments du menu déroulant */
- .dropdown-item:hover {
-  background-color: #2196F3; /* Couleur au survol */
+.dropdown-item:hover {
+  background-color: #2196F3;
+  /* Couleur au survol */
 }
 
 /* Couleur de fond pour l'élément actif dans le menu */
 .dropdown-item.active {
-  background-color: #1A237E; /* Couleur de fond pour l'élément actif */
-  color: #fff; /* Couleur du texte pour l'élément actif */
+  background-color: #1A237E;
+  /* Couleur de fond pour l'élément actif */
+  color: #fff;
+  /* Couleur du texte pour l'élément actif */
 }
 
 /* Couleur de fond pour les éléments du menu déroulant */
 .dropdown-menu {
-  background-color: #f8f9fa; /* Couleur de fond du menu déroulant */
+  background-color: #f8f9fa;
+  /* Couleur de fond du menu déroulant */
 }
 
 /* Couleur de fond pour les éléments du menu déroulant */
 .dropdown-menu.dropdown-item {
-  color: #343a40; /* Couleur du texte pour les éléments du menu déroulant */
+  color: #343a40;
+  /* Couleur du texte pour les éléments du menu déroulant */
+}
+
+.main-color {
+  background: #42C2FF;
 }

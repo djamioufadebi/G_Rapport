@@ -9,10 +9,10 @@ use App\Models\Intervenant;
 use App\Models\Projet;
 use App\Models\Rapport;
 use App\Models\User;
-use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BilanController extends Controller
 {

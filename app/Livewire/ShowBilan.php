@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\Activite;
 use App\Models\Projet;
 use App\Models\Rapport;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ShowBilan extends Component
@@ -22,7 +22,6 @@ class ShowBilan extends Component
     {
         $activite = Activite::find($this->id_activite);
         $rapport = Rapport::where('id_activite', $activite->id)->first();
-        dd($rapport);
         return $rapport;
     }
 

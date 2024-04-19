@@ -1,26 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
-  <div class="row justify-content-center">
-    <div class="col-md-10">
-      <div class="card">
-        <div class="card-header">{{ __('Creation d\'un besoin') }}</div>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card ">
+                    <div class="card-header main-color">{{ __('Creation d\'un besoin') }}</div>
 
-        <div class="card-body">
-          @if (session('status'))
-          <div class="alert alert-success" role="alert">
-            {{ session('status') }}
-          </div>
-          @endif
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
-          <div>
-            @livewire('create-besoin')
-          </div>
+                        <div>
+                            @livewire('create-besoin')
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-      </div>
     </div>
-  </div>
-</div>
 @endsection

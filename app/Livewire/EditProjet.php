@@ -16,7 +16,7 @@ class EditProjet extends Component
     public $lieu;
     public $statut;
     public $id_client;
-    public $id_gestionnaire;
+    public $gestionnaire_id;
 
     public $projets;
     public function mount()
@@ -27,7 +27,7 @@ class EditProjet extends Component
         $this->date_debut = $this->projets->date_debut;
         $this->date_fin_prevue = $this->projets->date_fin_prevue;
         $this->id_client = $this->projets->id_client;
-        $this->id_gestionnaire = $this->projets->id_gestionnaire;
+        $this->gestionnaire_id = $this->projets->gestionnaire_id;
         $this->statut = $this->projets->statut;
     }
 
@@ -44,7 +44,7 @@ class EditProjet extends Component
             'date_fin_prevue' => 'date|required',
             'statut' => 'string',
             'id_client' => 'required',
-            'id_gestionnaire' => 'required'
+            'gestionnaire_id' => 'required'
         ]);
 
         try {
@@ -55,12 +55,13 @@ class EditProjet extends Component
             $projet->date_fin_prevue = $this->date_fin_prevue;
             $projet->statut = $this->statut;
             $projet->id_client = $this->id_client;
-            $projet->id_gestionnaire = $this->id_gestionnaire;
+            $projet->gestionnaire_id = $this->gestionnaire_id;
+            $projet->user_id = auth()->user()->id;
             $projet->save();
 
             return redirect()->Route('projets')->with(
                 'miseajour',
-                'Mise à jour du projet !'
+                'Le projet a été mise à jour avec succès !'
             );
         } catch (\Exception $e) {
             return redirect()->back()->with(

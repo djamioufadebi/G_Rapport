@@ -6,7 +6,7 @@ use App\Models\Notifications;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Projet;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CreateProjet extends Component

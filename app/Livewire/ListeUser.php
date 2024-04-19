@@ -44,7 +44,10 @@ class ListeUser extends Component
     {
         $listeProfil = Profil::all();
 
-        $listeUsers = User::where('nom', 'like', '%' . $this->search . '%')->paginate(10);
+        $word = '%' . $this->search . '%';
+        $listeUsers = User::with(['profil:id,nom'])->where('nom', 'like', $word )
+        ->orWhere('prenom', 'like', $word )
+        ->orWhere('email', 'like', $word )->latest()->paginate(10);
 
         return view('livewire.liste-user', compact('listeUsers', 'listeProfil'));
     }

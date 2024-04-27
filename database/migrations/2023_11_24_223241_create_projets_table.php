@@ -22,9 +22,9 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->
                 references('id')->on('users');
-            $table->unsignedBigInteger('id_gestionnaire');
-            $table->foreign('id_gestionnaire')->
-                references('id')->on('users');
+            $table->unsignedBigInteger('id_gestionnaire')->nullable();
+            //$table->foreign('id_gestionnaire')->
+             //   references('id')->on('users');
 
             $table->unsignedBigInteger('id_client');
             $table->foreign('id_client')->
@@ -47,8 +47,8 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('projets', function (Blueprint $table) {
-            $table->dropForeign(['id_client', 'id_user']);
-            $table->dropForeign(['id_client', 'id_user']);
+            $table->dropForeign(['id_client', 'id_user', 'id_gestionnaire']);
+            $table->dropForeign(['id_client', 'id_user', 'id_gestionnaire']);
         });
 
         Schema::dropIfExists('projets');

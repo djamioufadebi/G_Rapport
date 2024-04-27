@@ -1,102 +1,60 @@
-@extends('layouts.app')
+ @extends('layouts.app')
 
-@section('content')
-    {{--  @include('menu') --}}
+ @section('content')
+     <div class="container pt-3">
 
-    <div class="container pt-3">
+         <div class="row justify-content-between">
 
-        <div class="row justify-content-between">
+             <a href="{{ route('rapports') }}" style="text-decoration: none;">
+                 <div class="card shadow-sm" style="width: 20rem; height: 18rem; border-radius: 10px; overflow: hidden;">
+                     <div class="row g-0">
 
-            {{-- Utilisateurs --}}
-            <div class="col-lg-3 col-3">
-                <a href="{{ route('users') }}" class="text-decoration-none">
-                    <div class="small-box position-relative rounded" style="background: #42C2FF;">
-                        <div class="p-2" style="background: #F1F1F1">
-                            <span class="badge bg-warning rounded-pill 
-                    float-end p-2 m-2 text-dark">
-                                {{ $newsUser }} nouveau(x)</span>
-                            <h3 class="m-2 text-dark">{{ $userCount }}</h3>
-                        </div>
-                        <div class="p-4 rounded">
-                            <p class="text-center mb-0 fw-bold text-dark">EMPLOYES</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                         <img src="{{ asset('images/rapport-dactivite.jpg') }}" class="card-img" alt="Rapport d'activité">
 
-            {{-- Projets --}}
-            <div class="col-lg-3 col-3">
-                <a href="{{ route('projets') }}" class="text-decoration-none">
-                    <div class="small-box position-relative rounded" style="background: #42C2FF;">
-                        <div class="p-2" style="background: #F1F1F1">
-                            <span class="badge bg-warning rounded-pill 
-                    float-end p-2 m-2 text-dark">
-                                {{ $encoursProjectCount }} en cours</span>
-                            <h3 class="m-2 text-dark">{{ $projectCount }}</h3>
-                        </div>
-                        <div class="p-4 rounded">
-                            <p class="text-center mb-0 fw-bold text-dark">PROJETS</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
 
-            {{-- Activités --}}
-            <div class="col-lg-3 col-3">
-                <a href="{{ route('activites') }}" class="text-decoration-none">
-                    <div class="small-box position-relative rounded" style="background: #42C2FF;">
-                        <div class="p-2" style="background: #F1F1F1">
-                            <span class="badge bg-warning rounded-pill 
-                    float-end p-2 m-2 text-dark">
-                                {{ $encoursActivityCount }} en cours</span>
-                            <h3 class="m-2 text-dark">{{ $activityCount }}</h3>
-                        </div>
-                        <div class="p-4 rounded">
-                            <p class="text-center mb-0 fw-bold text-dark">ACTIVITES</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                         <div class="card-body">
+                             <h5 class="card-title text-dark fw-bold mb-3">RAPPORT D'ACTIVITÉ</h5>
+                             <p class="card-text text-secondary">
+                                 Un aperçu rapide de vos activités, des insights essentiels et des données clés.
+                             </p>
+                             <a href="{{ route('rapports') }}" class="btn main-color pt-2">Voir plus</a>
+                         </div>
 
-        </div>
-        <br>
+                     </div>
+                 </div>
+             </a>
 
-        <div class="row pt-3 justify-content-around">
+             <div class="card" style="width: 18rem;">
+                 <img src="{{ asset('images/innov2b.jpg') }}" class="card-img-top" alt="...">
+                 <div class="card-body">
+                     <h5 class="card-title">LES ACTIVITES</h5>
+                     <p class="card-text">
+                         Some quick example text to build on
+                         the card title and make up the bulk of the card's content.
+                     </p>
+                     <a href="{{ route('activites') }}" class="btn main-color">Voir</a>
+                 </div>
+             </div>
 
-            {{-- Rapports --}}
-            <div class="col-lg-3 col-6">
-                <a href="{{ route('rapports') }}" class="text-decoration-none">
-                    <div class="small-box position-relative rounded" style="background: #42C2FF;">
-                        <div class="p-2" style="background: #F1F1F1">
-                            <span class="badge bg-warning rounded-pill 
-                    float-end p-2 m-2 text-dark">
-                                {{ $dayReportCount }} ce jour</span>
-                            <h3 class="m-2 text-dark">{{ $reportCount }}</h3>
-                        </div>
-                        <div class="p-4 rounded">
-                            <p class="text-center mb-0 fw-bold text-dark">RAPPORTS</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
 
-            {{-- Besoins --}}
-            <div class="col-lg-3 col-6">
-                <a href="{{ route('besoins') }}" class="text-decoration-none">
-                    <div class="small-box position-relative rounded" style="background: #42C2FF;">
-                        <div class="p-2" style="background: #F1F1F1">
-                            <span class="badge bg-warning rounded-pill 
-                    float-end p-2 m-2 text-dark">
-                                {{ $dayBesoinCount }} ce jour</span>
-                            <h3 class="m-2 text-dark">{{ $besoinCount }}</h3>
-                        </div>
-                        <div class="p-4 rounded">
-                            <p class="text-center mb-0 fw-bold text-dark">BESOINS</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
 
-        </div>
-    </div>
-@endsection
+             <div class="card" style="width: 18rem;">
+                 <img src="{{ asset('images/innov2b.jpg') }}" class="card-img-top" alt="...">
+                 <div class="card-body">
+                     <h5 class="card-title">LES RAPPORTS</h5>
+                     <p class="card-text">
+                         Some quick example text to build on
+                         the card title and make up the bulk of the card's content.
+                     </p>
+                     <a href="{{ route('rapports') }}" class="btn main-color">Voir</a>
+                 </div>
+             </div>
+         </div>
+         <br>
+
+         <div class="row pt-3 justify-content-around">
+
+
+         </div>
+     </div>
+ @endsection

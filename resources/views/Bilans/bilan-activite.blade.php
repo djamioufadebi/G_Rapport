@@ -17,20 +17,19 @@
 
         table {
             width: 98%;
-            border: 1px solid #ccc;
             border-collapse: collapse;
         }
 
         table tbody tr td {
             padding: 5px;
-            border: 2px solid #77B5FE;
+            border: 1px solid black;
         }
 
         table thead th {
             background: #ccc;
             font-size: 15px;
             padding: 5px;
-            border: 1px solid #77B5FE;
+            border: 1px solid black;
         }
 
         thead {
@@ -91,8 +90,9 @@
             width: 100%;
             background-color: #f8f9fa;
             text-align: right;
-            padding: 10px;
-            font-size: 14px;
+            padding: 8px;
+            padding-top: 0;
+            font-size: 16px;
         }
 
         .table-responsive {
@@ -103,7 +103,7 @@
         .report-detail {
             font-weight: bold;
             margin-bottom: 10px;
-            border-bottom: 5px solid #000000;
+            /* border-bottom: 5px solid #000000; */
             background-attachment: fixed;
             padding-bottom: 10px;
         }

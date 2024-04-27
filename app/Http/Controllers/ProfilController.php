@@ -13,7 +13,7 @@ class ProfilController extends Controller
     public function index()
     {
         if (Gate::allows('viewliste', Profil::class)) {
-            return view('profils.liste');
+            return view('Profils.liste');
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }

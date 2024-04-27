@@ -36,10 +36,10 @@ class Projet extends Model
     }
 
 
-    //public function user()
-    //{
-    //  return $this->belongsTo(User::class)->where('id_user', $this->id_user)->where('id_gestionnaire', $this->id_gestionnaire);
-    //}
+    public function gestionnaire()
+    {
+         return $this->belongsTo(User::class, 'id_gestionnaire');
+    }
 
 
     // un projet a plusieurs rapports

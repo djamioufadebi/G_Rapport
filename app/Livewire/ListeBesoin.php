@@ -14,8 +14,14 @@ class ListeBesoin extends Component
 {
 
     use WithPagination;
+
+
     public $statut;
     public $search;
+
+    // Le code pour spécifier qu'on veut utiliser le theme de bootstrap pour la pagination
+    protected $paginationTheme = 'bootstrap';
+
 
     public function s()
     {

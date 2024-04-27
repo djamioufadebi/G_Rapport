@@ -26,7 +26,7 @@
 
             <div class="card-body">
                 <div class=" row d-flex justify-content-between mb-3">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Nom </th>
@@ -46,14 +46,14 @@
                                         <a href="{{ route('profils.show', $profil->id) }}"
                                             class="btn btn-sm btn-info"><i class="fas fa-eye"></i> </a>
                                         <!-- Un bouton pour modifier le profil -->
-                                        <a href="{{ route('profils.edit', $profil->id) }}"
-                                            class="btn btn-sm btn-warning"><i class="fas fa-pen"></i></a>
+                                        {{-- <a href="{{ route('profils.edit', $profil->id) }}"
+                                            class="btn btn-sm btn-warning"><i class="fas fa-pen"></i></a> --}}
 
                                         <!-- Un bouton pour supprimer le profil -->
-                                        <button type="submit" data-bs-toggle="modal"
+                                        {{-- <button type="submit" data-bs-toggle="modal"
                                             data-bs-target="#confirmationModal" class="btn btn-sm btn-danger"><i
                                                 class="fas fa-trash-alt"></i>
-                                        </button>
+                                        </button> --}}
                                     </td>
                                 </tr>
 
@@ -103,7 +103,7 @@
                     </table>
                     <!-- pagination : links -->
                     <div class=" my-1">
-                        {{ $profils->links('Pagination.bootstrap-pagination') }}
+                        {{ $profils->links() }}
                     </div>
 
 

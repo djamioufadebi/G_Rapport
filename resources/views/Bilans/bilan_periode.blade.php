@@ -20,26 +20,27 @@
             border-collapse: collapse;
         }
 
-        td th {
-            text-align: right;
-        }
+
 
         .taux_nombre {
             text-align: center;
         }
 
-        tbody tr td {
-            min-width: 50px;
-            max-width: 200px;
+        table {
+            width: 98%;
+            border-collapse: collapse;
+        }
+
+        table tbody tr td {
             padding: 5px;
-            border: 2px solid #77B5FE;
+            border: 1px solid black;
         }
 
         table thead th {
             background: #ccc;
             font-size: 15px;
             padding: 5px;
-            border: 2px solid #77B5FE;
+            border: 1px solid black;
         }
 
         .container-fluid {

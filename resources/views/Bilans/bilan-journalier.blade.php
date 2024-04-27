@@ -19,30 +19,28 @@
 
         thead {
             display: table-header-group;
-            background: #ccc;
-            font-size: 15px;
-        }
 
-        td {
-            text-align: right;
         }
 
         .taux_nombre {
             text-align: center;
         }
 
-        tbody tr td {
-            min-width: 50px;
-            max-width: 200px;
+        table {
+            width: 98%;
+            border-collapse: collapse;
+        }
+
+        table tbody tr td {
             padding: 5px;
-            border: 2px solid #42C2FF;
+            border: 1px solid black;
         }
 
         table thead th {
-
+            background: #ccc;
             font-size: 15px;
             padding: 5px;
-            border: 2px solid #42C2FF;
+            border: 1px solid black;
         }
 
         th {
@@ -136,7 +134,7 @@
 
         .report-detail {
             margin-bottom: 10px;
-            border-bottom: 5px solid #ccc;
+            border-bottom: 1px solid black;
             padding-bottom: 10px;
         }
 
@@ -153,7 +151,7 @@
             background-color: #f8f9fa;
             /* couleur de fond, ajustez selon vos préférences */
             text-align: right;
-            padding: 5px;
+            padding: 8px;
         }
     </style>
 </head>

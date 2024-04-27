@@ -14,6 +14,9 @@ class ListeProfil extends Component
 
     use WithPagination;
 
+    // Le code pour spécifier qu'on veut utiliser le theme de bootstrap pour la pagination
+    protected $paginationTheme = 'bootstrap';
+
     // champs pour la selection d'un profil
     public $selectedItemId;
     public $search;

@@ -78,7 +78,7 @@
 
         <div class="card">
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">Libellé </th>
@@ -110,33 +110,43 @@
                                             class="btn btn-sm badge bg-danger">{{ $besoin->statut }}</a>
                                     @endif
                                 </td>
-                                <td>
-                                    <!-- Par exemple, un lien pour afficher le besoins détaillé -->
-                                    <a href="{{ route('besoins.show', $besoin->id) }}" class="btn btn-sm btn-info"><i
-                                            class="fas fa-eye"></i> </a>
-                                    <!-- Un bouton pour modifier le besoin -->
-                                    <!-- Seul celui a fait le besoin peut le modifier -->
-                                    @if (Auth::user()->id === $besoin->user_id)
-                                        <a href="{{ route('besoins.edit', $besoin->id) }}"
-                                            class="btn btn-sm btn-warning"><i class="fas fa-pen"></i>
-                                        </a>
-                                    @endif
 
-                                    @if (Auth::user()->id_profil == 1 || Auth::user()->id === $besoin->user_id)
-                                        <!-- Un bouton pour supprimer le rapport -->
-                                        <button type="submit" data-bs-toggle="modal"
-                                            data-bs-target="#confirmationModal{{ $besoin->id }}"
-                                            class="btn btn-sm btn-danger" style="display: block;"><i
-                                                class="fas fa-trash-alt"></i>
+                                <td class="text-center">
+                                    <div class="btn-group dropdown " style="text-align: center; ">
+                                        <button type="button" class="btn btn-sm main-color">Action</button>
+                                        <button type="button"
+                                            class="btn btn-sm main-color dropdown-toggle dropdown-toggle-split"
+                                            data-bs-toggle="dropdown" aria-expanded="true">
+                                            <span class="visually-hidden">Actions</span>
                                         </button>
-                                    @else
-                                        <button type="submit" data-bs-toggle="modal"
-                                            data-bs-target="#confirmationModal{{ $besoin->id }}"
-                                            class="btn btn-sm btn-danger" style="display: none;"><i
-                                                class="fas fa-trash-alt"></i>
-                                        </button>
-                                    @endif
+                                        <ul class="dropdown-menu main-color">
+                                            <li>
+                                                <a href="{{ route('besoins.show', $besoin->id) }}"
+                                                    class="btn btn-sm btn-info"><i class="fas fa-eye"></i> Voir
+                                                    détails</a>
+                                            </li>
+                                            @if (Auth::user()->id === $besoin->user_id)
+                                                <li>
+                                                    <a href="{{ route('besoins.edit', $besoin->id) }}"
+                                                        class="btn btn-sm btn-warning"><i class="fas fa-pen"></i>
+                                                        Modifier
+                                                    </a>
+                                                </li>
+                                            @endif
 
+                                            <li>
+                                                @if (Auth::user()->id_profil == 1 || Auth::user()->id === $besoin->user_id)
+                                                    <!-- Un bouton pour supprimer le rapport -->
+                                                    <a data-bs-toggle="modal"
+                                                        data-bs-target="#confirmationModal{{ $besoin->id }}"
+                                                        class="btn btn-sm btn-danger"><i class="fas fa-trash-alt">
+                                                        </i>Supprimer
+                                                    </a>
+                                                @endif
+
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
 
                                 @include('modals.modals-status.modal-besoin-statut')
@@ -177,46 +187,9 @@
                 </table>
                 <!-- Lien de pagination -->
                 <div class="container my-4">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-end">
-                            {{-- Lien vers la page précédente --}}
-                            @if ($listeBesoins->previousPageUrl())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $listeBesoins->previousPageUrl() }}"
-                                        aria-label="Précédente">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-hidden="true">&laquo;</span>
-                                </li>
-                            @endif
-
-                            {{-- Affichage des numéros de page --}}
-                            @for ($i = 1; $i <= $listeBesoins->lastPage(); $i++)
-                                <li class="page-item {{ $i == $listeBesoins->currentPage() ? 'active' : '' }}">
-                                    <a class="page-link" href="{{ $listeBesoins->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-
-                            {{-- Lien vers la page suivante --}}
-                            @if ($listeBesoins->nextPageUrl())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $listeBesoins->nextPageUrl() }}"
-                                        aria-label="Suivante">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-hidden="true">&raquo;</span>
-                                </li>
-                            @endif
-                        </ul>
-                    </nav>
+                    {{ $listeBesoins->links() }}
                 </div>
-                <!-- Fin du lien  -->
+
 
             </div>
         </div>

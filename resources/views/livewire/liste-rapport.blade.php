@@ -75,7 +75,7 @@
 
         <div class="card">
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">Libellé </th>
@@ -204,44 +204,7 @@
                 </table>
                 <!-- Lien de pagination -->
                 <div class="container my-4">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-end">
-                            {{-- Lien vers la page précédente --}}
-                            @if ($listeRapport->previousPageUrl())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $listeRapport->previousPageUrl() }}"
-                                        aria-label="Précédente">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-hidden="true">&laquo;</span>
-                                </li>
-                            @endif
-
-                            {{-- Affichage des numéros de page --}}
-                            @for ($i = 1; $i <= $listeRapport->lastPage(); $i++)
-                                <li class="page-item {{ $i == $listeRapport->currentPage() ? 'active' : '' }}">
-                                    <a class="page-link" href="{{ $listeRapport->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-
-                            {{-- Lien vers la page suivante --}}
-                            @if ($listeRapport->nextPageUrl())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $listeRapport->nextPageUrl() }}"
-                                        aria-label="Suivante">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-hidden="true">&raquo;</span>
-                                </li>
-                            @endif
-                        </ul>
-                    </nav>
+                    {{ $listeRapport->links() }}
                 </div>
                 <!-- Fin du lien  -->
 

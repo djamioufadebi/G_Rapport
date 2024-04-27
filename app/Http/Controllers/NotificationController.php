@@ -8,7 +8,7 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        return view('notifications.liste');
+        return view('Notifications.liste');
     }
 
 }

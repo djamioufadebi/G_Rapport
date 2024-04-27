@@ -70,7 +70,7 @@
         <div class="card">
             <!-- <div class="card-header">Liste des articles</div> -->
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered ">
                     <thead>
                         <tr>
                             <th scope="col">Nom de l'activité</th>
@@ -188,49 +188,11 @@
 
                 <!-- Lien de pagination -->
                 <div class="container my-4">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-end">
-                            {{-- Lien vers la page précédente --}}
-                            @if ($listeActivites->previousPageUrl())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $listeActivites->previousPageUrl() }}"
-                                        aria-label="Précédente">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-hidden="true">&laquo;</span>
-                                </li>
-                            @endif
-
-                            {{-- Affichage des numéros de page --}}
-                            @for ($i = 1; $i <= $listeActivites->lastPage(); $i++)
-                                <li class="page-item {{ $i == $listeActivites->currentPage() ? 'active' : '' }}">
-                                    <a class="page-link"
-                                        href="{{ $listeActivites->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-
-                            {{-- Lien vers la page suivante --}}
-                            @if ($listeActivites->nextPageUrl())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $listeActivites->nextPageUrl() }}"
-                                        aria-label="Suivante">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-hidden="true">&raquo;</span>
-                                </li>
-                            @endif
-                        </ul>
-                    </nav>
+                    {{ $listeActivites->links() }}
                 </div>
                 <!-- Fin du lien  -->
 
             </div>
         </div>
-        </di v>
     </div>
+</div>

@@ -42,22 +42,22 @@
             @if (Auth::user()->id_profil == 1)
                 <li class="nav-item dropdown" onmouseover="showDropdown(this)">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="true">
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Administration
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <!-- Sous-menu Administration -->
                         <li><a class="dropdown-item" href="{{ route('profils') }}">Profils</a></li>
-                        <!-- <li><a class="dropdown-item" href="{{ route('roles') }}">Rôles</a></li> -->
+
                         <li><a class="dropdown-item" href="{{ route('users') }}">Utilisateurs</a></li>
                     </ul>
                 </li>
             @endif
 
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" onmouseover="showDropdown(this)">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="true">
-                    Gestion de Projets
+                    Gestion des projets
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <!-- Sous-menu Administration -->
@@ -71,7 +71,7 @@
             </li>
 
 
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" onmouseover="showDropdown(this)">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Partenaires
@@ -79,7 +79,7 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <!-- Sous-menu Administration -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('clients') }}">{{ __('Nos Clients') }}</a>
+                        <a class="nav-link" href="{{ route('clients') }}">{{ __('Clients') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('intervenants') }}">{{ __('Intervenants') }}</a>
@@ -87,10 +87,10 @@
                 </ul>
             </li>
 
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" onmouseover="showDropdown(this)">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    Gestion et suivi
+                    Gestion et Suivi
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <!-- Sous-menu Administration -->
@@ -116,8 +116,7 @@
                 @else
                     badge-danger @endif
                  badge-blink
-            @endif
-        ">
+            @endif ">
                         {{ $CountNotReadNotifications }}</span>
                 </a>
             </li>

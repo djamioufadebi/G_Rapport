@@ -13,8 +13,10 @@ class ShowProfils extends Component
         $profils = $this->profils;
 
         // recuperer les utlisteur ayant le profil actif
-        $Users = User::where('id_profil', $profils->id);
+        $usersHavingProfil = User::where('id_profil', $profils->id)->get();
 
-        return view('livewire.show-profils', compact('profils', 'Users'));
+
+        return view('livewire.show-profils', compact('profils', 'usersHavingProfil'));
+
     }
 }

@@ -15,7 +15,7 @@ class ProjetController extends Controller
     public function index()
     {
         if (Gate::allows('viewliste', Projet::class)) {
-            return view('projets.liste');
+            return view('Projets.liste');
         } else {
             return view('composants.redirection-new-user'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -24,7 +24,7 @@ class ProjetController extends Controller
     public function create()
     {
         if (Gate::allows('create', Projet::class)) {
-            return view('projets.create');
+            return view('Projets.create');
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -33,7 +33,7 @@ class ProjetController extends Controller
     public function edit(Projet $projet)
     {
         if (Gate::allows('edit', $projet)) {
-            return view('projets.edit', compact('projet'));
+            return view('Projets.edit', compact('projet'));
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -42,7 +42,7 @@ class ProjetController extends Controller
     public function show(Projet $projet)
     {
         if (Gate::allows('view', $projet)) {
-            return view('projets.show', compact('projet'));
+            return view('Projets.show', compact('projet'));
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }

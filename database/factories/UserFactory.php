@@ -27,10 +27,8 @@ class UserFactory extends Factory
             'contact' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            //'password' => static::$password ??= Hash::make('password'),
-            'password' => Hash::make('12345678'),
-            // pour definir un factory pour le champ étranger:
-            //recupère un id_profil aléatoire depuis la table Profils
+            'password' => Hash::make('password'),
+
             'id_profil' => function () {
                 return Profil::inRandomOrder()->first()->id;
             },

@@ -31,6 +31,9 @@ class ListeProjet extends Component
 
     public $selectedGestionnaireId;
 
+    // Le code pour spécifier qu'on veut utiliser le theme de bootstrap pour la pagination
+    protected $paginationTheme = 'bootstrap';
+
     public function NommerGestionnaire($id)
     {
 

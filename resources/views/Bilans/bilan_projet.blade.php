@@ -16,26 +16,25 @@
             padding: 5px;
         }
 
-        table {
-            width: 98%;
-            border: 1px solid #ccc;
-            border-collapse: collapse;
-        }
-
         .taux_nombre {
             text-align: center;
         }
 
+        table {
+            width: 98%;
+            border-collapse: collapse;
+        }
+
         table tbody tr td {
             padding: 5px;
-            border: 2px solid #77B5FE;
+            border: 1px solid black;
         }
 
         table thead th {
             background: #ccc;
             font-size: 15px;
             padding: 5px;
-            border: 1px solid #77B5FE;
+            border: 1px solid black;
         }
 
         thead {
@@ -103,7 +102,7 @@
             background-color: #f8f9fa;
             /* couleur de fond, ajustez selon vos préférences */
             text-align: right;
-            padding: 10px;
+            padding: 8px;
         }
     </style>
 </head>

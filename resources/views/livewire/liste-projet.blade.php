@@ -96,7 +96,7 @@
 
         <div class="card">
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">Libellé </th>
@@ -248,43 +248,7 @@
 
                 <!-- Lien de pagination -->
                 <div class="container my-4">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-end">
-                            {{-- Lien vers la page précédente --}}
-                            @if ($projets->previousPageUrl())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $projets->previousPageUrl() }}"
-                                        aria-label="Précédente">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-hidden="true">&laquo;</span>
-                                </li>
-                            @endif
-
-                            {{-- Affichage des numéros de page --}}
-                            @for ($i = 1; $i <= $projets->lastPage(); $i++)
-                                <li class="page-item {{ $i == $projets->currentPage() ? 'active' : '' }}">
-                                    <a class="page-link" href="{{ $projets->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-
-                            {{-- Lien vers la page suivante --}}
-                            @if ($projets->nextPageUrl())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $projets->nextPageUrl() }}" aria-label="Suivante">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-hidden="true">&raquo;</span>
-                                </li>
-                            @endif
-                        </ul>
-                    </nav>
+                    {{ $projets->links() }}
                 </div>
                 <!-- Fin du lien  -->
 

@@ -16,6 +16,9 @@ class ListeIntervenant extends Component
 
     public $search;
 
+    // Le code pour spécifier qu'on veut utiliser le theme de bootstrap pour la pagination
+    protected $paginationTheme = 'bootstrap';
+
     public function s () {}
 
     // fonction pour supprimer un Intervenant avec une confirmation avant de suppression

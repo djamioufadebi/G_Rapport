@@ -28,9 +28,15 @@ class ProjetFactory extends Factory
             'date_fin_prevue' => $dateFin,
             'fichier' => $this->faker->word,
             'statut' => $this->faker->randomElement(['en attente', 'en cours', 'terminé', 'arrêté']),
+
             'id_user' => function () {
                 return User::inRandomOrder()->first()->id;
             },
+
+            'id_gestionnaire' => function () {
+         return User::where('id_profil', 2)->inRandomOrder()->first()->id;
+         },
+
             'id_client' => function () {
                 return Client::inRandomOrder()->first()->id;
             },

@@ -17,7 +17,7 @@ class BesoinController extends Controller
     public function index()
     {
         if (Gate::allows('viewliste', Besoin::class)) {
-            return view('besoins.liste');
+            return view('Besoins.liste');
         } else {
             return view('composants.redirection-new-user'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -25,13 +25,13 @@ class BesoinController extends Controller
 
     public function create()
     {
-        return view('besoins.create');
+        return view('Besoins.create');
     }
 
     public function edit(Besoin $besoin)
     {
         if (Gate::allows('edit', $besoin)) {
-            return view('besoins.edit', compact('besoin'));
+            return view('Besoins.edit', compact('besoin'));
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -39,11 +39,15 @@ class BesoinController extends Controller
 
     public function show(Besoin $besoin)
     {
+
         if (Gate::allows('view', $besoin)) {
-            return view('besoins.show', compact('besoin'));
-        } else {
+            return view('Besoins.show', compact('besoin'));
+        } 
+        else 
+        {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
+
     }
     public function pdfBesoin()
     {
@@ -55,12 +59,12 @@ class BesoinController extends Controller
 
             $pdf = Pdf::loadView('PDF.besoins_pdf', compact('besoins', 'dateToday'));
             return $pdf->stream();
-        } else {
+        } else 
+        {
             // recuperer les besoins de l'utilisateur connecté
             $besoins = Besoin::where('user_id', $user->id)->get();
             $pdf = Pdf::loadView('PDF.besoins_pdf', compact('besoins', 'dateToday'));
             return $pdf->stream();
-
         }
     }
 

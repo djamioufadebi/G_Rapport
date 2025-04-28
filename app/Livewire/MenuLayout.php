@@ -12,6 +12,7 @@ class MenuLayout extends Component
     {
         $user = Auth::user();
 
+        
         // Les notifications
         $CountNotReadNotifications = Notifications::where('read', false)
         ->leftJoin('rapports', 'notifications.rapport_id', '=', 'rapports.id')//Notifications concernant les rapports de l'utilisateur connecter

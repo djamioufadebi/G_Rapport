@@ -22,14 +22,13 @@ class CreateClient extends Component
             'email' => 'string|required',
             'contact' => 'integer|required|min:8',
         ]);
-
         // On recupère les Clients existants avec le nom et le prenom
         $query = Client::where('nom', $this->nom)->orwhere('email', $this->email)->get();
         // On verifie si l'Client existe déjà dans la base de données avec le nom et le prenom
         if (count($query) > 0) {
 
-            $this->error = 'Ce Client existe déjà!';
-            return redirect()->route('Clients.create')->with('dejatiliser', $this->error);
+            $error = 'Ce Client existe déjà!';
+            return redirect()->route('Clients.create')->with('dejatiliser', $error);
         } else {
 
             try {

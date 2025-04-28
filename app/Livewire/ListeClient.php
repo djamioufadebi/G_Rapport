@@ -16,6 +16,9 @@ class ListeClient extends Component
 
     public $search;
 
+    // Le code pour spécifier qu'on veut utiliser le theme de bootstrap pour la pagination
+    protected $paginationTheme = 'bootstrap';
+
     public function s()
     {
     }
@@ -56,7 +59,13 @@ class ListeClient extends Component
 
     public function render()
     {
-        $clients = Client::where('nom', 'like', '%' . $this->search . '%')->paginate(10);
+        $word =  '%' . $this->search . '%';
+        $clients = Client::where('nom', 'like', $word)
+        ->orWhere('adresse', 'like', $word )
+        ->orWhere('email', 'like', $word )
+        ->orWhere('contact', 'like', $word )->latest()->paginate(10);
+        
         return view('livewire.liste-client', compact('clients'));
     }
+    
 }

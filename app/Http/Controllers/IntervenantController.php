@@ -7,10 +7,11 @@ use App\Models\Projet;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\Intervenant;
-use Auth;
-use Gate;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class IntervenantController extends Controller
 {
@@ -18,7 +19,7 @@ class IntervenantController extends Controller
     public function index()
     {
         if (Gate::allows('viewliste', Intervenant::class)) {
-            return view('intervenants.liste');
+            return view('Intervenants.liste');
         } else {
             return view('composants.redirection-new-user'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -27,7 +28,7 @@ class IntervenantController extends Controller
     public function create()
     {
         if (Gate::allows('create', Intervenant::class)) {
-            return view('intervenants.create');
+            return view('Intervenants.create');
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -36,7 +37,7 @@ class IntervenantController extends Controller
     public function edit(Intervenant $intervenant)
     {
         if (Gate::allows('edit', $intervenant)) {
-            return view('intervenants.edit', compact('intervenant'));
+            return view('Intervenants.edit', compact('intervenant'));
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -45,7 +46,7 @@ class IntervenantController extends Controller
     public function show(Intervenant $intervenant)
     {
         if (Gate::allows('view', $intervenant)) {
-            return view('intervenants.show', compact('intervenant'));
+            return view('Intervenants.show', compact('intervenant'));
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }

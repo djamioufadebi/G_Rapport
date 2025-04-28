@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
-use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Gate;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\WithPagination;
 
 class UserController extends Controller
@@ -18,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         if (Gate::allows('viewliste', User::class)) {
-            return view('utilisateurs.liste');
+            return view('Utilisateurs.liste');
         } else {
             return view('composants.acces_refuser');
         }
@@ -26,17 +27,17 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('utilisateurs.create');
+        return view('Utilisateurs.create');
     }
 
     public function edit(User $user)
     {
-        return view('utilisateurs.edit', compact('user'));
+        return view('Utilisateurs.edit', compact('user'));
     }
 
     public function show(User $user)
     {
-        return view('utilisateurs.show', compact('user'));
+        return view('Utilisateurs.show', compact('user'));
     }
 
     public function generatepdf()

@@ -9,6 +9,10 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Styles personnalisés -->
     <style>
+<<<<<<< HEAD
+=======
+        /* Ajoutez vos styles CSS personnalisés ici */
+>>>>>>> a6040aeff8f947039ecbff5d3e7be7beb83a58fa
         body {
             font-family: arial, sans-serif;
             letter-spacing: 0.5px;
@@ -16,6 +20,7 @@
             padding: 5px;
         }
 
+<<<<<<< HEAD
         table {
             width: 98%;
             border: 1px solid #ccc;
@@ -39,13 +44,36 @@
             max-width: 200px;
             padding: 5px;
             border: 2px solid #77B5FE;
+=======
+        thead {
+            display: table-header-group;
+
+        }
+
+        .taux_nombre {
+            text-align: center;
+        }
+
+        table {
+            width: 98%;
+            border-collapse: collapse;
+        }
+
+        table tbody tr td {
+            padding: 5px;
+            border: 1px solid black;
+>>>>>>> a6040aeff8f947039ecbff5d3e7be7beb83a58fa
         }
 
         table thead th {
             background: #ccc;
             font-size: 15px;
             padding: 5px;
+<<<<<<< HEAD
             border: 1px solid #77B5FE;
+=======
+            border: 1px solid black;
+>>>>>>> a6040aeff8f947039ecbff5d3e7be7beb83a58fa
         }
 
         th {
@@ -139,7 +167,11 @@
 
         .report-detail {
             margin-bottom: 10px;
+<<<<<<< HEAD
             border-bottom: 5px solid #ccc;
+=======
+            border-bottom: 1px solid black;
+>>>>>>> a6040aeff8f947039ecbff5d3e7be7beb83a58fa
             padding-bottom: 10px;
         }
 
@@ -156,7 +188,11 @@
             background-color: #f8f9fa;
             /* couleur de fond, ajustez selon vos préférences */
             text-align: right;
+<<<<<<< HEAD
             padding: 5px;
+=======
+            padding: 8px;
+>>>>>>> a6040aeff8f947039ecbff5d3e7be7beb83a58fa
         }
     </style>
 </head>
@@ -217,11 +253,19 @@
         <!-- Fin module Projets en cours -->
 
 
+<<<<<<< HEAD
 
         <div class="module">
             <h2 class="module-title">Rapports du jour</h2>
 
             @if (count($rapportsCreesAujourdhui) > 0)
+=======
+        @if (count($rapportsCreesAujourdhui) > 0)
+            <div class="module">
+                <h2 class="module-title">Rapports du jour</h2>
+
+
+>>>>>>> a6040aeff8f947039ecbff5d3e7be7beb83a58fa
                 @foreach ($rapportsCreesAujourdhui as $rapport)
                     <table class="table table-bordered">
                         <thead>
@@ -331,6 +375,7 @@
                     <br>
                 @endforeach
                 <br>
+<<<<<<< HEAD
             @else
                 <p>Aucun rapport n'a été fait aujourd'hui.</p>
             @endif
@@ -343,6 +388,17 @@
         <!-- Autre module projetEnAttenteAjourdhui -->
         <div class="module">
             <h1 class="module-title">Activités</h1>
+=======
+            </div>
+        @else
+            <p>Aucun rapport n'a été fait aujourd'hui.</p>
+        @endif
+
+        <hr>
+        <H2>PREVISION</H2>
+
+        <div class="module">
+>>>>>>> a6040aeff8f947039ecbff5d3e7be7beb83a58fa
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="module-title">Activité en attentes</h2>

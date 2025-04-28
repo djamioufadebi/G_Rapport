@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profil;
-use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
 
 class ProfilController extends Controller
 {
     public function index()
     {
         if (Gate::allows('viewliste', Profil::class)) {
-            return view('profils.liste');
+            return view('Profils.liste');
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }

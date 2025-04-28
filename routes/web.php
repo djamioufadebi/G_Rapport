@@ -16,6 +16,7 @@ use App\Http\Controllers\RapportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfilController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -158,20 +159,13 @@ route::middleware('auth')->group(function () {
     );
 
 
-    Route::prefix('notifications')->group(
-        function () {
-            Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
-        }
-    );
-
-
     Route::prefix('bilans')->group(
         function () {
             Route::get('/bilan', [BilanController::class, 'index'])->name('bilans');
             Route::get('/bilan-journalier', [BilanController::class, 'generateBilan'])->name('bilans.pdf');
-            Route::post('/bilan-activite', [BilanController::class, 'generateActivitepdfBilan'])->name('bilans.activite');
-            Route::post('/bilan-projet', [BilanController::class, 'generateProjetBilan'])->name('bilans.projets');
-            Route::post('/bilan-periode', [BilanController::class, 'generatePeriodeBilan'])->name('bilans.periode');
+            Route::get('/bilan-activite', [BilanController::class, 'generateActivitepdfBilan'])->name('bilans.activite');
+            Route::get('/bilan-projet', [BilanController::class, 'generateProjetBilan'])->name('bilans.projets');
+            Route::get('/bilan-periode', [BilanController::class, 'generatePeriodeBilan'])->name('bilans.periode');
         }
     );
 

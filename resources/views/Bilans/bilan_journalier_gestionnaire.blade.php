@@ -2,462 +2,452 @@
 <html lang="fr">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bilan du jour</title>
-  <!-- Intégration de Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Styles personnalisés -->
-  <style>
-  /* Ajoutez vos styles CSS personnalisés ici */
-  body {
-    font-family: arial, sans-serif;
-    letter-spacing: 0.5px;
-    margin: 5px;
-    padding: 5px;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilan du jour</title>
+    <!-- Intégration de Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Styles personnalisés -->
+    <style>
+        /* Ajoutez vos styles CSS personnalisés ici */
+        body {
+            font-family: arial, sans-serif;
+            letter-spacing: 0.5px;
+            margin: 5px;
+            padding: 5px;
+        }
 
-  table {
-    width: 98%;
-    border: 1px solid #ccc;
-    border-collapse: collapse;
-  }
+        .taux_nombre {
+            text-align: center;
+        }
 
-  td th {
-    text-align: right;
-  }
+        table {
+            width: 98%;
+            border-collapse: collapse;
+        }
 
-  .taux_nombre {
-    text-align: center;
-  }
+        table tbody tr td {
+            padding: 5px;
+            border: 1px solid black;
+        }
 
-  table tbody tr td {
-    min-width: 50px;
-    max-width: 200px;
-    padding: 5px;
-    border: 2px solid #77B5FE;
-  }
+        table thead th {
+            background: #ccc;
+            font-size: 15px;
+            padding: 5px;
+            border: 1px solid black;
+        }
 
-  table thead th {
-    background: #ccc;
-    font-size: 15px;
-    padding: 5px;
-    border: 1px solid #77B5FE;
-  }
+        .container-fluid {
+            padding: 10px;
+        }
 
-  thead {
-    display: table-header-group;
-  }
+        .module {
+            margin-bottom: 10px;
+        }
 
-  .container-fluid {
-    padding: 10px;
-  }
+        .module-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: left;
+        }
 
-  .module {
-    margin-bottom: 10px;
-  }
+        h2 {
+            text-align: center;
+            text-decoration: underline;
+        }
 
-  .module-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    text-align: left;
-  }
+        h3 {
+            font-size: 5px;
+            font-weight: italic;
+            margin-bottom: 5px;
+            /* text-decoration: underline; */
+        }
 
-  h2 {
-    text-align: center;
-    text-decoration: underline;
-  }
+        .company-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2px;
+        }
 
-  h3 {
-    font-size: 5px;
-    font-weight: italic;
-    margin-bottom: 5px;
-    /* text-decoration: underline; */
-  }
+        .company-logo {
+            max-height: 70px;
+            margin-right: 50px;
+        }
 
-  .company-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2px;
-  }
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
 
-  .company-logo {
-    max-height: 70px;
-    margin-right: 50px;
-  }
+            /* Couleur bleue, vous pouvez ajuster selon vos préférences */
+        }
 
-  .company-name {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 10px;
+        .separator {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+            /* Couleur grise, vous pouvez ajuster selon vos préférences */
+        }
 
-    /* Couleur bleue, vous pouvez ajuster selon vos préférences */
-  }
+        .document-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: underline;
+            color: #333;
+            text-align: right;
+            /* Couleur grise, vous pouvez ajuster selon vos préférences */
+        }
 
-  .separator {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 10px;
-    color: #333;
-    /* Couleur grise, vous pouvez ajuster selon vos préférences */
-  }
+        hr {
+            border: 1px solid black;
+            /* Couleur bleue pour le hr, ajustez selon vos préférences */
+        }
 
-  .document-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: underline;
-    color: #333;
-    text-align: right;
-    /* Couleur grise, vous pouvez ajuster selon vos préférences */
-  }
+        .report-detail {
+            margin-bottom: 10px;
+            border-bottom: 5px solid #ccc;
+            padding-bottom: 10px;
+        }
 
-  hr {
-    border: 1px solid black;
-    /* Couleur bleue pour le hr, ajustez selon vos préférences */
-  }
+        .report-detail strong {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-  .report-detail {
-    margin-bottom: 10px;
-    border-bottom: 5px solid #ccc;
-    padding-bottom: 10px;
-  }
-
-  .report-detail strong {
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #f8f9fa;
-    /* couleur de fond, ajustez selon vos préférences */
-    text-align: right;
-    padding: 5px;
-  }
-  </style>
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            /* couleur de fond, ajustez selon vos préférences */
+            text-align: right;
+            padding: 5px;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="container-fluid">
+    <div class="container-fluid">
 
-    <!-- En-tête de la société et du document -->
-    <div class="company-header">
-      <div>
-        <img src="{{ public_path('images/innov2b.jpg') }}" alt="Logo de la société" class="company-logo">
-        <span class="module-title text-center">INNOVATION BULDING BUSINESS SAS</span>
-      </div>
-      <hr>
-      <h1 class="document-title">Bilan du {{ $dateToday->format('d-m-Y')}}</h1>
-    </div>
-    <!-- Fin de l'en-tête -->
-
-    <!-- module Projets en cours -->
-    <div class="module">
-      <div class="row">
-        <div class="col-md-6">
-          <h2 class="module-title">Projets en cours</h2>
-          <br>
-          <!-- Tableau pour afficher les détails des projets en cours -->
-          @if (count($projetsEnCoursAujourdhui) > 0)
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <!-- En-têtes du tableau -->
-              <thead>
-                <tr>
-                  <th scope="col">Libellé</th>
-                  <th scope="col">Lieu</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Nom Gestionnaire</th>
-                  <th scope="col">Date début</th>
-                  <th scope="col">Date fin</th>
-                  <th scope="col">Statut</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($projetsEnCoursAujourdhui as $projet)
-                <tr>
-                  <td>{{ $projet->libelle }}</td>
-                  <td>{{ $projet->lieu }}</td>
-                  <td>{{ $projet->description }}</td>
-                  <td>{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</td>
-                  <td>{{ $projet->date_debut }}</td>
-                  <td>{{ $projet->date_fin_prevue }}</td>
-                  <td>{{ $projet->statut }}</td>
-                </tr>
-                @endforeach
-
-              </tbody>
-            </table>
-          </div>
-          @else
-          <p>Aucun projet en cours pour le moment.</p>
-          @endif
+        <!-- En-tête de la société et du document -->
+        <div class="company-header">
+            <div>
+                <img src="{{ public_path('images/innov2b.jpg') }}" alt="Logo de la société" class="company-logo">
+                <span class="module-title text-center">INNOVATION BULDING BUSINESS SAS</span>
+            </div>
+            <hr>
+            <h1 class="document-title">Bilan du {{ $dateToday->format('d-m-Y') }}</h1>
         </div>
-      </div>
-    </div>
-    <!-- Fin module Projets en cours -->
+        <!-- Fin de l'en-tête -->
 
-    <!-- Module pour activités en cours du jour -->
-    <div class="module">
-      <h2 class="module-title">Activités en cours</h2>
-      <!-- Tableau pour afficher les détails des activités -->
-      @if (count($activitesEnCours) > 0)
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <!-- En-têtes du tableau -->
-          <thead>
-            <tr>
-              <th scope="col">Nom</th>
-              <th scope="col">Description</th>
-              <th scope="col">Projet</th>
-              <th scope="col">Date début</th>
-              <th scope="col">Date fin</th>
-              <th scope="col">Taux de réalisation</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($activitesEnCours as $activite)
-            <tr>
-              <td>{{ $activite->nom }}</td>
-              <td>{{ $activite->description }}</td>
-              <td>{{ $activite->projet->libelle }}</td>
-              <td>{{ $activite->date_debut }}</td>
-              <td>{{ $activite->date_fin }}</td>
-              <td class="taux_nombre ">{{ $activite->taux_de_realisation }}</td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-      @else
-      <p>Aucune activité en cours pour le moment.</p>
-      @endif
-    </div>
-    <!-- Fin module -->
+        <!-- module Projets en cours -->
+        <div class="module">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="module-title">Projets en cours</h2>
+                    <br>
+                    <!-- Tableau pour afficher les détails des projets en cours -->
+                    @if (count($projetsEnCoursAujourdhui) > 0)
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <!-- En-têtes du tableau -->
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Libellé</th>
+                                        <th scope="col">Lieu</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Nom Gestionnaire</th>
+                                        <th scope="col">Date début</th>
+                                        <th scope="col">Date fin</th>
+                                        <th scope="col">Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($projetsEnCoursAujourdhui as $projet)
+                                        <tr>
+                                            <td>{{ $projet->libelle }}</td>
+                                            <td>{{ $projet->lieu }}</td>
+                                            <td>{{ $projet->description }}</td>
+                                            <td>{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</td>
+                                            <td>{{ $projet->date_debut }}</td>
+                                            <td>{{ $projet->date_fin_prevue }}</td>
+                                            <td>{{ $projet->statut }}</td>
+                                        </tr>
+                                    @endforeach
 
-
-    <div class="module">
-      <h2 class="module-title">Mes Rapports du jour </h2>
-      @if (count($rapportsCreesAujourdhui) > 0)
-      @foreach($rapportsCreesAujourdhui as $rapport)
-      <table class="table table-bordered">
-        <thead>
-          <tr class="text-center">
-            <th> <strong> RAPPORT N° : </strong>{{ $rapport->id}}<b></th>
-            <th> <strong> Libellé : </strong> <i>{{ $rapport->libelle }} </i></th>
-          </tr>
-
-        </thead>
-        <tbody>
-          <tr>
-            <td class="report-detail">
-              <strong>Chef travaux :</strong> <br>
-              <p>{{ $rapport->user->nom }} {{ $rapport->user->prenom }} </p>
-            </td>
-            <td class="report-detail">
-              <strong>DATE & HEURES :</strong><br>
-              <p>{{ $rapport->created_at->format('d-m-Y')}} à {{ $rapport->created_at->format('H:m:s')}}</p>
-            </td>
-          </tr>
-          <tr>
-            <td class="report-detail">
-              <strong>PROJET N° :{{ $rapport->activite->projet->id}}</strong> <br>
-              <strong>NOM DU PROJET :</strong>
-              <p>{{ $rapport->activite->projet->libelle }}</p>
-            </td>
-            <td class="report-detail">
-              <strong>LOCALISATION DES TRAVAUX EN COURS :</strong><br>
-              <p>{{ $rapport->activite->lieu }}</p>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="report-detail">
-              <strong>ACTIVITE :</strong> <br>
-              <p>{{ $rapport->activite->nom }}</p>
-            </td>
-            <td class="report-detail">
-              <strong>STATUT :</strong> <br>
-              <p>{{ $rapport->statut }}</p><br>
-
-              <strong>TAUX DE REALISATION :</strong><br>
-              <p>{{ $rapport->activite->taux_de_realisation }} %</p>
-            </td>
-          </tr>
-          <tr>
-            <td class="report-detail" colspan="2">
-              <strong class=" text-bold text-center">TRAVAUX PREVUS DE LA JOURNEE :</strong>
-              <br>
-              <p>{{ $rapport->travaux_prevus_journee }}</p>
-            </td>
-          </tr>
-          <tr>
-            <td class="report-detail">
-              <strong>TRAVAUX EFFECTUES DE LA JOURNEE :</strong><br>
-              <br>
-              <p>{{ $rapport->travaux_realises }}</p>
-            </td>
-            <td class="report-detail">
-              <strong>HEURES DE TRAVAIL:</strong><br>
-              <br>
-              <p><strong>Heure de démarrage :</strong>
-              <p>{{ $rapport->heure_demarrage }}</p><br>
-              <strong>Heure de fin :</strong>
-              <p>{{ $rapport->heure_fin }}</p>
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td class="report-detail">
-              <strong>MATERIELS :</strong>
-            </td>
-            <td>
-              <p>{{ $rapport->materiels_utilises }}</p>
-            </td>
-          </tr>
-          <tr>
-            <td class="report-detail">
-              <strong>PROBLEMES/RETARDS :</strong><br>
-              <p>{{ $rapport->difficultes_rencontrees }}</p>
-            </td>
-            <td class="report-detail">
-              <strong>MESURES CORRECTIVES OU A METTRE EN OEUVRE :</strong><br>
-              <p>{{ $rapport->solutions_apportees }}</p>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="report-detail">
-              <strong>TRAVAUX RESTANTS A FAIRE :</strong><br>
-              <p>{{ $rapport->travaux_restants }}</p>
-            </td>
-            <td class="report-detail">
-              <strong>BESOINS EN MATERIAUX :</strong><br>
-              <p>{{ $rapport->besoins_materiaux }}</p>
-            </td>
-          </tr>
-          <tr>
-            <td class="report-detail" colspan="2">
-              <strong class="text-center">TRAVAUX PREVUS POUR DEMAIN :</strong> <br>
-              <p>{{ $rapport->travaux_prevus_demain }}</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
-      <br>
-      @endforeach
-      <br>
-      @else
-      <p>Aucun rapport n'a été fait aujourd'hui.</p>
-      @endif
-    </div>
-    <hr>
-
-    <h2 text-align="center">Prévision </h2>
-
-    <!-- module Projets en cours -->
-    <div class="module">
-      <h1 class="module-title">Projets</h1>
-      <div class="row">
-        <div class="col-md-6">
-          <h2 class="module-title">Projets en attente</h2>
-          <br>
-          <!-- Tableau pour afficher les détails des projets en cours -->
-          @if (count($projetEnAttenteAjourdhui) > 0)
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <!-- En-têtes du tableau -->
-              <thead>
-                <tr>
-                  <th scope="col">Libellé</th>
-                  <th scope="col">Lieu</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Nom Gestionnaire</th>
-                  <th scope="col">Date début</th>
-                  <th scope="col">Date fin</th>
-                  <th scope="col">Statut</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($projetEnAttenteAjourdhui as $projet)
-                <tr>
-                  <td>{{ $projet->libelle }}</td>
-                  <td>{{ $projet->lieu }}</td>
-                  <td>{{ $projet->description }}</td>
-                  <td>{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</td>
-                  <td>{{ $projet->date_debut }}</td>
-                  <td>{{ $projet->date_fin_prevue }}</td>
-                  <td>{{ $projet->statut }}</td>
-                </tr>
-                @endforeach
-
-              </tbody>
-            </table>
-          </div>
-          @else
-          <p>Aucune projet en attente pour le moment.</p>
-          @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <p>Aucun projet en cours pour le moment.</p>
+                    @endif
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!-- Fin module Projets en cours -->
+        <!-- Fin module Projets en cours -->
 
-    <!-- Autre module -->
-    <div class="module">
-      <h1 class="module-title">Activités</h1>
-      <div class="row">
-        <div class="col-md-6">
-          <h2 class="module-title">Activité en attentes</h2>
-          <!-- Tableau pour afficher les détails des projets en cours -->
-          @if (count($activitesEnAttentes) > 0)
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <!-- En-têtes du tableau -->
-              <thead>
-                <tr>
-                  <th scope="col">Nom de l'activité</th>
-                  <th scope="col">Nom du projet </th>
-                  <th scope="col">Date de début</th>
-                  <th scope="col">Date de fin</th>
-                  <th scope="col">Statut</th>
-                  <th scope="col">Taux de réalisation</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($activitesEnAttentes as $activite)
-                <tr>
-                  <td>{{ $activite->nom }}</td>
-                  <td>{{ $activite->projet->libelle }}</td>
-                  <td>{{ $activite->date_debut }}</td>
-                  <td>{{ $activite->date_fin }}</td>
-                  <td>{{ $activite->statut }}</td>
-                  <td class="taux_nombre ">{{ $activite->taux_de_realisation }}</td>
-                </tr>
-                @endforeach
-
-              </tbody>
-            </table>
-          </div>
-          @else
-          <p>Aucune actvité en attente pour le moment.</p>
-          @endif
+        <!-- Module pour activités en cours du jour -->
+        <div class="module">
+            <h2 class="module-title">Activités en cours</h2>
+            <!-- Tableau pour afficher les détails des activités -->
+            @if (count($activitesEnCours) > 0)
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <!-- En-têtes du tableau -->
+                        <thead>
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Projet</th>
+                                <th scope="col">Date début</th>
+                                <th scope="col">Date fin</th>
+                                <th scope="col">Taux de réalisation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($activitesEnCours as $activite)
+                                <tr>
+                                    <td>{{ $activite->nom }}</td>
+                                    <td>{{ $activite->description }}</td>
+                                    <td>{{ $activite->projet->libelle }}</td>
+                                    <td>{{ $activite->date_debut }}</td>
+                                    <td>{{ $activite->date_fin }}</td>
+                                    <td class="taux_nombre ">{{ $activite->taux_de_realisation }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <p>Aucune activité en cours pour le moment.</p>
+            @endif
         </div>
-      </div>
+        <!-- Fin module -->
+
+
+        <div class="module">
+            <h2 class="module-title">Mes Rapports du jour </h2>
+            @if (count($rapportsCreesAujourdhui) > 0)
+                @foreach ($rapportsCreesAujourdhui as $rapport)
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="text-center">
+                                <th> <strong> RAPPORT N° : </strong>{{ $rapport->id }}<b></th>
+                                <th> <strong> Libellé : </strong> <i>{{ $rapport->libelle }} </i></th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="report-detail">
+                                    <strong>Chef travaux :</strong> <br>
+                                    <p>{{ $rapport->user->nom }} {{ $rapport->user->prenom }} </p>
+                                </td>
+                                <td class="report-detail">
+                                    <strong>DATE & HEURES :</strong><br>
+                                    <p>{{ $rapport->created_at->format('d-m-Y') }} à
+                                        {{ $rapport->created_at->format('H:m:s') }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="report-detail">
+                                    <strong>PROJET N° :{{ $rapport->activite->projet->id }}</strong> <br>
+                                    <strong>NOM DU PROJET :</strong>
+                                    <p>{{ $rapport->activite->projet->libelle }}</p>
+                                </td>
+                                <td class="report-detail">
+                                    <strong>LOCALISATION DES TRAVAUX EN COURS :</strong><br>
+                                    <p>{{ $rapport->activite->lieu }}</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="report-detail">
+                                    <strong>ACTIVITE :</strong> <br>
+                                    <p>{{ $rapport->activite->nom }}</p>
+                                </td>
+                                <td class="report-detail">
+                                    <strong>STATUT :</strong> <br>
+                                    <p>{{ $rapport->statut }}</p><br>
+
+                                    <strong>TAUX DE REALISATION :</strong><br>
+                                    <p>{{ $rapport->activite->taux_de_realisation }} %</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="report-detail" colspan="2">
+                                    <strong class=" text-bold text-center">TRAVAUX PREVUS DE LA JOURNEE :</strong>
+                                    <br>
+                                    <p>{{ $rapport->travaux_prevus_journee }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="report-detail">
+                                    <strong>TRAVAUX EFFECTUES DE LA JOURNEE :</strong><br>
+                                    <br>
+                                    <p>{{ $rapport->travaux_realises }}</p>
+                                </td>
+                                <td class="report-detail">
+                                    <strong>HEURES DE TRAVAIL:</strong><br>
+                                    <br>
+                                    <p><strong>Heure de démarrage :</strong>
+                                    <p>{{ $rapport->heure_demarrage }}</p><br>
+                                    <strong>Heure de fin :</strong>
+                                    <p>{{ $rapport->heure_fin }}</p>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="report-detail">
+                                    <strong>MATERIELS :</strong>
+                                </td>
+                                <td>
+                                    <p>{{ $rapport->materiels_utilises }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="report-detail">
+                                    <strong>PROBLEMES/RETARDS :</strong><br>
+                                    <p>{{ $rapport->difficultes_rencontrees }}</p>
+                                </td>
+                                <td class="report-detail">
+                                    <strong>MESURES CORRECTIVES OU A METTRE EN OEUVRE :</strong><br>
+                                    <p>{{ $rapport->solutions_apportees }}</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="report-detail">
+                                    <strong>TRAVAUX RESTANTS A FAIRE :</strong><br>
+                                    <p>{{ $rapport->travaux_restants }}</p>
+                                </td>
+                                <td class="report-detail">
+                                    <strong>BESOINS EN MATERIAUX :</strong><br>
+                                    <p>{{ $rapport->besoins_materiaux }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="report-detail" colspan="2">
+                                    <strong class="text-center">TRAVAUX PREVUS POUR DEMAIN :</strong> <br>
+                                    <p>{{ $rapport->travaux_prevus_demain }}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <br>
+                @endforeach
+                <br>
+            @else
+                <p>Aucun rapport n'a été fait aujourd'hui.</p>
+            @endif
+        </div>
+        <hr>
+
+        <h2 text-align="center">Prévision </h2>
+
+        <!-- module Projets en cours -->
+        <div class="module">
+            <h1 class="module-title">Projets</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="module-title">Projets en attente</h2>
+                    <br>
+                    <!-- Tableau pour afficher les détails des projets en cours -->
+                    @if (count($projetEnAttenteAjourdhui) > 0)
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <!-- En-têtes du tableau -->
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Libellé</th>
+                                        <th scope="col">Lieu</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Nom Gestionnaire</th>
+                                        <th scope="col">Date début</th>
+                                        <th scope="col">Date fin</th>
+                                        <th scope="col">Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($projetEnAttenteAjourdhui as $projet)
+                                        <tr>
+                                            <td>{{ $projet->libelle }}</td>
+                                            <td>{{ $projet->lieu }}</td>
+                                            <td>{{ $projet->description }}</td>
+                                            <td>{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</td>
+                                            <td>{{ $projet->date_debut }}</td>
+                                            <td>{{ $projet->date_fin_prevue }}</td>
+                                            <td>{{ $projet->statut }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <p>Aucune projet en attente pour le moment.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <!-- Fin module Projets en cours -->
+
+        <!-- Autre module -->
+        <div class="module">
+            <h1 class="module-title">Activités</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="module-title">Activité en attentes</h2>
+                    <!-- Tableau pour afficher les détails des projets en cours -->
+                    @if (count($activitesEnAttentes) > 0)
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <!-- En-têtes du tableau -->
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nom de l'activité</th>
+                                        <th scope="col">Nom du projet </th>
+                                        <th scope="col">Date de début</th>
+                                        <th scope="col">Date de fin</th>
+                                        <th scope="col">Statut</th>
+                                        <th scope="col">Taux de réalisation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($activitesEnAttentes as $activite)
+                                        <tr>
+                                            <td>{{ $activite->nom }}</td>
+                                            <td>{{ $activite->projet->libelle }}</td>
+                                            <td>{{ $activite->date_debut }}</td>
+                                            <td>{{ $activite->date_fin }}</td>
+                                            <td>{{ $activite->statut }}</td>
+                                            <td class="taux_nombre ">{{ $activite->taux_de_realisation }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <p>Aucune actvité en attente pour le moment.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+
+        <footer>
+            <h6>
+                Généré par {{ Auth::user()->nom }} {{ Auth::user()->prenom }}, ce
+                {{ $dateToday->format('d-m-Y') }}
+            </h6>
+        </footer>
     </div>
-
-
-    <footer>
-      <h6>
-        Généré par {{ Auth::user()->nom }} {{ Auth::user()->prenom }}, ce
-        {{ $dateToday->format('d-m-Y') }}
-      </h6>
-    </footer>
-  </div>
 </body>
 
 </html>

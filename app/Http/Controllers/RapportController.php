@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\Rapport;
 use App\Models\User;
-use Gate;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class RapportController extends Controller
 {
     public function index()
     {
         if (Gate::allows('viewliste', Rapport::class)) {
-            return view('rapports.liste');
+            return view('Rapports.liste');
         } else {
             return view('composants.redirection-new-user'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -24,13 +25,13 @@ class RapportController extends Controller
 
     public function create()
     {
-        return view('rapports.create');
+        return view('Rapports.create');
     }
 
     public function edit(Rapport $rapport)
     {
         if (Gate::allows('edit', $rapport)) {
-            return view('rapports.edit', compact('rapport'));
+            return view('Rapports.edit', compact('rapport'));
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }
@@ -39,7 +40,7 @@ class RapportController extends Controller
     public function show(Rapport $rapport)
     {
         if (Gate::allows('view', $rapport)) {
-            return view('rapports.show', compact('rapport'));
+            return view('Rapports.show', compact('rapport'));
         } else {
             return view('composants.acces_refuser'); // Redirection vers une vue indiquant un accès refusé
         }

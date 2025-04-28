@@ -9,8 +9,9 @@ use App\Models\Notification;
 use App\Models\Notifications;
 use App\Models\Projet;
 use App\Models\User;
-use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -29,6 +30,9 @@ class ListeProjet extends Component
     public $id_gestionnaire;
 
     public $selectedGestionnaireId;
+
+    // Le code pour spécifier qu'on veut utiliser le theme de bootstrap pour la pagination
+    protected $paginationTheme = 'bootstrap';
 
     public function NommerGestionnaire($id)
     {
@@ -146,20 +150,6 @@ class ListeProjet extends Component
     public function ValidationStatutProjet($id, Request $request)
     {
         $projet = Projet::find($id);
-
-        //$this->createNotification($projet);
-
-        // Associer le statut du projet
-        // if ($request->filled(['statut', 'date_debut', 'date_fin_prevue'])) {
-        //    $this->validate($request, [
-        //        'date_debut' => 'required|date',
-        //      'date_fin_prevue' => 'required|after_or_equal:date_debut',
-        //  ]);
-
-        // $projet->statut = $request->input('statut');
-        //    $projet->date_debut = $request->input('date_debut');
-        //   $projet->date_fin_prevue = $request->input('date_fin_prevue');
-
         // Associer le statut du projet
         if ($this->statut != null && $this->date_debut != null && $this->date_fin_prevue != null) {
             $projet->statut = $this->statut;
@@ -221,9 +211,11 @@ class ListeProjet extends Component
     }
 
 
-
     public function render()
     {
+
+        Carbon::setLocale('fr');
+
         $word = '%' . $this->search . '%';
 
         $projets = Projet::where(
@@ -232,7 +224,7 @@ class ListeProjet extends Component
             $word
         )->orwhere('description', 'like', $word)
             ->orwhere('lieu', 'like', $word)
-            ->paginate(10);
+             ->latest()->paginate(10);
 
 
         // $currentProjet = Projet::where('id_gestionnaire', '=', Auth::user()->id)->get();
@@ -242,18 +234,12 @@ class ListeProjet extends Component
         // Verifier si le gestionnaire de projet est le même que l'utilisateur
         if ($user->id_profil == 1) {
             // tout les projets
-            $projets = Projet::paginate(10);
+            $projets = Projet::latest()->paginate(10);
         } else {
-            $projets = Projet::where('id_gestionnaire', '=', $user_id)->paginate(10);
+            $projets = Projet::where('id_gestionnaire', '=', $user_id)->latest()->paginate(10);
         }
 
         $managers = User::where('id_profil', '=', '2')->get();
-
-
-        // Récupérer l'id du gestionnaire de projet (supposons que Projet a une colonne 'id_gestionnaire')
-        //$id_gestionnaireProjet = Projet::pluck('id_gestionnaire')->first();
-        // Récupérer l'utilisateur dont son id est égal à l'id_gestionnaire du projet
-        // $gestionnaire = User::find($id_gestionnaireProjet);
 
         return view('livewire.liste-projet', compact('projets', 'managers'));
     }

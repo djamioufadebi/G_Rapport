@@ -20,22 +20,24 @@ class RapportFactory extends Factory
     {
         return [
             'libelle' => $this->faker->sentence,
-            'contenu' => $this->faker->paragraph,
             'statut' => $this->faker->randomElement(['en attente', 'Validé', 'rejeté']),
-
-            // Génère un nombre décimal entre 0 et 100 avec 2 décimales
-            'materiels_utilises' => $this->faker->text,
-            'difficultes_rencontrees' => $this->faker->text,
-            'solutions_apportees' => $this->faker->text,
-
+            'materiels_utilises' => $this->faker->paragraph,
+            'difficultes_rencontrees' => $this->faker->paragraph,
+            'solutions_apportees' => $this->faker->paragraph,
+            'heure_demarrage' => $this->faker->time,
+            'heure_fin' => $this->faker->time,
+            'travaux_prevus_journee' => $this->faker->paragraph,
+            'travaux_realises' => $this->faker->paragraph,
+            'travaux_restants' => $this->faker->paragraph,
+            'travaux_prevus_demain' => $this->faker->paragraph,
+            'besoins_materiaux' => $this->faker->paragraph,
             'id_activite' => function () {
                 return Activite::inRandomOrder()->first()->id;
             },
-
             'user_id' => function () {
-                return User::inRandomOrder()->first()->id;
+                return User::where('id_profil', 2)->inRandomOrder()->first()->id;
             },
-            'commentaires' => $this->faker->text,
+            'commentaires' => $this->faker->paragraph,
         ];
     }
 }

@@ -14,8 +14,14 @@ class ListeBesoin extends Component
 {
 
     use WithPagination;
+
+
     public $statut;
     public $search;
+
+    // Le code pour spécifier qu'on veut utiliser le theme de bootstrap pour la pagination
+    protected $paginationTheme = 'bootstrap';
+
 
     public function s()
     {
@@ -38,7 +44,7 @@ class ListeBesoin extends Component
 
         //  selectionner le besoin à supprimer avec la fonction find() et le supprimer avec la fonction delete()
         $besoin->delete();
-        return redirect("besoins")->with('delete', 'Le rapport à été supprimé');
+        return redirect("besoins")->with('delete', 'Le besoin à été supprimé avec succès');
     }
 
     public function confirmSaveBesoin($id)
@@ -110,18 +116,17 @@ class ListeBesoin extends Component
 
         $listeBesoins = Besoin::where('libelle', 'like', $word)
             ->orwhere('created_at', 'like', $word)
-            ->orwhere('contenu', 'like', $word);
+            ->orwhere('contenu', 'like', $word)->latest()->paginate(10);
 
         $user = Auth::user();
         // Si l'utilisateur n'est pas admin, afficher uniquement les besoins qu'il a creer
         if ($user->id_profil == 1) {
             // Si l'utilisateur n'est ni manager ni admin, afficher uniquement les besoins qu'il a creer
-            $listeBesoins = Besoin::paginate(10);
+            $listeBesoins = Besoin::latest()->paginate(10);
 
         } else {
             // Si l'utilisateur est admin, afficher les besoins qu'il a creer et les besoins qu'il a validé ou rejeté
-            $listeBesoins = Besoin::where('user_id', $user->id)->paginate(10);
-
+            $listeBesoins = Besoin::where('user_id', $user->id)->latest()->paginate(10);
         }
 
 

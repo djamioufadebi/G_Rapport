@@ -16,6 +16,9 @@ class ListeIntervenant extends Component
 
     public $search;
 
+    // Le code pour spécifier qu'on veut utiliser le theme de bootstrap pour la pagination
+    protected $paginationTheme = 'bootstrap';
+
     public function s () {}
 
     // fonction pour supprimer un Intervenant avec une confirmation avant de suppression
@@ -30,7 +33,12 @@ class ListeIntervenant extends Component
 
     public function render()
     {
-        $intervenants = Intervenant::where('nom', 'like', '%' . $this->search . '%')->paginate(10);
+        $word = '%' . $this->search . '%';
+        $intervenants = Intervenant::where('nom', 'like', $word)
+        ->orWhere('prenom', 'like', $word )
+        ->orWhere('email', 'like', $word )
+        ->orWhere('contact', 'like', $word )->latest()->paginate(10);
+
         return view('livewire.liste-intervenant', compact('intervenants'));
     }
 }

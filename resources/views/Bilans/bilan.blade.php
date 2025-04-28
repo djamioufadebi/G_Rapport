@@ -1,26 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid bg-light">
-  <div class="row justify-content-center">
-    <div class="col-md-10">
-      <div class="card">
-        <div class="card-header bg-primary text-white"> <strong>{{ __('Bilans') }}</strong></div>
+    <div class="container ">
+        <div class="card">
+            <div class="card-header text-white" style="background: #42C2FF;"> <strong>{{ __('Bilans') }}</strong></div>
 
-        <div class="card-body">
-          @if (session('status'))
-          <div class="alert alert-success" role="alert">
-            {{ session('status') }}
-          </div>
-          @endif
+            <div class="card-body">
+                <div>
+                    @livewire('show-bilan')
+                </div>
+            </div>
 
-          <div>
-            @livewire('show-bilan')
-          </div>
         </div>
-
-      </div>
     </div>
-  </div>
-</div>
 @endsection

@@ -5,9 +5,9 @@ namespace App\Livewire;
 use App\Models\Activite;
 use App\Models\Besoin;
 use App\Models\Projet;
-use Auth;
 use Livewire\Component;
 use App\Models\Notifications;
+use Illuminate\Support\Facades\Auth;
 
 class EditBesoin extends Component
 {

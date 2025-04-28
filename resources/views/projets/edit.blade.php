@@ -1,28 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
-  <div class="row justify-content-center">
-    <div class="col-md-10">
-      <div class="card">
-        <div class="card-header">{{ __('Edition du projet') }}</div>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card ">
+                    <div class="card-header main-color">{{ __('Edition du projet') }}</div>
 
-        <div class="card-body">
-          @if (session('status'))
-          <div class="alert alert-success" role="alert">
-            {{ session('status') }}
-          </div>
-          @endif
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
-          <div>
+                        <div>
 
-            @livewire('edit-projet', ['projets'=> $projet])
+                            @livewire('edit-projet', ['projets' => $projet])
 
-          </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-      </div>
     </div>
-  </div>
-</div>
 @endsection

@@ -2,18 +2,19 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
-use App\Models\Profil;
+ use Illuminate\Support\Facades\Gate;
 use App\Models\User;
-use App\Policies\ActivitePolicy;
+use App\Models\Profil;
+use App\Policies\RolePolicy;
+use App\Policies\UserPolicy;
 use App\Policies\BesoinPolicy;
-use App\Policies\IntervenantPolicy;
+use App\Policies\ClientPolicy;
 use App\Policies\ProfilPolicy;
 use App\Policies\ProjetPolicy;
 use App\Policies\RapportPolicy;
-use App\Policies\RolePolicy;
-use App\Policies\UserPolicy;
-use Gate;
+use App\Policies\ActivitePolicy;
+
+use App\Policies\IntervenantPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -29,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => BesoinPolicy::class,
         User::class => RapportPolicy::class,
         User::class => ActivitePolicy::class,
-        User::class => ClentPolicy::class,
+        User::class => ClientPolicy::class,
         User::class => IntervenantPolicy::class,
         User::class => UserPolicy::class,
         User::class => RolePolicy::class,

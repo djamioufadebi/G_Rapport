@@ -21,6 +21,7 @@ class IntervenantFactory extends Factory
             'nom' => $this->faker->lastName,
             'prenom' => $this->faker->firstName,
             'contact' => $this->faker->phoneNumber,
+            'date_participation' => $this->faker->date,
             'email' => $this->faker->email,
             'adresse' => $this->faker->address,
             'id_activite' => function () {

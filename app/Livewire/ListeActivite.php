@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\Activite;
 use App\Models\Notification;
 use App\Models\Projet;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,6 +17,9 @@ class ListeActivite extends Component
     public $search;
 
     use WithPagination;
+
+    // Le code pour spécifier qu'on veut utiliser le theme de bootstrap pour la pagination
+    protected $paginationTheme = 'bootstrap';
 
     public function s()
     {
@@ -170,9 +173,10 @@ class ListeActivite extends Component
 
     public function render()
     {
-
-
-        $listeActivites = Activite::where('nom', 'like', '%' . $this->search . '%')
+        $word = '%' . $this->search . '%';
+        $listeActivites = Activite::where('nom', 'like', $word)
+        ->orWhere('description','like', $word)
+        ->orWhere('lieu','like', $word)
             ->paginate(5);
 
         $user = Auth::user();
@@ -181,14 +185,14 @@ class ListeActivite extends Component
         // Verifier si le gestionnaire de projet est le même que l'utilisateur
         if ($user->id_profil == 1) {
             // toutes les activités
-            $listeActivites = Activite::paginate(10);
+            $listeActivites = Activite::latest()->paginate(10);
         } else {
             // Récupérer les projets de l'utilisateur
             $projetsUser = Projet::where('id_gestionnaire', '=', $user_id)->get();
             // Extraire uniquement les IDs des projets
             $idsProjetsUser = $projetsUser->pluck('id')->toArray();
             // Récupérer les activités dont le champ 'id_projet' est parmi les IDs extraits
-            $listeActivites = Activite::whereIn('id_projet', $idsProjetsUser)->paginate(10);
+            $listeActivites = Activite::whereIn('id_projet', $idsProjetsUser)->latest()->paginate(10);
         }
 
         return view('livewire.liste-activite', compact('listeActivites'));

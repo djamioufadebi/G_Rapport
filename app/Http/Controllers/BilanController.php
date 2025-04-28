@@ -7,11 +7,18 @@ use App\Models\Bilan;
 use App\Models\Besoin;
 use App\Models\Projet;
 use App\Models\Rapport;
+<<<<<<< HEAD
 use App\Models\Activite;
 use App\Models\Intervenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
+=======
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+>>>>>>> a6040aeff8f947039ecbff5d3e7be7beb83a58fa
 use Illuminate\Support\Facades\Auth;
 
 class BilanController extends Controller
